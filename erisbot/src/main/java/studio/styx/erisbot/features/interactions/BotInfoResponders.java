@@ -3,8 +3,8 @@ package studio.styx.erisbot.features.interactions;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import org.springframework.stereotype.Component;
 import studio.styx.erisbot.core.ResponderInterface;
-import studio.styx.erisbot.utils.EmbedReply;
 import utils.ComponentBuilder;
+import utils.Embed;
 
 @Component
 public class BotInfoResponders implements ResponderInterface {
@@ -28,8 +28,7 @@ public class BotInfoResponders implements ResponderInterface {
 
         // Verificar se o usuário é o correto
         if (!userId.equals(event.getUser().getId())) {
-            EmbedReply res = new EmbedReply();
-            event.replyEmbeds(res.danger("Você não é <@" + userId + "> para poder usar esse botão!"))
+            event.replyEmbeds(Embed.danger("Você não é <@" + userId + "> para poder usar esse botão!"))
                     .setEphemeral(true)
                     .queue();
             return;

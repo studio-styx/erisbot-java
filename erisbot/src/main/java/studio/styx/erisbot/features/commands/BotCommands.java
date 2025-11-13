@@ -10,8 +10,8 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import okhttp3.MediaType;
 import org.springframework.stereotype.Component;
 import studio.styx.erisbot.core.CommandInterface;
-import studio.styx.erisbot.utils.EmbedReply;
 import utils.ComponentBuilder;
+import utils.Embed;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -26,10 +26,9 @@ public class BotCommands implements CommandInterface {
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        var res = new EmbedReply();
         var subCommand = event.getSubcommandName();
         if (subCommand == null) {
-            event.replyEmbeds(res.danger("Nenhum subcomando especificado.")).setEphemeral(true).queue();
+            event.replyEmbeds(Embed.danger("Nenhum subcomando especificado.")).setEphemeral(true).queue();
             return;
         }
 
@@ -58,7 +57,7 @@ public class BotCommands implements CommandInterface {
                             "Latência do Gateway: " + gatewayPing + "ms\n" +
                             "Data/Hora: " + formattedDate;
                     // Responde com a latência e a data/hora
-                    hook.sendMessageEmbeds(res.info(message)).queue();
+                    hook.sendMessageEmbeds(Embed.info(message)).queue();
                 });
                 break;
             }

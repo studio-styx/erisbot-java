@@ -5,40 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90219cdd-834f-4824-84ac-e9a08a1b9da2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ComponentBuilder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/shared/Colors.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/Utils.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/main/kotlin/database/utils/DatabaseUtils.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/Main.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/Main.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/database/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/kotlin/Main.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/core/AbstractCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/core/Colors.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/core/CommandInterface.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/core/CommandManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/core/Database.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/core/DiscordConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/core/ResponderInterface.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/BotCommands.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/Counter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/Balance.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/Daily.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/interactions/BotInfoResponders.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/interactions/CounterInteractions.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/utils/ComponentBuilder.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/EmbedReply.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/emojis/EmojisLoader.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/Emojis.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/BotCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/BotCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/interactions/BotInfoResponders.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/interactions/BotInfoResponders.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/utils/EmbedReply.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/utils/Utils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/games/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/games/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +27,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Kotlin Class" />
         <option value="Kotlin File" />
       </list>
     </option>
@@ -78,6 +53,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.Build ModuleTest.executor": "Run",
     "Gradle.ModuleTest:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -85,12 +61,13 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/guilherme/Documentos/projetos/ModuleTest/erisbot",
+    "last_opened_file_path": "/home/guilherme/Documentos/projetos/ModuleTest",
     "onboarding.tips.debug.path": "/home/guilherme/Documentos/projetos/ModuleTest/erisbot/src/main/java/studio/styx/erisbot/Main.java"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/erisbot" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
