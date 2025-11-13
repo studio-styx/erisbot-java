@@ -1,5 +1,6 @@
 package studio.styx.erisbot.features.commands.economy;
 
+import database.utils.DatabaseUtils;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
@@ -7,20 +8,16 @@ import org.jooq.DSLContext;
 import org.jooq.TransactionalRunnable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import studio.styx.erisbot.core.Colors;
+import shared.Colors;
+import shared.utils.Utils;
 import studio.styx.erisbot.core.CommandInterface;
-import studio.styx.erisbot.jooq.tables.Cooldown;
-import studio.styx.erisbot.jooq.tables.records.CooldownRecord;
-import studio.styx.erisbot.jooq.tables.records.UserRecord;
-import studio.styx.erisbot.utils.ComponentBuilder;
-import studio.styx.erisbot.utils.Utils;
+import studio.styx.erisbot.generated.tables.references.TablesKt;
+import studio.styx.erisbot.generated.tables.records.CooldownRecord;
+import studio.styx.erisbot.generated.tables.records.UserRecord;
+import utils.ComponentBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
-import static studio.styx.erisbot.jooq.tables.Cooldown.COOLDOWN;
-import static studio.styx.erisbot.jooq.tables.User.USER;
 
 @Component
 public class Daily implements CommandInterface {
@@ -40,7 +37,7 @@ public class Daily implements CommandInterface {
             DSLContext tx = config.dsl();
 
             // 1. Busca ou cria usuário + cooldown em 2 queries otimizadas
-            UserRecord user = Utils.getOrCreateUser(tx, userId);
+            UserRecord user = DatabaseUtils.getOrCreateUser(tx, userId);
             CooldownRecord cooldown = getCooldown(tx, userId);
 
             LocalDateTime now = LocalDateTime.now();
@@ -82,19 +79,29 @@ public class Daily implements CommandInterface {
 
     // === BUSCA COOLDOWN ===
     private CooldownRecord getCooldown(DSLContext tx, String userId) {
-        return tx.selectFrom(COOLDOWN)
-                .where(COOLDOWN.USERID.eq(userId).and(COOLDOWN.NAME.eq("daily")))
+        return tx.selectFrom(TablesKt.getCOOLDOWN())
+                .where(
+                        TablesKt.getCOOLDOWN().getUSERID().eq(userId)
+                                .and(TablesKt.getCOOLDOWN().getNAME().eq("daily"))
+                )
                 .fetchOne();
     }
 
-    // === UPSERT COOLDOWN + STREAK ===
+    // === UPSERT COOLDOWN ===
     private void upsertCooldown(DSLContext tx, String userId, LocalDateTime nextDaily) {
-        tx.insertInto(COOLDOWN)
-                .columns(COOLDOWN.USERID, COOLDOWN.NAME, COOLDOWN.WILLENDIN)
+        tx.insertInto(TablesKt.getCOOLDOWN())
+                .columns(
+                        TablesKt.getCOOLDOWN().getUSERID(),
+                        TablesKt.getCOOLDOWN().getNAME(),
+                        TablesKt.getCOOLDOWN().getWILLENDIN()
+                )
                 .values(userId, "daily", nextDaily)
-                .onConflict(COOLDOWN.USERID, COOLDOWN.NAME) // ← AGORA FUNCIONA!
+                .onConflict(
+                        TablesKt.getCOOLDOWN().getUSERID(),
+                        TablesKt.getCOOLDOWN().getNAME()
+                )
                 .doUpdate()
-                .set(COOLDOWN.WILLENDIN, nextDaily)
+                .set(TablesKt.getCOOLDOWN().getWILLENDIN(), nextDaily)
                 .execute();
     }
 

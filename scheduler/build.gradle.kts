@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm")
-    id("org.springframework.boot") version "3.3.4" apply false
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
 }
 
 group = "studio.styx.erisbot"

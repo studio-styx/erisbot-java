@@ -1,7 +1,6 @@
 plugins {
-    id("java")
     id("org.springframework.boot") version "3.3.4"
-    id("io.spring.dependency-management") version "1.1.5"
+    id("io.spring.dependency-management") version "1.1.6"
 }
 
 group = "studio.styx.erisbot"
@@ -19,10 +18,11 @@ repositories {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":common-discord"))
     implementation(project(":database"))
     implementation(project(":games"))
     implementation(project(":scheduler"))
-    implementation(project(":redis-bridge"))
+    implementation(project(":redisbridge"))
 
     implementation("net.dv8tion:JDA:6.1.0")
     implementation("org.reflections:reflections:0.10.2")
@@ -32,6 +32,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-jooq")
+    implementation("org.postgresql:postgresql:42.7.4")
 
     runtimeOnly("org.postgresql:postgresql:42.7.4")
 

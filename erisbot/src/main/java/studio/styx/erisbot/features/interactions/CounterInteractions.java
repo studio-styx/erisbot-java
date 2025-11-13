@@ -4,10 +4,10 @@ import net.dv8tion.jda.api.components.actionrow.ActionRow;
 import net.dv8tion.jda.api.components.buttons.Button;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import org.springframework.stereotype.Component;
-import studio.styx.erisbot.core.Colors;
+import shared.Colors;
+import shared.utils.Utils;
 import studio.styx.erisbot.core.ResponderInterface;
-import studio.styx.erisbot.utils.ComponentBuilder;
-import studio.styx.erisbot.utils.Utils;
+import utils.ComponentBuilder;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

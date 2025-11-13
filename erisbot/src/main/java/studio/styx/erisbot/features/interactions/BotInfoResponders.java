@@ -3,8 +3,8 @@ package studio.styx.erisbot.features.interactions;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import org.springframework.stereotype.Component;
 import studio.styx.erisbot.core.ResponderInterface;
-import studio.styx.erisbot.utils.ComponentBuilder;
 import studio.styx.erisbot.utils.EmbedReply;
+import utils.ComponentBuilder;
 
 @Component
 public class BotInfoResponders implements ResponderInterface {

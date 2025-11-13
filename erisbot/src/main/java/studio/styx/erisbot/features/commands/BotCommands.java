@@ -10,8 +10,8 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import okhttp3.MediaType;
 import org.springframework.stereotype.Component;
 import studio.styx.erisbot.core.CommandInterface;
-import studio.styx.erisbot.utils.ComponentBuilder;
 import studio.styx.erisbot.utils.EmbedReply;
+import utils.ComponentBuilder;
 
 import java.time.Instant;
 import java.time.ZoneId;

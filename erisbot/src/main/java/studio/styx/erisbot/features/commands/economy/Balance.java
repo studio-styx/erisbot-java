@@ -1,5 +1,6 @@
 package studio.styx.erisbot.features.commands.economy;
 
+import database.utils.DatabaseUtils;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -9,16 +10,13 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import studio.styx.erisbot.core.Colors;
+import shared.Colors;
+import shared.utils.Utils;
 import studio.styx.erisbot.core.CommandInterface;
-import studio.styx.erisbot.jooq.tables.records.UserRecord;
-import studio.styx.erisbot.utils.ComponentBuilder;
-import studio.styx.erisbot.utils.Utils;
+import studio.styx.erisbot.generated.tables.records.UserRecord;
+import utils.ComponentBuilder;
 
 import java.math.BigDecimal;
-
-import static studio.styx.erisbot.jooq.tables.User.USER;
-import static studio.styx.erisbot.utils.Utils.getOrCreateUser;
 
 @Component
 public class Balance implements CommandInterface {
@@ -41,7 +39,7 @@ public class Balance implements CommandInterface {
         }
 
         String userId = targetUser.getId();
-        UserRecord userRecord = getOrCreateUser(dsl, userId);
+        UserRecord userRecord = DatabaseUtils.getOrCreateUser(dsl, userId);
         BigDecimal money = userRecord.getMoney() != null ? userRecord.getMoney() : BigDecimal.ZERO;
 
         String replyMessage = userOption == null

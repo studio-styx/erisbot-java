@@ -17,8 +17,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import shared.Colors;
 import studio.styx.erisbot.core.*;
-import studio.styx.erisbot.utils.ComponentBuilder;
+import utils.ComponentBuilder;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -32,10 +33,10 @@ public class Main implements CommandLineRunner {
     private ApplicationContext context; // ← para pegar beans do Spring
 
     @Autowired
-    private DSLContext dsl;
+    private DSLContext dsl; // ← seu JOOQ pronto
 
     @Autowired
-    private DiscordConfig discordConfig;
+    private DiscordConfig discordConfig; // ← seu token
 
     private JDA jda;
 
@@ -77,7 +78,7 @@ public class Main implements CommandLineRunner {
         }
     }
 
-    // === CARREGA COMANDOS ===
+    // === SEU CÓDIGO ORIGINAL 100% INTACTO ===
     private List<CommandInterface> loadCommands() {
         List<CommandInterface> commands = new ArrayList<>();
         Reflections reflections = new Reflections("studio.styx.erisbot.features.commands", new SubTypesScanner(false));
