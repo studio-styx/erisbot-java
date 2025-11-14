@@ -140,7 +140,6 @@ public class Main implements CommandLineRunner {
         return responders;
     }
 
-    // === SEU CommandListener 100% INTACTO ===
     class CommandListener extends ListenerAdapter {
         private final List<CommandInterface> commands = loadCommands(); // ← agora usa Spring!
         private final List<ResponderInterface> responders = loadResponders();
@@ -164,7 +163,6 @@ public class Main implements CommandLineRunner {
             event.reply("Comando não encontrado.").setEphemeral(true).queue();
         }
 
-        // === TODO O RESTO DO SEU CÓDIGO (buttons, modals, etc) 100% IGUAL ===
         @Override
         public void onButtonInteraction(ButtonInteractionEvent event) {
             handleInteraction(event, event.getComponentId(), ButtonInteractionEvent.class);

@@ -14,7 +14,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2")
 
     // .env reader
-    implementation("io.github.cdimascio:dotenv-java:3.0.0")
+    implementation("io.github.cdimascio:java-dotenv:5.2.2")
 }
 
 tasks.test {

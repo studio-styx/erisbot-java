@@ -28,4 +28,9 @@ object Utils {
     fun formatNumber(number: Double): String {
         return String.format("%,.0f", number).replace(",", ".")
     }
+
+    @JvmStatic
+    fun <T> getRandomListValue(list: List<T>): T {
+        return list[getRandomInt(0, list.size - 1)]
+    }
 }

@@ -8,6 +8,7 @@ import org.jooq.DSLContext;
 import org.jooq.TransactionalRunnable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import shared.Cache;
 import shared.Colors;
 import shared.utils.Utils;
 import studio.styx.erisbot.core.CommandInterface;
@@ -31,6 +32,12 @@ public class Daily implements CommandInterface {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
         String userId = event.getUser().getId();
+
+        Integer dailyAttempts = Cache.get("user:daily:manyAttempts");
+        
+        if (dailyAttempts != null) {
+            
+        }
 
         // === TUDO EM TRANSAÇÃO (seguro contra race condition) ===
         dsl.transaction((TransactionalRunnable) config -> {
