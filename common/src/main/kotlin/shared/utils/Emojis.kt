@@ -3,6 +3,11 @@ package shared.utils
 import emojis.EmojiLoader
 
 object Icon {
-    val static by lazy { EmojiLoader.emojis.static }
+    object static {
+        @JvmStatic
+        fun get(key: String): String {
+            return EmojiLoader.emojis.static.get(key) ?: "null"
+        }
+    }
     val animated by lazy { EmojiLoader.emojis.animated }
 }

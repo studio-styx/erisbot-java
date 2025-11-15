@@ -13,18 +13,22 @@ object DatabaseUtils {
         userId: String
     ): studio.styx.erisbot.generated.tables.records.UserRecord {
 
-        return tx.insertInto(USER)
+        val user = tx.insertInto(USER)
             .columns(USER.ID, USER.MONEY, USER.CREATEDAT, USER.UPDATEDAT)
-            .values(
-                userId,
-                BigDecimal.ZERO,
-                LocalDateTime.now(),
-                LocalDateTime.now()
-            )
+            .values(userId, BigDecimal.ZERO, LocalDateTime.now(), LocalDateTime.now())
             .onConflict(USER.ID)
             .doUpdate()
             .set(USER.UPDATEDAT, LocalDateTime.now())
-            .returning(USER.ID, USER.MONEY, USER.CREATEDAT, USER.UPDATEDAT)
+            .returning()
             .fetchOne()!!
+
+        // LOG PARA DEBUG
+        println("=== USER LOADED ===")
+        println("userId: $userId")
+        println("activePetId (getter): ${user.activepetid}")
+        println("activePetId (raw): ${user.get(USER.ACTIVEPETID)}")
+        println("Todos os campos: ${user.intoMap().keys}")
+
+        return user
     }
 }

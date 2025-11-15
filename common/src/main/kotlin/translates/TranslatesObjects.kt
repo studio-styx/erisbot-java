@@ -2,6 +2,8 @@ package translates
 
 import translates.commands.economy.general.BalanceTranslate
 import translates.commands.economy.general.BalanceTranslateInterface
+import translates.commands.economy.general.DailyTranslate
+import translates.commands.economy.general.DailyTranslateInterface
 
 object TranslatesObjects {
     @JvmStatic
@@ -15,7 +17,6 @@ object TranslatesObjects {
 
     @JvmStatic
     fun getBalance(locale: String = "enus"): BalanceTranslateInterface {
-        println("=== DEBUG TRANSLATES ===")
         val transformed = LanguageUtils.transform(locale)
 
         val result = when (transformed) {
@@ -29,6 +30,26 @@ object TranslatesObjects {
                 BalanceTranslate.enus()
             }
         }
+        return result
+    }
+
+    @JvmStatic
+
+    fun getDaily(locale: String = "enus"): DailyTranslateInterface {
+        val transformed = LanguageUtils.transform(locale)
+
+        val result = when (transformed) {
+            "ptbr" -> {
+                DailyTranslate.ptbr()
+            }
+            "eses" -> {
+                DailyTranslate.eses()
+            }
+            else -> {
+                DailyTranslate.enus()
+            }
+        }
+
         return result
     }
 }

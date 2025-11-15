@@ -14,13 +14,13 @@ interface BalanceTranslateInterface {
 class BalanceTranslate {
     companion object {
         @JvmStatic
-        fun ptbr() = PtBr()
+        fun ptbr() = PtBrBalance()
 
         @JvmStatic
-        fun enus() = EnUs()
+        fun enus() = EnUsBalance()
 
         @JvmStatic
-        fun eses() = EsEs()
+        fun eses() = EsEsBalance()
     }
 }
 
@@ -45,7 +45,7 @@ private fun gerarFrase(
     }
 }
 
-class PtBr : BalanceTranslateInterface {
+class PtBrBalance : BalanceTranslateInterface {
     override val erisMoney = "**${Icon.static.get("Eris_cry")} | Eu sou pobre, eu não tenho dinheiro! ${Icon.static.get("Eris_shy_left")}**"
     override val botMoney = "${Icon.static.get("denied")} | Você não pode ver o saldo de um bot!"
 
@@ -104,7 +104,7 @@ class PtBr : BalanceTranslateInterface {
     }
 }
 
-class EnUs : BalanceTranslateInterface {
+class EnUsBalance : BalanceTranslateInterface {
     override val erisMoney = "**${Icon.static.get("Eris_cry")} | I'm broke... I have no money! ${Icon.static.get("Eris_shy_left")}**"
     override val botMoney = "${Icon.static.get("denied")} | You can't check a bot's balance!"
 
@@ -170,7 +170,7 @@ class EnUs : BalanceTranslateInterface {
     }
 }
 
-class EsEs : BalanceTranslateInterface {
+class EsEsBalance : BalanceTranslateInterface {
     override val erisMoney = "**${Icon.static.get("Eris_cry")} | ¡Estoy pobre, no tengo dinero! ${Icon.static.get("Eris_shy_left")}**"
     override val botMoney = "${Icon.static.get("denied")} | ¡No puedes ver el saldo de un bot!"
 

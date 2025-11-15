@@ -45,3 +45,10 @@ bin/
 .DS_Store
 
 .env
+
+certs/
+database/src/main/resources/certs/
+database/src/main/jooq/certs/
+*.p12
+*.key
+*.crt

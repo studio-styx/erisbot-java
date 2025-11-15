@@ -1,6 +1,7 @@
 package shared.utils
 
 import java.math.BigDecimal
+import java.time.LocalDateTime
 
 object Utils {
 
@@ -33,4 +34,50 @@ object Utils {
     fun <T> getRandomListValue(list: List<T>): T {
         return list[getRandomInt(0, list.size - 1)]
     }
+
+    @JvmStatic
+    fun formatDiscordTime(time: Long, type: DiscordTimeStyle): String {
+        val style = convertDiscordTimeStyleToString(type)
+        return "<t:$time:$style>"
+    }
+
+    @JvmStatic
+    fun formatDiscordTime(time: Long, type: String): String {
+        return "<t:$time:$type>"
+    }
+
+    @JvmStatic
+    fun formatDiscordTime(time: LocalDateTime, type: DiscordTimeStyle): String {
+        val style = convertDiscordTimeStyleToString(type)
+        return "<t:${time.toEpochSecond(java.time.ZoneOffset.UTC)}:$style>"
+    }
+
+    @JvmStatic
+    fun formatDiscordTime(time: LocalDateTime, type: String): String {
+        return "<t:${time.toEpochSecond(java.time.ZoneOffset.UTC)}:$type>"
+    }
+
+    @JvmStatic
+    fun convertDiscordTimeStyleToString(style: DiscordTimeStyle): String {
+        return when (style) {
+            DiscordTimeStyle.RELATIVE -> "R"
+            DiscordTimeStyle.LONGDATE -> "D"
+            DiscordTimeStyle.LONGDATETIME -> "F"
+            DiscordTimeStyle.LONGTIME -> "T"
+            DiscordTimeStyle.SHORTDATE -> "d"
+            DiscordTimeStyle.SHORTDATETIME -> "f"
+            DiscordTimeStyle.SHORTTIME -> "t"
+        }
+    }
+}
+
+enum class DiscordTimeStyle {
+    RELATIVE,
+    LONGDATE,
+    LONGDATETIME,
+    LONGTIME,
+    SHORTDATE,
+    SHORTDATETIME,
+    SHORTTIME
+
 }
