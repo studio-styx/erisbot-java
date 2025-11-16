@@ -4,6 +4,8 @@ import translates.commands.economy.general.BalanceTranslate
 import translates.commands.economy.general.BalanceTranslateInterface
 import translates.commands.economy.general.DailyTranslate
 import translates.commands.economy.general.DailyTranslateInterface
+import translates.commands.economy.general.TransferTranslate
+import translates.commands.economy.general.TransferTranslateInterface
 
 object TranslatesObjects {
     @JvmStatic
@@ -47,6 +49,25 @@ object TranslatesObjects {
             }
             else -> {
                 DailyTranslate.enus()
+            }
+        }
+
+        return result
+    }
+
+    @JvmStatic
+    fun getTransferCommand(locale: String = "enus"): TransferTranslateInterface {
+        val transformed = LanguageUtils.transform(locale)
+
+        val result = when (transformed) {
+            "ptbr" -> {
+                TransferTranslate.ptbr()
+            }
+            "eses" -> {
+                TransferTranslate.eses()
+            }
+            else -> {
+                TransferTranslate.enus()
             }
         }
 

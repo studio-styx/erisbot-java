@@ -13,6 +13,7 @@ import org.jooq.Configuration
 import org.jooq.JSONB
 import org.jooq.impl.DAOImpl
 
+import studio.styx.erisbot.generated.enums.Gender
 import studio.styx.erisbot.generated.tables.User
 import studio.styx.erisbot.generated.tables.records.UserRecord
 
@@ -210,4 +211,15 @@ open class UserDao(configuration: Configuration?) : DAOImpl<UserRecord, studio.s
      * Fetch records that have <code>showNameInPresence IN (values)</code>
      */
     fun fetchByShownameinpresence(vararg values: Boolean): List<studio.styx.erisbot.generated.tables.pojos.User> = fetch(User.USER.SHOWNAMEINPRESENCE, *values.toTypedArray())
+
+    /**
+     * Fetch records that have <code>gender BETWEEN lowerInclusive AND
+     * upperInclusive</code>
+     */
+    fun fetchRangeOfGender(lowerInclusive: Gender?, upperInclusive: Gender?): List<studio.styx.erisbot.generated.tables.pojos.User> = fetchRange(User.USER.GENDER, lowerInclusive, upperInclusive)
+
+    /**
+     * Fetch records that have <code>gender IN (values)</code>
+     */
+    fun fetchByGender(vararg values: Gender): List<studio.styx.erisbot.generated.tables.pojos.User> = fetch(User.USER.GENDER, *values)
 }

@@ -30,6 +30,7 @@ import utils.ComponentBuilder;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Map;
 import java.util.Objects;
 
@@ -71,7 +72,7 @@ public class Daily implements CommandInterface {
                     .setEphemeral(true)
                     .withColor(Colors.DANGER)
                     .reply(event);
-            Cache.set(cacheKey, attempts + 1);
+            Cache.set(cacheKey, attempts + 1, 60 * 2);
             return;
         }
 
@@ -82,21 +83,20 @@ public class Daily implements CommandInterface {
             UserRecord user = DatabaseUtils.getOrCreateUser(tx, userId);
             CooldownRecord cooldown = getCooldown(tx, userId);
 
-            // === FORÇA activePetId = 92 (para teste) ===
+            if (cooldown != null && cooldown.getWillendin() != null && cooldown.getWillendin().isAfter(now)) {
+                Cache.set(cacheKey, 1); // inicia contador
+                ComponentBuilder.ContainerBuilder.create()
+                        .addText(t.cooldown(cooldown.getWillendin().toEpochSecond(ZoneOffset.UTC)))
+                        .withColor(Colors.DANGER)
+                        .disableMentions()
+                        .setEphemeral(true)
+                        .reply(event);
+               return;
+            }
+
             Integer activePetId = user.getActivepetid();
             user.setActivepetid(activePetId);
             ActivePetData petData = getActivePetWithSkills(tx, activePetId);
-
-            log.info("=== DAILY DEBUG (FORÇADO) ===");
-            log.info("userId: {}", userId);
-            log.info("activePetId forçado: {}", activePetId);
-            log.info("petData encontrado: {}", petData != null ? "SIM" : "NÃO");
-            if (petData != null) {
-                log.info("Pet: {} | Rarity: {} | BonusLv: {} | CooldownLv: {}",
-                        petData.name, petData.rarity, petData.dailyBonusLevel, petData.cooldownReductionLevel);
-            } else {
-                log.warn("PET ID 92 NÃO ENCONTRADO NA TABELA userpet!");
-            }
 
             // === CÁLCULO DO BÔNUS ===
             int baseMax = 100;
@@ -117,10 +117,6 @@ public class Daily implements CommandInterface {
                 double finalCooldownMult = baseCooldownMult - reduction;
                 hours = Math.max((int) (24 * finalCooldownMult), 1);
                 nextDaily = now.plusHours(hours);
-
-                log.info("Bônus aplicado: {} | Próximo daily em {}h", dailyValue, hours);
-            } else {
-                log.info("Sem pet ativo → daily base (30-100)");
             }
 
             BigDecimal bonus = BigDecimal.valueOf(dailyValue);
@@ -146,7 +142,6 @@ public class Daily implements CommandInterface {
 
             PetDailyAbilities abilities = new PetDailyAbilities(hasBonus, hasCooldownReduction);
 
-// === TRADUÇÃO OBRIGATÓRIA (com fallback de ícone) ===
             String message;
             try {
                 if (hasBonus || hasCooldownReduction) {
@@ -164,8 +159,7 @@ public class Daily implements CommandInterface {
                     );
                 }
             } catch (Exception e) {
-                log.error("ERRO NA TRADUÇÃO (ícone ausente)", e);
-                throw new RuntimeException("Tradução falhou por ícone null. Corrija Icon.static.get()", e);
+                throw new RuntimeException("Tradução falhou", e);
             }
 
             ComponentBuilder.ContainerBuilder.create()

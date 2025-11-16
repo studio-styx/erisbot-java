@@ -35,6 +35,7 @@ import org.jooq.impl.SQLDataType
 import org.jooq.impl.TableImpl
 
 import studio.styx.erisbot.generated.Public
+import studio.styx.erisbot.generated.enums.Gender
 import studio.styx.erisbot.generated.indexes.USER_ACTIVEPETID_KEY
 import studio.styx.erisbot.generated.keys.APPLICATION__APPLICATION_OWNERID_FKEY
 import studio.styx.erisbot.generated.keys.COMBATHISTORY__COMBATHISTORY_USER1ID_FKEY
@@ -192,6 +193,11 @@ open class User(
      * The column <code>public.User.showNameInPresence</code>.
      */
     val SHOWNAMEINPRESENCE: TableField<UserRecord, Boolean?> = createField(DSL.name("showNameInPresence"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("false"), SQLDataType.BOOLEAN)), this, "")
+
+    /**
+     * The column <code>public.User.gender</code>.
+     */
+    val GENDER: TableField<UserRecord, Gender?> = createField(DSL.name("gender"), SQLDataType.VARCHAR.asEnumDataType(Gender::class.java), this, "")
 
     private constructor(alias: Name, aliased: Table<UserRecord>?): this(alias, null, null, null, aliased, null, null)
     private constructor(alias: Name, aliased: Table<UserRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, null, aliased, parameters, null)

@@ -22,13 +22,7 @@ object DatabaseUtils {
             .returning()
             .fetchOne()!!
 
-        // LOG PARA DEBUG
-        println("=== USER LOADED ===")
-        println("userId: $userId")
-        println("activePetId (getter): ${user.activepetid}")
-        println("activePetId (raw): ${user.get(USER.ACTIVEPETID)}")
-        println("Todos os campos: ${user.intoMap().keys}")
-
         return user
     }
+
 }

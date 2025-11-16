@@ -32,6 +32,9 @@ data class PetGrammar(
 
     val dePronoun: String
         get() = if (gender == DailyGender.MASC) "dele" else "dela"
+
+    val daPronoun: String
+        get() = if (gender == DailyGender.MASC) "do" else "da"
 }
 
 object DailyPieces {
@@ -44,7 +47,7 @@ object DailyPieces {
     )
 
     val bonus = listOf(
-        "com uma ajudinha de {article} **{pet}**!",
+        "com uma ajudinha {daPronoun} **{pet}**!",
         "{pet} encontrou algumas moedas perdidas!",
         "{pet} trouxe um bônus inesperado!",
         "{pet} resolveu colaborar hoje!",
@@ -53,14 +56,14 @@ object DailyPieces {
 
     val cooldownReduction = listOf(
         "{pet} ajudou a reduzir seu tempo de espera!",
-        "graças à ajuda de {article} **{pet}**, seu cooldown foi reduzido!",
+        "graças à ajuda {daPronoun} **{pet}**, seu cooldown foi reduzido!",
         "{pet} usou suas habilidades para acelerar o processo!",
-        "com a magia de {article} **{pet}**, você pode coletar mais cedo!"
+        "com a magia {daPronoun} **{pet}**, você pode coletar mais cedo!"
     )
 
     val bothAbilities = listOf(
         "{pet} trouxe bônus e reduziu seu cooldown!",
-        "dupla ajuda de {article} **{pet}**: bônus e cooldown reduzido!",
+        "dupla ajuda {daPronoun} **{pet}**: bônus e cooldown reduzido!",
         "{pet} foi incrível hoje - bônus extra e menos tempo de espera!",
         "graças {article} **{pet}**, você ganhou mais e esperará menos!"
     )
@@ -131,17 +134,20 @@ class PtBrDaily : DailyTranslateInterface {
             abilities.hasBonus && abilities.hasCooldownReduction ->
                 assemble(DailyPieces.bothAbilities, mapOf(
                     "pet" to grammar.name,
-                    "article" to grammar.article
+                    "article" to grammar.article,
+                    "daPronoun" to grammar.daPronoun
                 ))
             abilities.hasBonus ->
                 assemble(DailyPieces.bonus, mapOf(
                     "pet" to grammar.name,
-                    "article" to grammar.article
+                    "article" to grammar.article,
+                    "daPronoun" to grammar.daPronoun
                 ))
             abilities.hasCooldownReduction ->
                 assemble(DailyPieces.cooldownReduction, mapOf(
                     "pet" to grammar.name,
-                    "article" to grammar.article
+                    "article" to grammar.article,
+                    "daPronoun" to grammar.daPronoun
                 ))
             else -> "" // Sem habilidades
         }

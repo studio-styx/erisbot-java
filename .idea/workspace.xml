@@ -5,18 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90219cdd-834f-4824-84ac-e9a08a1b9da2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/database/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/Grammar.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/general/Transfer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/Transfer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/Emojis.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/Emojis.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/Utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/Utils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/translates/TranslatesObjects.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/TranslatesObjects.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/general/Balance.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/general/Balance.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/general/Daily.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/general/Daily.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/database/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/daos/UserDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/daos/UserDao.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/pojos/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/pojos/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/records/UserRecord.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/records/UserRecord.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/src/main/kotlin/database/utils/DatabaseUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/kotlin/database/utils/DatabaseUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/Daily.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/Daily.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +33,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Object" />
-        <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -56,24 +57,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build ModuleTest.executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "Gradle.ErisbotJava:database [:database:TestConnectionKt.main()].executor": "Run",
-    "Gradle.ErisbotJava:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor": "Run",
-    "Gradle.ModuleTest:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/guilherme/Documentos/projetos/SchemaEXtended",
-    "onboarding.tips.debug.path": "/home/guilherme/Documentos/projetos/ModuleTest/erisbot/src/main/java/studio/styx/erisbot/Main.java",
-    "settings.editor.selected.configurable": "io.github.pandier.intellijdiscordrp.settings.DiscordSettingsConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build ModuleTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ErisbotJava:database [:database:TestConnectionKt.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ErisbotJava:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ModuleTest:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/guilherme/Documentos/projetos/SchemaEXtended&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/home/guilherme/Documentos/projetos/ModuleTest/erisbot/src/main/java/studio/styx/erisbot/Main.java&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;io.github.pandier.intellijdiscordrp.settings.DiscordSettingsConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -121,36 +122,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/Daily.java</url>
-          <line>175</line>
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/Daily.java</url>
-          <line>221</line>
-          <option name="timeStamp" value="37" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/Daily.java</url>
-          <line>236</line>
-          <option name="timeStamp" value="39" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/Daily.java</url>
-          <line>238</line>
-          <option name="timeStamp" value="40" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/Daily.java</url>
-          <line>261</line>
-          <option name="timeStamp" value="48" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

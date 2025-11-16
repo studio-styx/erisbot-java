@@ -11,6 +11,7 @@ import org.jooq.JSONB
 import org.jooq.Record1
 import org.jooq.impl.UpdatableRecordImpl
 
+import studio.styx.erisbot.generated.enums.Gender
 import studio.styx.erisbot.generated.tables.User
 
 
@@ -84,6 +85,10 @@ open class UserRecord() : UpdatableRecordImpl<UserRecord>(User.USER) {
         set(value): Unit = set(15, value)
         get(): Boolean? = get(15) as Boolean?
 
+    open var gender: Gender?
+        set(value): Unit = set(16, value)
+        get(): Gender? = get(16) as Gender?
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -93,7 +98,7 @@ open class UserRecord() : UpdatableRecordImpl<UserRecord>(User.USER) {
     /**
      * Create a detached, initialised UserRecord
      */
-    constructor(id: String? = null, afkreasson: String? = null, afktime: LocalDateTime? = null, companyid: Int? = null, dmnotification: Boolean? = null, money: BigDecimal? = null, token: JSONB? = null, xp: Int? = null, activepetid: Int? = null, blacklist: JSONB? = null, createdat: LocalDateTime? = null, updatedat: LocalDateTime? = null, acceptedfootballtermsat: LocalDateTime? = null, favoriteteamid: Long? = null, readfootballbetterms: Boolean? = null, shownameinpresence: Boolean? = null): this() {
+    constructor(id: String? = null, afkreasson: String? = null, afktime: LocalDateTime? = null, companyid: Int? = null, dmnotification: Boolean? = null, money: BigDecimal? = null, token: JSONB? = null, xp: Int? = null, activepetid: Int? = null, blacklist: JSONB? = null, createdat: LocalDateTime? = null, updatedat: LocalDateTime? = null, acceptedfootballtermsat: LocalDateTime? = null, favoriteteamid: Long? = null, readfootballbetterms: Boolean? = null, shownameinpresence: Boolean? = null, gender: Gender? = null): this() {
         this.id = id
         this.afkreasson = afkreasson
         this.afktime = afktime
@@ -110,6 +115,7 @@ open class UserRecord() : UpdatableRecordImpl<UserRecord>(User.USER) {
         this.favoriteteamid = favoriteteamid
         this.readfootballbetterms = readfootballbetterms
         this.shownameinpresence = shownameinpresence
+        this.gender = gender
         resetChangedOnNotNull()
     }
 
@@ -134,6 +140,7 @@ open class UserRecord() : UpdatableRecordImpl<UserRecord>(User.USER) {
             this.favoriteteamid = value.favoriteteamid
             this.readfootballbetterms = value.readfootballbetterms
             this.shownameinpresence = value.shownameinpresence
+            this.gender = value.gender
             resetChangedOnNotNull()
         }
     }

@@ -69,6 +69,39 @@ object Utils {
             DiscordTimeStyle.SHORTTIME -> "t"
         }
     }
+
+    @JvmStatic
+    fun getNameGender(name: String): GenderUnknown {
+        val cleanName = name.trim().lowercase()
+
+        // Primeiro verificar plurais
+        if (cleanName.endsWith("as")) return GenderUnknown.FEMALE
+        if (cleanName.endsWith("os")) return GenderUnknown.MALE
+
+        // Depois verificar singulares
+        if (cleanName.endsWith("a")) return GenderUnknown.FEMALE
+        if (cleanName.endsWith("o")) return GenderUnknown.MALE
+
+        // Lista de exceções comuns
+        val maleExceptions = listOf("josé", "josue", "davi", "rami", "roni")
+        val femaleExceptions = listOf("eve", "marie", "rose")
+
+        return when {
+            maleExceptions.any { cleanName.endsWith(it) } -> GenderUnknown.MALE
+            femaleExceptions.any { cleanName.endsWith(it) } -> GenderUnknown.FEMALE
+            else -> GenderUnknown.UNKNOWN
+        }
+    }
+
+    @JvmStatic
+    fun replaceText(text: String, replacements: Map<String, String>): String {
+        var result = text
+        replacements.forEach { (key, value) ->
+            result = result.replace("{$key}", value)
+        }
+
+        return result
+    }
 }
 
 enum class DiscordTimeStyle {
@@ -79,5 +112,6 @@ enum class DiscordTimeStyle {
     SHORTDATE,
     SHORTDATETIME,
     SHORTTIME
-
 }
+
+enum class GenderUnknown { MALE, FEMALE, UNKNOWN }
