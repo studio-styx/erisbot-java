@@ -20,6 +20,9 @@ interface TransferTranslateInterface {
     fun manyUsersTitle(): String
     fun manyUsersDescription(amount: Double): String
     fun manyUsersUserSelectLabel(): String
+    fun tryingToSendMoneyToABot(): String
+    fun tryingToSendMoneyToEris(): String
+    fun tryingToSendMoneyToOurSelf(): String
 }
 
 class TransferTranslate {
@@ -66,30 +69,7 @@ class PtBrTransfer : TransferTranslateInterface {
         val userGrammar = UserGrammar(user.name, user.gender);
         val targetGrammar = UserGrammar(target.name, target.gender);
 
-        val messages = listOf(
-            "${Icon.static.get("success")} | {articleU} {userPronoun} {username} quer dar **{amount}** para {articleT} {targetPronoun}! ambos precisam apertar o botão abaixo para aceitar a transação!",
-            "${Icon.static.get("success")} | {username} iniciou uma transação com {articleU} {targetname} no valor de **{amount}**! ambos precisam apertar o botão abaixo para aceitar a transação!",
-            "${Icon.static.get("success")} | {articleU} {username} iniciou uma transferência de **{amount}** para {articleT} {targetname}! confirmem abaixo para prosseguir!",
-
-            "${Icon.static.get("success")} | Transação iniciada! " +
-                    "{articleU} {username} deseja enviar **{amount}** para {articleT} {targetPronoun}. " +
-                    "ambos precisam confirmar para continuar!",
-
-            "${Icon.static.get("success")} | {username} abriu uma operação para enviar **{amount}** " +
-                    "para {articleT} {targetname}. confirmem abaixo para finalizar!",
-
-            "${Icon.static.get("success")} | Pedido de transferência criado! " +
-                    "{articleU} {username} está enviando **{amount}** {articleT} {targetPronoun}. " +
-                    "falta a confirmação dos dois!",
-
-            "${Icon.static.get("success")} | {articleU} {userPronoun} {username} propôs enviar **{amount}** " +
-                    "para {articleT} {targetname}. apertem o botão para validar a transação!",
-
-            "${Icon.static.get("success")} | Transferência pendente: {username} quer mandar **{amount}** " +
-                    "para {articleT} {targetPronoun} {targetname}. os dois precisam confirmar para liberar o valor!"
-        )
-
-        val message = Utils.replaceText(messages.random(), mapOf(
+        val message = Utils.replaceText("${Icon.static.get("success")} | {username} iniciou uma transação com {articleU} {targetname} no valor de **{amount}**! ambos precisam apertar o botão abaixo para aceitar a transação!", mapOf(
             "articleU" to userGrammar.article,
             "articleT" to targetGrammar.article,
             "userPronoun" to userGrammar.userPronoun,
@@ -116,10 +96,22 @@ class PtBrTransfer : TransferTranslateInterface {
     override fun buttonLabel(oneAcepted: Boolean): String {
         return "Aceitar ( ${if (oneAcepted) 1 else 0}/2 )"
     }
+
+    override fun tryingToSendMoneyToABot(): String {
+        return "${Icon.static.get("denied")} | Você não pode enviar stx para um bot!"
+    }
+
+    override fun tryingToSendMoneyToEris(): String {
+        return "${Icon.static.get("denied")} | Eu gostaria tanto de receber esse dinheiro! Porém é contra as regras ${Icon.static.get("Eris_cry_left")}"
+    }
+
+    override fun tryingToSendMoneyToOurSelf(): String {
+        return "${Icon.static.get("denied")} | Você não pode enviar stx para si mesmo!"
+    }
 }
 
 private class EnglishUserGrammar(name: String, gender: GenderUnknown) : OpenEnglishGrammar(name, gender) {
-    override val userPronoun: String
+    val userPronoun: String
         get() = when {
             gender == GenderUnknown.MALE -> "male user"
             gender == GenderUnknown.FEMALE -> "female user"
@@ -154,30 +146,7 @@ class EnUsTransfer : TransferTranslateInterface {
 
         val formattedAmount = Utils.formatNumber(amount)
 
-        val messages = listOf(
-            "${Icon.static.get("success")} | {articleU} {userPronoun} {username} wants to give **{amount}** to {articleT} {targetPronoun}! Both need to press the button below to accept the transaction!",
-            "${Icon.static.get("success")} | {username} started a transaction with {articleT} {targetname} for **{amount}**! Both need to press the button below to accept the transaction!",
-            "${Icon.static.get("success")} | {articleU} {username} started a transfer of **{amount}** to {articleT} {targetname}! Confirm below to proceed!",
-
-            "${Icon.static.get("success")} | Transaction started! " +
-                    "{articleU} {username} wants to send **{amount}** to {articleT} {targetPronoun}. " +
-                    "Both need to confirm to continue!",
-
-            "${Icon.static.get("success")} | {username} opened an operation to send **{amount}** " +
-                    "to {articleT} {targetname}. Confirm below to finalize!",
-
-            "${Icon.static.get("success")} | Transfer request created! " +
-                    "{articleU} {username} is sending **{amount}** to {articleT} {targetPronoun}. " +
-                    "Both confirmations are needed!",
-
-            "${Icon.static.get("success")} | {articleU} {userPronoun} {username} proposed to send **{amount}** " +
-                    "to {articleT} {targetname}. Press the button to validate the transaction!",
-
-            "${Icon.static.get("success")} | Pending transfer: {username} wants to send **{amount}** " +
-                    "to {articleT} {targetPronoun}. Both need to confirm to release the amount!"
-        )
-
-        val message = Utils.replaceText(messages.random(), mapOf(
+        val message = Utils.replaceText("${Icon.static.get("success")} | {username} started a transaction with {articleT} {targetname} for **{amount}**! Both need to press the button below to accept the transaction!", mapOf(
             "articleU" to userGrammar.article,
             "articleT" to targetGrammar.article,
             "userPronoun" to userGrammar.userPronoun,
@@ -202,6 +171,18 @@ class EnUsTransfer : TransferTranslateInterface {
 
     override fun buttonLabel(oneAcepted: Boolean): String {
         return "Accept (${if (oneAcepted) 1 else 0}/2)"
+    }
+
+    override fun tryingToSendMoneyToABot(): String {
+        return "${Icon.static.get("denied")} | You can't send stx to a bot!"
+    }
+
+    override fun tryingToSendMoneyToEris(): String {
+        return "${Icon.static.get("denied")} | I would love to receive this money! But it's against the rules ${Icon.static.get("Eris_cry_left")}"
+    }
+
+    override fun tryingToSendMoneyToOurSelf(): String {
+        return "${Icon.static.get("denied")} | You can't send stx to yourself!"
     }
 }
 
@@ -237,30 +218,7 @@ class EsEsTransfer : TransferTranslateInterface {
 
         val formattedAmount = Utils.formatNumber(amount)
 
-        val messages = listOf(
-            "${Icon.static.get("success")} | ¡{articleU} {userPronoun} {username} quiere dar **{amount}** a {articleT} {targetPronoun}! ¡Ambos necesitan presionar el botón de abajo para aceptar la transacción!",
-            "${Icon.static.get("success")} | ¡{username} inició una transacción con {articleT} {targetname} por **{amount}**! ¡Ambos necesitan presionar el botón de abajo para aceptar la transacción!",
-            "${Icon.static.get("success")} | ¡{articleU} {username} inició una transferencia de **{amount}** a {articleT} {targetname}! ¡Confirmen abajo para proceder!",
-
-            "${Icon.static.get("success")} | ¡Transacción iniciada! " +
-                    "{articleU} {username} desea enviar **{amount}** a {articleT} {targetPronoun}. " +
-                    "¡Ambos necesitan confirmar para continuar!",
-
-            "${Icon.static.get("success")} | {username} abrió una operación para enviar **{amount}** " +
-                    "a {articleT} {targetname}. ¡Confirmen abajo para finalizar!",
-
-            "${Icon.static.get("success")} | ¡Solicitud de transferencia creada! " +
-                    "{articleU} {username} está enviando **{amount}** a {articleT} {targetPronoun}. " +
-                    "¡Falta la confirmación de ambos!",
-
-            "${Icon.static.get("success")} | {articleU} {userPronoun} {username} propuso enviar **{amount}** " +
-                    "a {articleT} {targetname}. ¡Presionen el botón para validar la transacción!",
-
-            "${Icon.static.get("success")} | Transferencia pendiente: {username} quiere enviar **{amount}** " +
-                    "a {articleT} {targetPronoun}. ¡Ambos necesitan confirmar para liberar el monto!"
-        )
-
-        val message = Utils.replaceText(messages.random(), mapOf(
+        val message = Utils.replaceText("${Icon.static.get("success")} | ¡{username} inició una transacción con {articleT} {targetname} por **{amount}**! ¡Ambos necesitan presionar el botón de abajo para aceptar la transacción!", mapOf(
             "articleU" to userGrammar.article,
             "articleT" to targetGrammar.article,
             "userPronoun" to userGrammar.userPronoun,
@@ -285,5 +243,17 @@ class EsEsTransfer : TransferTranslateInterface {
 
     override fun buttonLabel(oneAcepted: Boolean): String {
         return "Aceptar (${if (oneAcepted) 1 else 0}/2)"
+    }
+
+    override fun tryingToSendMoneyToABot(): String {
+        return "${Icon.static.get("denied")} | ¡No puedes enviar stx a un bot!"
+    }
+
+    override fun tryingToSendMoneyToEris(): String {
+        return "${Icon.static.get("denied")} | ¡Me encantaría recibir este dinero! Pero está contra las reglas ${Icon.static.get("Eris_cry_left")}"
+    }
+
+    override fun tryingToSendMoneyToOurSelf(): String {
+        return "${Icon.static.get("denied")} | ¡No puedes enviar stx a ti mismo!"
     }
 }

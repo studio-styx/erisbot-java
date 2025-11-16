@@ -15,6 +15,8 @@ dependencies {
 
     // .env reader
     implementation("io.github.cdimascio:java-dotenv:5.2.2")
+
+    implementation("studio.styx.sx:SchemaEXtended:1.1.0")
 }
 
 tasks.test {

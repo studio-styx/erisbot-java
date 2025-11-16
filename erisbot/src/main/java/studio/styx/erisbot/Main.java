@@ -66,6 +66,12 @@ public class Main implements CommandLineRunner {
 
         // === REGISTRA COMANDOS ===
         registerCommands(jda, commands);
+
+        // === CARREGA INTERAÇÕES ===
+        List<ResponderInterface> responders = loadResponders();
+
+        // === CARREGA AGENDAMENTOS ===
+
     }
 
     // === INJETA O DSL NOS COMANDOS QUE HERDAM DE AbstractCommand ===

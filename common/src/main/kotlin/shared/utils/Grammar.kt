@@ -43,7 +43,11 @@ open class OpenGrammar(
         get() = if (gender == GenderUnknown.MALE || gender == GenderUnknown.UNKNOWN) "dele" else "dela"
 
     val dePronoun: String
-        get() = if (gender == GenderUnknown.MALE || gender == GenderUnknown.UNKNOWN) "do" else "da"
+        get() = when(gender) {
+            GenderUnknown.MALE -> "do"
+            GenderUnknown.FEMALE -> "da"
+            GenderUnknown.UNKNOWN -> "de"
+        }
 }
 
 // English Grammar
@@ -91,13 +95,6 @@ data class EnglishGrammar(
 
     fun adj(masc: String, fem: String) =
         if (gender == GenderUnknown.MALE || gender == GenderUnknown.UNKNOWN) masc else fem
-
-    val userPronoun: String
-        get() = when {
-            gender == GenderUnknown.MALE -> "male user"
-            gender == GenderUnknown.FEMALE -> "female user"
-            else -> "user"
-        }
 }
 
 open class OpenEnglishGrammar(
@@ -145,12 +142,6 @@ open class OpenEnglishGrammar(
     fun adj(masc: String, fem: String) =
         if (gender == GenderUnknown.MALE || gender == GenderUnknown.UNKNOWN) masc else fem
 
-    open val userPronoun: String
-        get() = when {
-            gender == GenderUnknown.MALE -> "male user"
-            gender == GenderUnknown.FEMALE -> "female user"
-            else -> "user"
-        }
 }
 
 // Spanish Grammar

@@ -34,6 +34,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-jooq")
     implementation("org.postgresql:postgresql:42.7.4")
 
+    implementation("studio.styx.sx:SchemaEXtended:1.1.0")
+
     runtimeOnly("org.postgresql:postgresql:42.7.4")
 
     testImplementation(platform("org.junit:junit-bom:5.11.3"))

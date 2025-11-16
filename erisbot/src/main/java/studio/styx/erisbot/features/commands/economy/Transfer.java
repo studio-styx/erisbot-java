@@ -1,6 +1,7 @@
 package studio.styx.erisbot.features.commands.economy;
 
 import database.utils.DatabaseUtils;
+import database.utils.LogManage;
 import net.dv8tion.jda.api.components.actionrow.ActionRow;
 import net.dv8tion.jda.api.components.buttons.Button;
 import net.dv8tion.jda.api.components.selections.EntitySelectMenu;
@@ -29,6 +30,7 @@ import utils.ComponentBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -70,6 +72,34 @@ public class Transfer implements CommandInterface {
             }
 
             // 3. Caso: transferência direta
+
+            if (target.getId().equals(userId)) {
+                ComponentBuilder.ContainerBuilder.create()
+                        .addText(t.tryingToSendMoneyToOurSelf())
+                        .withColor(Colors.DANGER)
+                        .setEphemeral(true)
+                        .reply(event);
+                return;
+            }
+
+            if (target.getId().equals(event.getJDA().getSelfUser().getId())) {
+                ComponentBuilder.ContainerBuilder.create()
+                        .addText(t.tryingToSendMoneyToOurSelf())
+                        .withColor(Colors.DANGER)
+                        .setEphemeral(true)
+                        .reply(event);
+                return;
+            }
+
+            if (target.isBot()) {
+                ComponentBuilder.ContainerBuilder.create()
+                        .addText(t.tryingToSendMoneyToABot())
+                        .withColor(Colors.DANGER)
+                        .setEphemeral(true)
+                        .reply(event);
+                return;
+            }
+
             handleDirectTransfer(event, userData, targetData, amount, user, target, t);
         });
     }
@@ -135,9 +165,30 @@ public class Transfer implements CommandInterface {
                 ))
                 .addRow(ActionRow.of(confirmButton))
                 .reply(event);
+
+        LogManage.CreateLog.create()
+                .setMessage(t.log(
+                        new ExpectedUser(
+                                user.getGlobalName(),
+                                getUserGender(user.getGlobalName(),
+                                    userData.getGender()
+                                )
+                        ),
+                        new ExpectedUser(
+                                target.getGlobalName(),
+                                getUserGender(target.getGlobalName(),
+                                    targetData.getGender()
+                                )
+                        ),
+                        amount.doubleValue())
+                )
+                .setLevel(4)
+                .setTags(List.of("transfer", "economy", "target:" + target.getId()))
+                .insert(dsl);
+
     }
 
-    // === CRIA TRANSACAO (CORRIGIDO) ===
+    // === CRIA TRANSACAO ===
     private TransactionRecord createTransaction(DSLContext tx, String userId, String targetId, BigDecimal amount,
                                                 String channelId, String guildId) {
         LocalDateTime now = java.time.LocalDateTime.now();
@@ -150,7 +201,8 @@ public class Transfer implements CommandInterface {
                 .set(TablesKt.getTRANSACTION().getGUILDID(), guildId)
                 .set(TablesKt.getTRANSACTION().getSTATUS(), Transactionstatus.PENDING)
                 .set(TablesKt.getTRANSACTION().getCREATEDAT(), now)
-                .set(TablesKt.getTRANSACTION().getUPDATEDAT(), now) // ← ADICIONE ESTA LINHA
+                .set(TablesKt.getTRANSACTION().getUPDATEDAT(), now)
+                .set(TablesKt.getTRANSACTION().getEXPIRESAT(), now.plusHours(24))
                 .returning(TablesKt.getTRANSACTION().getID())
                 .fetchOne();
     }

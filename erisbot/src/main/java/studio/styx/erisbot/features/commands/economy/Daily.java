@@ -1,6 +1,7 @@
 package studio.styx.erisbot.features.commands.economy;
 
 import database.utils.DatabaseUtils;
+import database.utils.LogManage;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
@@ -31,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -168,6 +170,20 @@ public class Daily implements CommandInterface {
                     .disableMentions()
                     .setEphemeral(false)
                     .reply(event);
+
+            List<String> tags = new java.util.ArrayList<>(List.of("daily", "economy", "reward:" + bonus.intValue()));
+            var log = LogManage.CreateLog.create()
+                    .setLevel(2);
+
+            if (petData != null && petData.name != null) {
+                log.setMessage(t.log(bonus.intValue(), petData.name, gender, abilities));
+                tags.add("pet:" + petData.name);
+            } else {
+                log.setMessage(t.log(bonus.intValue()));
+            }
+            log.setUserId(userId)
+                    .setTags(tags)
+                    .insert(tx);
         });
     }
 

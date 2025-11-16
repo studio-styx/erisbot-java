@@ -1,6 +1,7 @@
 package studio.styx.erisbot.features.commands.economy;
 
 import database.utils.DatabaseUtils;
+import database.utils.LogManage;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -18,6 +19,7 @@ import translates.TranslatesObjects;
 import utils.ComponentBuilder;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -59,6 +61,12 @@ public class Balance implements CommandInterface {
                 .withColor(Colors.FUCHSIA)
                 .disableMentions()
                 .reply(event);
+
+        LogManage.CreateLog.create()
+                .setMessage(String.format(t.log(userId, targetUser.getId())))
+                .setLevel(1)
+                .setTags(List.of("balance", "economy", "view", "target:" + targetUser.getId()))
+                .insert(dsl);
     }
 
     @Override

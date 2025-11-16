@@ -1,6 +1,7 @@
 package database.utils
 
 import org.jooq.DSLContext
+import studio.styx.erisbot.generated.tables.records.UserRecord
 import studio.styx.erisbot.generated.tables.references.USER
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -11,7 +12,7 @@ object DatabaseUtils {
     fun getOrCreateUser(
         tx: DSLContext,
         userId: String
-    ): studio.styx.erisbot.generated.tables.records.UserRecord {
+    ): UserRecord {
 
         val user = tx.insertInto(USER)
             .columns(USER.ID, USER.MONEY, USER.CREATEDAT, USER.UPDATEDAT)
@@ -24,5 +25,4 @@ object DatabaseUtils {
 
         return user
     }
-
 }
