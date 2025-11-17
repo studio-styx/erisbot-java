@@ -6,6 +6,8 @@ import translates.commands.economy.general.DailyTranslate
 import translates.commands.economy.general.DailyTranslateInterface
 import translates.commands.economy.general.TransferTranslate
 import translates.commands.economy.general.TransferTranslateInterface
+import translates.interactions.economy.ManyTransferInteraction
+import translates.interactions.economy.ManyTransferInteractionInterface
 import translates.interactions.economy.TransactionTransferInteraction
 import translates.interactions.economy.TransactionTransferInteractionInterface
 
@@ -89,6 +91,25 @@ object TranslatesObjects {
             }
             else -> {
                 TransactionTransferInteraction.enus()
+            }
+        }
+
+        return result
+    }
+
+    @JvmStatic
+    fun getManyTransferInteraction(locale: String = "enus"): ManyTransferInteractionInterface {
+        val transformed = LanguageUtils.transform(locale)
+
+        val result = when (transformed) {
+            "ptbr" -> {
+                ManyTransferInteraction.ptbr()
+            }
+            "eses" -> {
+                ManyTransferInteraction.eses()
+            }
+            else -> {
+                ManyTransferInteraction.enus()
             }
         }
 

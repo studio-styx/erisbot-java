@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+import net.dv8tion.jda.api.interactions.components.selections.SelectMenuInteraction;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.jooq.DSLContext;
 import org.reflections.Reflections;
@@ -84,7 +85,6 @@ public class Main implements CommandLineRunner {
         }
     }
 
-    // === SEU CÓDIGO ORIGINAL 100% INTACTO ===
     private List<CommandInterface> loadCommands() {
         List<CommandInterface> commands = new ArrayList<>();
         Reflections reflections = new Reflections("studio.styx.erisbot.features.commands", new SubTypesScanner(false));
@@ -147,7 +147,7 @@ public class Main implements CommandLineRunner {
     }
 
     class CommandListener extends ListenerAdapter {
-        private final List<CommandInterface> commands = loadCommands(); // ← agora usa Spring!
+        private final List<CommandInterface> commands = loadCommands();
         private final List<ResponderInterface> responders = loadResponders();
 
         @Override
@@ -182,6 +182,10 @@ public class Main implements CommandLineRunner {
         @Override
         public void onModalInteraction(ModalInteractionEvent event) {
             handleInteraction(event, event.getModalId(), ModalInteractionEvent.class);
+        }
+
+        public void on(SelectMenuInteraction event) {
+            handleInteraction(event, event.getComponentId(), SelectMenuInteraction.class);
         }
 
         private void handleInteraction(Object event, String componentId, Class<?> eventType) {

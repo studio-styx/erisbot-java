@@ -112,7 +112,7 @@ public class Transfer implements CommandInterface {
             return;
         }
 
-        EntitySelectMenu menu = EntitySelectMenu.create("manyTransfer/selectUsers/" + event.getUser().getId(), EntitySelectMenu.SelectTarget.USER)
+        EntitySelectMenu menu = EntitySelectMenu.create("manyTransfer/selectUsers/" + event.getUser().getId() + "/" + amount.toString(), EntitySelectMenu.SelectTarget.USER)
                 .setPlaceholder(t.manyUsersUserSelectLabel())
                 .setRequiredRange(1, maxUsers)
                 .build();
