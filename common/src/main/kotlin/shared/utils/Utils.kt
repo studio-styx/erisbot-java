@@ -102,6 +102,26 @@ object Utils {
 
         return result
     }
+
+    @JvmStatic
+    fun brBuilder(vararg texts: String): String {
+        return texts.joinToString("\n")
+    }
+
+    @JvmStatic
+    fun brBuilder(vararg texts: String, replacements: Map<String, String>): String {
+        var result = texts.joinToString("\n")
+        replacements.forEach { (key, value) ->
+            result = result.replace("{$key}", value)
+        }
+
+        return result
+    }
+
+    @JvmStatic
+    fun <T> alternate(primary: T, default: T): T {
+        return primary ?: default!!
+    }
 }
 
 enum class DiscordTimeStyle {

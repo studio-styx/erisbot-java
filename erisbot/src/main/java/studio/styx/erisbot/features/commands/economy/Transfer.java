@@ -159,8 +159,8 @@ public class Transfer implements CommandInterface {
                 .withColor(Colors.SUCCESS)
                 .setEphemeral(false)
                 .addText(t.message(
-                        new ExpectedUser(user.getName(), getUserGender(user.getGlobalName(), userData.getGender())),
-                        new ExpectedUser(target.getName(), getUserGender(target.getGlobalName(), targetData.getGender())),
+                        new ExpectedUser(user.getName(), getUserGender(user.getGlobalName(), userData.getGender()), user.getId()),
+                        new ExpectedUser(target.getName(), getUserGender(target.getGlobalName(), targetData.getGender()), target.getId()),
                         amount.doubleValue()
                 ))
                 .addRow(ActionRow.of(confirmButton))
@@ -170,15 +170,19 @@ public class Transfer implements CommandInterface {
                 .setMessage(t.log(
                         new ExpectedUser(
                                 user.getGlobalName(),
-                                getUserGender(user.getGlobalName(),
-                                    userData.getGender()
-                                )
+                                getUserGender(
+                                        user.getGlobalName(),
+                                        userData.getGender()
+                                ),
+                                user.getId()
                         ),
                         new ExpectedUser(
                                 target.getGlobalName(),
-                                getUserGender(target.getGlobalName(),
-                                    targetData.getGender()
-                                )
+                                getUserGender(
+                                        target.getGlobalName(),
+                                        targetData.getGender()
+                                ),
+                                target.getId()
                         ),
                         amount.doubleValue())
                 )

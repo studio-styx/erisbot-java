@@ -3,15 +3,18 @@ package studio.styx.erisbot.features.interactions.economy;
 import database.utils.DatabaseUtils;
 import net.dv8tion.jda.api.components.actionrow.ActionRow;
 import net.dv8tion.jda.api.components.buttons.Button;
+import net.dv8tion.jda.api.components.textdisplay.TextDisplay;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
-import net.dv8tion.jda.api.interactions.components.selections.EntitySelectInteraction;
-import net.dv8tion.jda.api.interactions.components.selections.SelectMenuInteraction;
+import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shared.Colors;
 import shared.utils.GenderUnknown;
+import shared.utils.Icon;
 import shared.utils.Utils;
 import studio.styx.erisbot.core.ResponderInterface;
 import studio.styx.erisbot.generated.enums.Gender;
@@ -25,6 +28,7 @@ import utils.ComponentBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,16 +43,7 @@ public class ManyTransfers implements ResponderInterface {
     }
 
     @Override
-    public void execute(SelectMenuInteraction event) {
-        System.out.println("Interação recebida");
-        if (!(event instanceof EntitySelectInteraction entityEvent)) {
-            System.out.println("Não é suportado");
-            event.reply("Este menu não é suportado.").setEphemeral(true).queue();
-            return;
-        }
-
-        System.out.println("É suportado");
-
+    public void execute(EntitySelectInteractionEvent event) {
         String[] parts = event.getCustomId().split("/");
         String authorId = parts[2];
         double amountPerUser = Double.parseDouble(parts[3]);
@@ -56,7 +51,6 @@ public class ManyTransfers implements ResponderInterface {
         var t = TranslatesObjects.getManyTransferInteraction(event.getUserLocale().getLocale());
 
         if (!authorId.equals(event.getUser().getId())) {
-            System.out.println("Não é o usuário correto");
             event.replyComponents(
                     ComponentBuilder.ContainerBuilder.create()
                             .addText(t.userCannotUseThisButton())
@@ -66,29 +60,30 @@ public class ManyTransfers implements ResponderInterface {
             return;
         }
 
-        System.out.println("Pegando usuários");
-        var selectedUsers = entityEvent.getValues().stream()
-                .filter(u -> u instanceof User)
-                .map(u -> (User) u)
-                .filter(u -> !u.isBot())
-                .filter(u -> !u.getId().equals(authorId))
-                .distinct()
-                .collect(Collectors.toList());
+        event.getValues().forEach(entity -> {
+            System.out.println("- Classe: " + entity.getClass().getSimpleName() + ", ID: " + entity.getId());
+        });
 
-        System.out.println("Usuários selecionados:" + selectedUsers.stream().map(User::getName));
+        var selectedUsers = event.getValues().stream()
+                .filter(entity -> entity instanceof Member) // Filtra Member
+                .map(entity -> (Member) entity) // Converte para Member
+                .map(Member::getUser) // Obtém o User do Member
+                .filter(user -> !user.isBot())
+                .filter(user -> !user.getId().equals(authorId))
+                .distinct()
+                .toList();
+
+        selectedUsers.forEach(user -> System.out.println("- " + user.getGlobalName() + " (" + user.getId() + ")"));
 
         if (selectedUsers.isEmpty()) {
-            System.out.println("Nenhum usuário válido selecionado");
             event.reply("Nenhum usuário válido selecionado.").setEphemeral(true).queue();
             return;
         }
 
         double totalAmount = amountPerUser * selectedUsers.size();
 
-        event.deferReply().queue(hook -> {
-            System.out.println("Esperando resposta");
+        event.deferEdit().queue(hook -> {
             dsl.transaction(config -> {
-                System.out.println("Transação atômica criada");
                 DSLContext tx = config.dsl();
 
                 List<String> targetIds = selectedUsers.stream()
@@ -114,41 +109,44 @@ public class ManyTransfers implements ResponderInterface {
                 String channelId = event.getChannel().getId();
                 String guildId = event.getGuild().getId();
 
-                BigDecimal amountBD = BigDecimal.valueOf(amountPerUser);
+                var tc = TranslatesObjects.getTransferCommand(event.getUserLocale().getLocale());
 
-                System.out.println("Criando transações");
-                List<TransactionRecord> transactions = tx.insertInto(TablesKt.getTRANSACTION())
-                        .columns(
-                                TablesKt.getTRANSACTION().getUSERID(),
-                                TablesKt.getTRANSACTION().getTARGETID(),
-                                TablesKt.getTRANSACTION().getAMOUNT(),
-                                TablesKt.getTRANSACTION().getCHANNELID(),
-                                TablesKt.getTRANSACTION().getGUILDID(),
-                                TablesKt.getTRANSACTION().getSTATUS(),
-                                TablesKt.getTRANSACTION().getCREATEDAT(),
-                                TablesKt.getTRANSACTION().getUPDATEDAT(),
-                                TablesKt.getTRANSACTION().getEXPIRESAT()
-                        )
-                        .values(
-                                targetIds.stream()
-                                        .map(targetId -> List.of(
-                                                authorId,
-                                                targetId,
-                                                amountPerUser,
-                                                channelId,
-                                                guildId,
-                                                Transactionstatus.PENDING,
-                                                now,
-                                                now,
-                                                expiresAt
-                                        ))
-                                        .collect(Collectors.toList())
-                        )
+                hook.editOriginalComponents(TextDisplay.of(
+                        Icon.INSTANCE.getAnimated().get("waiting_white") != null
+                            ? Icon.INSTANCE.getAnimated().get("waiting_white")
+                                : "Aguarde..."
+                )).useComponentsV2().queue();
+
+                var insert = tx.insertInto(TablesKt.getTRANSACTION(),
+                        TablesKt.getTRANSACTION().getUSERID(),
+                        TablesKt.getTRANSACTION().getTARGETID(),
+                        TablesKt.getTRANSACTION().getAMOUNT(),
+                        TablesKt.getTRANSACTION().getCHANNELID(),
+                        TablesKt.getTRANSACTION().getGUILDID(),
+                        TablesKt.getTRANSACTION().getSTATUS(),
+                        TablesKt.getTRANSACTION().getCREATEDAT(),
+                        TablesKt.getTRANSACTION().getUPDATEDAT(),
+                        TablesKt.getTRANSACTION().getEXPIRESAT()
+                );
+
+                for (String targetId : targetIds) {
+                    insert.values(
+                            authorId,
+                            targetId,
+                            amountPerUser,
+                            channelId,
+                            guildId,
+                            Transactionstatus.PENDING,
+                            now,
+                            now,
+                            expiresAt
+                    );
+                }
+
+                List<TransactionRecord> transactions = insert
                         .onDuplicateKeyIgnore()
                         .returning(TablesKt.getTRANSACTION().getID(), TablesKt.getTRANSACTION().getTARGETID())
                         .fetch();
-
-                System.out.println("Transações criadas");
 
                 var transactionMap = transactions.stream()
                         .collect(Collectors.toMap(
@@ -159,18 +157,17 @@ public class ManyTransfers implements ResponderInterface {
                 // 6. Monta ExpectedUser para todos
                 ExpectedUser author = new ExpectedUser(
                         event.getUser().getGlobalName(),
-                        getUserGender(event.getUser().getGlobalName(), authorRecord.getGender())
+                        getUserGender(event.getUser().getGlobalName(), authorRecord.getGender()),
+                        authorId
                 );
 
-                var tc = TranslatesObjects.getTransferCommand(event.getUserLocale().getLocale());
-
-                System.out.println("Criando map de mensagens");
                 var messages = selectedUsers.stream()
                         .map(user -> {
                             String targetId = user.getId();
                             ExpectedUser target = new ExpectedUser(
                                     user.getGlobalName(),
-                                   getUserGender(user.getGlobalName(), targetRecords.get(targetIds.indexOf(targetId)).getGender())
+                                    getUserGender(user.getGlobalName(), targetRecords.get(targetIds.indexOf(targetId)).getGender()),
+                                    targetId
                             );
 
                             Integer transactionId = transactionMap.get(targetId);
@@ -189,19 +186,19 @@ public class ManyTransfers implements ResponderInterface {
                         })
                         .collect(Collectors.toList());
 
-                // 7. Envia todas as mensagens de uma vez (bulk)
-                System.out.println("Enviando todas as mensagens");
-                event.getChannel()
-                        .sendMessageComponents(messages)
-                        .queue(success -> {
-                            hook.sendMessage("Transferências enviadas com sucesso para " + selectedUsers.size() + " usuários!")
-                                    .setEphemeral(true)
-                                    .queue();
-                        }, error -> {
-                            hook.sendMessage("Erro ao enviar mensagens: " + error.getMessage())
-                                    .setEphemeral(true)
-                                    .queue();
-                        });
+                // 7. Envia todas as mensagens
+                var channel = event.getChannel();
+
+                for (var message : messages) {
+                    channel.sendMessageComponents(message).useComponentsV2().queue();
+                }
+
+                hook.editOriginalComponents(
+                        ComponentBuilder.ContainerBuilder.create()
+                                .withColor(Colors.SUCCESS)
+                                .addText("Transações iniciadas!")
+                                .build()
+                ).useComponentsV2().setAllowedMentions(EnumSet.noneOf(Message.MentionType.class)).queue();
             });
         });
     }
@@ -209,6 +206,7 @@ public class ManyTransfers implements ResponderInterface {
     private static List<UserRecord> getOrCreateUsers(DSLContext tx, List<String> userIds) {
         if (userIds == null || userIds.isEmpty()) return List.of();
 
+        // Busca usuários existentes
         var existing = tx.selectFrom(TablesKt.getUSER())
                 .where(TablesKt.getUSER().getID().in(userIds))
                 .fetch();
@@ -217,6 +215,7 @@ public class ManyTransfers implements ResponderInterface {
                 .map(UserRecord::getId)
                 .collect(Collectors.toSet());
 
+        // Cria usuários faltantes
         var missingIds = userIds.stream()
                 .filter(id -> !existingIds.contains(id))
                 .toList();
@@ -224,22 +223,27 @@ public class ManyTransfers implements ResponderInterface {
         if (!missingIds.isEmpty()) {
             var now = java.time.LocalDateTime.now();
 
-            var insert = tx.insertInto(TablesKt.getUSER(),
-                    TablesKt.getUSER().getID(),
-                    TablesKt.getUSER().getMONEY(),
-                    TablesKt.getUSER().getCREATEDAT(),
-                    TablesKt.getUSER().getUPDATEDAT()
-            );
+            // Insere usuários faltantes
+            var insert = tx.insertInto(TablesKt.getUSER())
+                    .columns(
+                            TablesKt.getUSER().getID(),
+                            TablesKt.getUSER().getMONEY(),
+                            TablesKt.getUSER().getCREATEDAT(),
+                            TablesKt.getUSER().getUPDATEDAT()
+                    );
 
-            missingIds.forEach(id -> insert.values(id, BigDecimal.ZERO, now, now));
+            // Adiciona valores para cada ID faltante
+            for (String id : missingIds) {
+                insert.values(id, BigDecimal.ZERO, now, now);
+            }
 
             insert.onDuplicateKeyIgnore().execute();
         }
 
+        // Retorna todos os usuários (existentes + criados) na mesma ordem dos IDs solicitados
         return tx.selectFrom(TablesKt.getUSER())
                 .where(TablesKt.getUSER().getID().in(userIds))
                 .fetch()
-                .sortAsc(TablesKt.getUSER().getID().cast(String.class))
                 .into(UserRecord.class);
     }
 

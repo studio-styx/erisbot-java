@@ -2,6 +2,7 @@ package studio.styx.erisbot.core;
 
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.selections.SelectMenuInteraction;
 
@@ -23,6 +24,10 @@ public interface ResponderInterface {
     }
 
     default void execute(ModalInteractionEvent event) {
+        // Implementação vazia por padrão
+    }
+
+    default void execute(EntitySelectInteractionEvent event) {
         // Implementação vazia por padrão
     }
 }

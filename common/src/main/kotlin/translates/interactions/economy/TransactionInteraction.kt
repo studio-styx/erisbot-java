@@ -4,6 +4,7 @@ import shared.utils.EnglishGrammar
 import shared.utils.GenderUnknown
 import shared.utils.Grammar
 import shared.utils.Icon
+import shared.utils.MentionUtil
 import shared.utils.OpenEnglishGrammar
 import shared.utils.OpenGrammar
 import shared.utils.OpenSpanishGrammar
@@ -87,24 +88,24 @@ class PtBrTransferInteraction : TransactionTransferInteractionInterface {
         amount: Double
     ): String {
         var messages = listOf<String>(
-            "{icon} | Pagamento realizado! {artigleU} {username} enviou **{amount}** para: {artigleT} {targetname}!",
-            "{icon} | Sucesso! {username} enviou **{amount}** para {artigleT} {targetname}",
-            "{icon} | Transação finalizada. {username} fez a boa e enviou **{amount} para {targetname}"
+            "{icon} | Pagamento realizado! {artigleU} {username} enviou **{amount}** para: {artigleT} **{targetmention}**!",
+            "{icon} | Sucesso! {username} enviou **{amount}** para {artigleT} **{targetmention}**",
+            "{icon} | Transação finalizada. {username} fez a boa e enviou **{amount} para **{targetmention}**"
         )
 
         if (amount > 1200) {
             messages.plus(listOf<String>(
-                "{icon_enchanted} | Pix de milhares! {username} enviou **{amount}** para {artigleT} {targetname}",
-                "{icon_enchanted} | Super pagamenento de **{amount}** stx para {targetname}!",
-                "{icon_enchanted} | Quanto dinheiro! {artigleU} enviou **{amount}** para {targetname}!"
+                "{icon_enchanted} | Pix de milhares! {username} enviou **{amount}** para {artigleT} **{targetmention}**",
+                "{icon_enchanted} | Super pagamenento de **{amount}** stx para **{targetmention}**!",
+                "{icon_enchanted} | Quanto dinheiro! {artigleU} enviou **{amount}** para **{targetmention}**!"
             ))
         }
 
         if (amount < 50) {
             messages.plus(listOf<String>(
-                "{icon} | {username} enviou uma pequena quantia de: **{amount}** stx para {artigleT} {targetname}!",
-                "{icon} | {artigleU} {username} deu uma esmola de **{amount}** stx para {targetname}",
-                "{icon} | {targetname} recebeu **{amount}** stx {dePronounU} {username}!"
+                "{icon} | {username} enviou uma pequena quantia de: **{amount}** stx para {artigleT} **{targetmention}**!",
+                "{icon} | {artigleU} {username} deu uma esmola de **{amount}** stx para **{targetmention}**",
+                "{icon} | **{targetmention}** recebeu **{amount}** stx {dePronounU} {username}!"
             ))
         }
 
@@ -123,6 +124,7 @@ class PtBrTransferInteraction : TransactionTransferInteractionInterface {
             "icon_enchanted" to Icon.static.get("Eris_enchanted"),
             "username" to user.name,
             "targetname" to target.name,
+            "targetmention" to MentionUtil.userMention(target.id),
             "amount" to Utils.formatNumber(amount),
             "artigleU" to authorGrammar.article,
             "artigleT" to targetGrammar.article,
@@ -190,24 +192,24 @@ class EnUsTransferInteraction : TransactionTransferInteractionInterface {
         amount: Double
     ): String {
         var messages = listOf(
-            "{icon} | Payment completed! {articleU} {username} sent **{amount}** to: {articleT} {targetname}!",
-            "{icon} | Success! {username} sent **{amount}** to {articleT} {targetname}",
-            "{icon} | Transaction completed. {username} did the good deed and sent **{amount}** to {targetname}"
+            "{icon} | Payment completed! {articleU} {username} sent **{amount}** to: {articleT} **{targetmention}**!",
+            "{icon} | Success! {username} sent **{amount}** to {articleT} **{targetmention}**",
+            "{icon} | Transaction completed. {username} did the good deed and sent **{amount}** to **{targetmention}**"
         )
 
         if (amount > 1200) {
             messages = messages.plus(listOf(
-                "{icon_enchanted} | Big money transfer! {username} sent **{amount}** to {articleT} {targetname}",
-                "{icon_enchanted} | Super payment of **{amount}** stx to {targetname}!",
-                "{icon_enchanted} | So much money! {articleU} sent **{amount}** to {targetname}!"
+                "{icon_enchanted} | Big money transfer! {username} sent **{amount}** to {articleT} **{targetmention}**",
+                "{icon_enchanted} | Super payment of **{amount}** stx to **{targetmention}**!",
+                "{icon_enchanted} | So much money! {articleU} sent **{amount}** to **{targetmention}**!"
             ))
         }
 
         if (amount < 50) {
             messages = messages.plus(listOf(
-                "{icon} | {username} sent a small amount of: **{amount}** stx to {articleT} {targetname}!",
-                "{icon} | {articleU} {username} gave a small donation of **{amount}** stx to {targetname}",
-                "{icon} | {targetname} received **{amount}** stx from {username}!"
+                "{icon} | {username} sent a small amount of: **{amount}** stx to {articleT} **{targetmention}**!",
+                "{icon} | {articleU} {username} gave a small donation of **{amount}** stx to **{targetmention}**",
+                "{icon} | **{targetmention}** received **{amount}** stx from {username}!"
             ))
         }
 
@@ -226,6 +228,7 @@ class EnUsTransferInteraction : TransactionTransferInteractionInterface {
             "icon_enchanted" to Icon.static.get("Eris_enchanted"),
             "username" to user.name,
             "targetname" to target.name,
+            "targetmention" to MentionUtil.userMention(target.id),
             "amount" to Utils.formatNumber(amount),
             "articleU" to authorGrammar.article,
             "articleT" to targetGrammar.article
@@ -288,24 +291,24 @@ class EsEsTransferInteraction : TransactionTransferInteractionInterface {
         amount: Double
     ): String {
         var messages = listOf(
-            "{icon} | ¡Pago realizado! {articleU} {username} envió **{amount}** a: {articleT} {targetname}!",
-            "{icon} | ¡Éxito! {username} envió **{amount}** a {articleT} {targetname}",
-            "{icon} | Transacción finalizada. {username} hizo la buena acción y envió **{amount}** a {targetname}"
+            "{icon} | ¡Pago realizado! {articleU} {username} envió **{amount}** a: {articleT} **{targetmention}**!",
+            "{icon} | ¡Éxito! {username} envió **{amount}** a {articleT} **{targetmention}**",
+            "{icon} | Transacción finalizada. {username} hizo la buena acción y envió **{amount}** a **{targetmention}**"
         )
 
         if (amount > 1200) {
             messages = messages.plus(listOf(
-                "{icon_enchanted} | ¡Transferencia de miles! {username} envió **{amount}** a {articleT} {targetname}",
-                "{icon_enchanted} | ¡Super pago de **{amount}** stx a {targetname}!",
-                "{icon_enchanted} | ¡Cuánto dinero! {articleU} envió **{amount}** a {targetname}!"
+                "{icon_enchanted} | ¡Transferencia de miles! {username} envió **{amount}** a {articleT} **{targetmention}**",
+                "{icon_enchanted} | ¡Super pago de **{amount}** stx a **{targetmention}**!",
+                "{icon_enchanted} | ¡Cuánto dinero! {articleU} envió **{amount}** a **{targetmention}**!"
             ))
         }
 
         if (amount < 50) {
             messages = messages.plus(listOf(
-                "{icon} | ¡{username} envió una pequeña cantidad de: **{amount}** stx a {articleT} {targetname}!",
-                "{icon} | {articleU} {username} dio una pequeña donación de **{amount}** stx a {targetname}",
-                "{icon} | ¡{targetname} recibió **{amount}** stx de {username}!"
+                "{icon} | ¡{username} envió una pequeña cantidad de: **{amount}** stx a {articleT} **{targetmention}**!",
+                "{icon} | {articleU} {username} dio una pequeña donación de **{amount}** stx a **{targetmention}**",
+                "{icon} | ¡**{targetmention}** recibió **{amount}** stx de {username}!"
             ))
         }
 
@@ -324,6 +327,7 @@ class EsEsTransferInteraction : TransactionTransferInteractionInterface {
             "icon_enchanted" to Icon.static.get("Eris_enchanted"),
             "username" to user.name,
             "targetname" to target.name,
+            "targetmention" to MentionUtil.userMention(target.id),
             "amount" to Utils.formatNumber(amount),
             "articleU" to authorGrammar.article,
             "articleT" to targetGrammar.article

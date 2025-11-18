@@ -23,6 +23,7 @@ dependencies {
     implementation(project(":games"))
     implementation(project(":scheduler"))
     implementation(project(":redisbridge"))
+    implementation(project(":gemini-service"))
 
     implementation("net.dv8tion:JDA:6.1.0")
     implementation("org.reflections:reflections:0.10.2")

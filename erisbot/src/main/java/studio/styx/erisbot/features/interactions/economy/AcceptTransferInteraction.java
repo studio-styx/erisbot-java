@@ -252,11 +252,13 @@ public class AcceptTransferInteraction implements ResponderInterface {
                     .addText(((translates.commands.economy.general.TransferTranslateInterface) tc).message(
                             new translates.commands.economy.general.ExpectedUser(
                                     discordAuthor.getGlobalName(),
-                                    getUserGender(discordAuthor.getGlobalName(), authorData.getGender())
+                                    getUserGender(discordAuthor.getGlobalName(), authorData.getGender()),
+                                    discordAuthor.getId()
                             ),
                             new translates.commands.economy.general.ExpectedUser(
                                     discordTarget.getName(),
-                                    getUserGender(discordTarget.getGlobalName(), targetData.getGender())
+                                    getUserGender(discordTarget.getGlobalName(), targetData.getGender()),
+                                    discordTarget.getId()
                             ),
                             transaction.getAmount()
                     ))

@@ -5,6 +5,8 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.GenericSelectMenuInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
@@ -18,6 +20,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import schedules.transactionExpires.IntervalCheckKt;
 import shared.Colors;
 import studio.styx.erisbot.core.*;
 import utils.ComponentBuilder;
@@ -72,7 +75,7 @@ public class Main implements CommandLineRunner {
         List<ResponderInterface> responders = loadResponders();
 
         // === CARREGA AGENDAMENTOS ===
-
+        IntervalCheckKt.startIntervalCheck(dsl, jda); // Carrega agendamentos para expirar transações
     }
 
     // === INJETA O DSL NOS COMANDOS QUE HERDAM DE AbstractCommand ===
@@ -184,11 +187,13 @@ public class Main implements CommandLineRunner {
             handleInteraction(event, event.getModalId(), ModalInteractionEvent.class);
         }
 
-        public void on(SelectMenuInteraction event) {
-            handleInteraction(event, event.getComponentId(), SelectMenuInteraction.class);
+        @Override
+        public void onEntitySelectInteraction(EntitySelectInteractionEvent event) {
+            handleInteraction(event, event.getComponentId(), EntitySelectInteractionEvent.class);
         }
 
         private void handleInteraction(Object event, String componentId, Class<?> eventType) {
+            System.out.println("Handler interaction");
             for (ResponderInterface responder : responders) {
                 String customIdPattern = responder.getCustomId();
                 String regex = customIdPattern.replaceAll(":(\\w+)", "[^/]+");
@@ -205,6 +210,8 @@ public class Main implements CommandLineRunner {
                                 responder.execute(selectEvent);
                             } else if (event instanceof ModalInteractionEvent modalEvent) {
                                 responder.execute(modalEvent);
+                            } else if (event instanceof EntitySelectInteractionEvent selectEvent) {
+                                responder.execute(selectEvent);
                             }
                         } else {
                             replyError(event, "Interação não implementada para este tipo de evento.");

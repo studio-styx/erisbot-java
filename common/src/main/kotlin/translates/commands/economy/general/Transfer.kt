@@ -2,6 +2,7 @@ package translates.commands.economy.general
 
 import shared.utils.GenderUnknown
 import shared.utils.Icon
+import shared.utils.MentionUtil
 import shared.utils.OpenEnglishGrammar
 import shared.utils.OpenGrammar
 import shared.utils.OpenSpanishGrammar
@@ -9,7 +10,8 @@ import shared.utils.Utils
 
 data class ExpectedUser(
     val name: String,
-    val gender: GenderUnknown = GenderUnknown.UNKNOWN
+    val gender: GenderUnknown = GenderUnknown.UNKNOWN,
+    var id: String
 )
 
 interface TransferTranslateInterface {
@@ -43,6 +45,7 @@ private class UserGrammar(name: String, gender: GenderUnknown) : OpenGrammar (
 ) {
     val userPronoun: String
         get() = if (GenderUnknown.MALE == gender || GenderUnknown.UNKNOWN == gender) "usuário" else "usuária"
+
 }
 
 class PtBrTransfer : TransferTranslateInterface {
@@ -69,13 +72,13 @@ class PtBrTransfer : TransferTranslateInterface {
         val userGrammar = UserGrammar(user.name, user.gender);
         val targetGrammar = UserGrammar(target.name, target.gender);
 
-        val message = Utils.replaceText("${Icon.static.get("success")} | {username} iniciou uma transação com {articleU} {targetname} no valor de **{amount}**! ambos precisam apertar o botão abaixo para aceitar a transação!", mapOf(
+        val message = Utils.replaceText("${Icon.static.get("success")} | {username} iniciou uma transação com {articleU} **{targetmention}** no valor de **{amount}**! ambos precisam apertar o botão abaixo para aceitar a transação!", mapOf(
             "articleU" to userGrammar.article,
             "articleT" to targetGrammar.article,
             "userPronoun" to userGrammar.userPronoun,
             "username" to userGrammar.name,
             "targetPronoun" to targetGrammar.userPronoun,
-            "targetname" to targetGrammar.name,
+            "targetmention" to MentionUtil.userMention(target.id),
             "amount" to amount.toString()
         ))
 
@@ -117,6 +120,7 @@ private class EnglishUserGrammar(name: String, gender: GenderUnknown) : OpenEngl
             gender == GenderUnknown.FEMALE -> "female user"
             else -> "user"
         }
+
 }
 
 class EnUsTransfer : TransferTranslateInterface {
@@ -146,13 +150,13 @@ class EnUsTransfer : TransferTranslateInterface {
 
         val formattedAmount = Utils.formatNumber(amount)
 
-        val message = Utils.replaceText("${Icon.static.get("success")} | {username} started a transaction with {articleT} {targetname} for **{amount}**! Both need to press the button below to accept the transaction!", mapOf(
+        val message = Utils.replaceText("${Icon.static.get("success")} | {username} started a transaction with {articleT} **{targetmention}** for **{amount}**! Both need to press the button below to accept the transaction!", mapOf(
             "articleU" to userGrammar.article,
             "articleT" to targetGrammar.article,
             "userPronoun" to userGrammar.userPronoun,
             "username" to userGrammar.name,
             "targetPronoun" to targetGrammar.userPronoun,
-            "targetname" to targetGrammar.name,
+            "targetmention" to MentionUtil.userMention(target.id),
             "amount" to formattedAmount
         ))
 
@@ -218,13 +222,13 @@ class EsEsTransfer : TransferTranslateInterface {
 
         val formattedAmount = Utils.formatNumber(amount)
 
-        val message = Utils.replaceText("${Icon.static.get("success")} | ¡{username} inició una transacción con {articleT} {targetname} por **{amount}**! ¡Ambos necesitan presionar el botón de abajo para aceptar la transacción!", mapOf(
+        val message = Utils.replaceText("${Icon.static.get("success")} | ¡{username} inició una transacción con {articleT} **{targetmention}** por **{amount}**! ¡Ambos necesitan presionar el botón de abajo para aceptar la transacción!", mapOf(
             "articleU" to userGrammar.article,
             "articleT" to targetGrammar.article,
             "userPronoun" to userGrammar.userPronoun,
             "username" to userGrammar.name,
             "targetPronoun" to targetGrammar.userPronoun,
-            "targetname" to targetGrammar.name,
+            "targetmention" to MentionUtil.userMention(target.id),
             "amount" to formattedAmount
         ))
 
