@@ -193,7 +193,6 @@ public class Main implements CommandLineRunner {
         }
 
         private void handleInteraction(Object event, String componentId, Class<?> eventType) {
-            System.out.println("Handler interaction");
             for (ResponderInterface responder : responders) {
                 String customIdPattern = responder.getCustomId();
                 String regex = customIdPattern.replaceAll(":(\\w+)", "[^/]+");

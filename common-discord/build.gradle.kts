@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":common"))
+
     testImplementation(kotlin("test"))
     implementation("net.dv8tion:JDA:6.1.0")
 }
