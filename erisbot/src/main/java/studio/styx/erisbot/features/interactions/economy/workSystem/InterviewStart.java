@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.gson.Gson;
+import database.utils.DatabaseUtils;
 import net.dv8tion.jda.api.components.actionrow.ActionRow;
 import net.dv8tion.jda.api.components.buttons.Button;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
@@ -16,6 +17,7 @@ import shared.utils.CustomIdHelper;
 import shared.utils.Utils;
 import studio.styx.erisbot.core.ResponderInterface;
 import studio.styx.erisbot.generated.tables.records.CompanyRecord;
+import studio.styx.erisbot.generated.tables.records.UserRecord;
 import studio.styx.erisbot.generated.tables.references.TablesKt;
 import studio.styx.erisbot.menus.economy.workSystem.JobsSearch;
 import studio.styx.erisbot.services.gemini.GeminiRequest;
@@ -70,10 +72,32 @@ public class InterviewStart implements ResponderInterface {
                 CompanyRecord company = tx.selectFrom(TablesKt.getCOMPANY())
                         .where(TablesKt.getCOMPANY().getID().eq(companyId))
                         .fetchOne();
+                UserRecord userData = DatabaseUtils.getOrCreateUser(tx, event.getUser().getId());
 
                 if (company == null) {
                     res.setColor(Colors.DANGER)
                             .setText("Eu não consegui encontrar essa empresa!")
+                            .send(hook);
+                    return;
+                }
+
+                if (userData.getContractid() != null) {
+                    res.setColor(Colors.DANGER)
+                            .setText("Você já trabalha para uma empresa! use **/emprego demitir** para se demitir da empresa!")
+                            .send(hook);
+                    return;
+                }
+
+                if (!company.getIsenabled()) {
+                    res.setColor(Colors.DANGER)
+                            .setText("Essa empresa não está mais disponível!")
+                            .send(hook);
+                    return;
+                }
+
+                if (userData.getXp() < company.getExperience()) {
+                    res.setColor(Colors.DANGER)
+                            .setText("Você precisa ter: " + company.getExperience() + " de xp para entrar nessa empresa, no momento você tem: " + userData.getXp())
                             .send(hook);
                     return;
                 }

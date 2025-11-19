@@ -33,8 +33,8 @@ import org.jooq.impl.TableImpl
 
 import studio.styx.erisbot.generated.Public
 import studio.styx.erisbot.generated.keys.COMPANY_PKEY
-import studio.styx.erisbot.generated.keys.USER__USER_COMPANYID_FKEY
-import studio.styx.erisbot.generated.tables.User.UserPath
+import studio.styx.erisbot.generated.keys.CONTRACT__CONTRACT_COMPANYID_FKEY
+import studio.styx.erisbot.generated.tables.Contract.ContractPath
 import studio.styx.erisbot.generated.tables.records.CompanyRecord
 
 
@@ -154,20 +154,21 @@ open class Company(
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getPrimaryKey(): UniqueKey<CompanyRecord> = COMPANY_PKEY
 
-    private lateinit var _user: UserPath
+    private lateinit var _contract: ContractPath
 
     /**
-     * Get the implicit to-many join path to the <code>public.User</code> table
+     * Get the implicit to-many join path to the <code>public.Contract</code>
+     * table
      */
-    fun user(): UserPath {
-        if (!this::_user.isInitialized)
-            _user = UserPath(this, null, USER__USER_COMPANYID_FKEY.inverseKey)
+    fun contract(): ContractPath {
+        if (!this::_contract.isInitialized)
+            _contract = ContractPath(this, null, CONTRACT__CONTRACT_COMPANYID_FKEY.inverseKey)
 
-        return _user;
+        return _contract;
     }
 
-    val user: UserPath
-        get(): UserPath = user()
+    val contract: ContractPath
+        get(): ContractPath = contract()
     override fun `as`(alias: String): Company = Company(DSL.name(alias), this)
     override fun `as`(alias: Name): Company = Company(alias, this)
     override fun `as`(alias: Table<*>): Company = Company(alias.qualifiedName, this)

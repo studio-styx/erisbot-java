@@ -19,15 +19,19 @@ import shared.Colors;
 import shared.utils.CustomIdHelper;
 import shared.utils.Utils;
 import studio.styx.erisbot.core.ResponderInterface;
+import studio.styx.erisbot.generated.enums.Contractstatus;
 import studio.styx.erisbot.generated.tables.records.CompanyRecord;
+import studio.styx.erisbot.generated.tables.records.ContractRecord;
 import studio.styx.erisbot.generated.tables.references.TablesKt;
 import studio.styx.erisbot.services.gemini.GeminiRequest;
 import utils.ComponentBuilder;
 import utils.ContainerRes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Component
 public class InterviewAnswer implements ResponderInterface {
@@ -106,7 +110,7 @@ public class InterviewAnswer implements ResponderInterface {
                         return;
                     }
 
-                    res.setColor(Colors.WARNING).setText("Aguarde enquanto o analisador te analisa...").send(hook);
+                    res.setColor(Colors.WARNING).setText("Aguarde enquanto o entrevistador te analisa...").send(hook);
 
                     String prompt = Utils.brBuilder(
                             "Você é um entrevistador de IA. Sua tarefa é avaliar o candidato \"" + event.getUser().getName() + "\" para uma vaga na empresa \"" + company.getName() + "\".",
@@ -162,23 +166,64 @@ public class InterviewAnswer implements ResponderInterface {
                         String reason = jsonResponse.get("reason").asText();
 
                         if (contracted) {
-                            tx.update(TablesKt.getUSER())
-                                    .set(TablesKt.getUSER().getCOMPANYID(), company.getId())
-                                    .where(TablesKt.getUSER().getID().eq(event.getUser().getId()))
+                            var now = LocalDateTime.now();
+                            var CONTRACT = TablesKt.getCONTRACT();
+                            var USER = TablesKt.getUSER();
+
+                            // 1. Inserir contrato
+                            ContractRecord contract = tx.insertInto(CONTRACT)
+                                    .set(CONTRACT.getUSERID(), event.getUser().getId())
+                                    .set(CONTRACT.getCOMPANYID(), companyId)
+                                    .set(CONTRACT.getCREATEDAT(), now)
+                                    .set(CONTRACT.getUPDATEDAT(), now)
+                                    .set(CONTRACT.getSALARY(), company.getWage())
+                                    .set(CONTRACT.getSTATUS(), Contractstatus.ACTIVE)
+                                    .returning()
+                                    .fetchOne();
+
+                            // 2. Atualizar usuário
+                            tx.update(USER)
+                                    .set(USER.getCONTRACTID(), contract.getId())
+                                    .where(USER.getID().eq(event.getUser().getId()))
                                     .execute();
 
+                            // 3. Batch insert
+                            if (!questions.isEmpty()) {
+                                var INTERVIEW = TablesKt.getINTERVIEW();
+                                var batchInserts = questions.stream()
+                                        .map(q -> tx.insertInto(INTERVIEW)
+                                                .set(INTERVIEW.getANSWER(), q.getAnswer())
+                                                .set(INTERVIEW.getRESPONSE(), q.getResponse())
+                                                .set(INTERVIEW.getCREATEDAT(), now)
+                                                .set(INTERVIEW.getCONTRACTID(), contract.getId())
+                                        )
+                                        .collect(Collectors.toList());
+
+                                tx.batch(batchInserts).execute();
+                            }
+
+                            // 4. Mensagem
                             res.setColor(Colors.SUCCESS)
-                                    .setText("🎉 **Parabéns! Você foi contratado!**\n\n" +
-                                            "**Empresa:** " + company.getName() + "\n" +
-                                            "**Salário:** " + Utils.formatNumber(company.getWage().doubleValue()) + "\n" +
-                                            "**Feedback:** " + reason)
+                                    .setText(Utils.brBuilder(
+                                            "🎉 **Parabéns! Você foi contratado!**",
+                                            "",
+                                            "**ID do contrato:** " + contract.getId(),
+                                            "**Empresa:** " + company.getName(),
+                                            "**Salário:** " + Utils.formatNumber(company.getWage().doubleValue()),
+                                            "**Feedback:** " + reason
+                                    ))
                                     .send(hook);
+
                         } else {
-                            // Candidato reprovado
                             res.setColor(Colors.DANGER)
-                                    .setText("❌ **Não foi dessa vez...**\n\n" +
-                                            "Infelizmente você não foi aprovado para a vaga na **" + company.getName() + "**.\n\n" +
-                                            "**Feedback do entrevistador:**\n" + reason)
+                                    .setText(Utils.brBuilder(
+                                            "❌ **Não foi dessa vez...**",
+                                            "",
+                                            "Infelizmente você não foi aprovado para a vaga na **" + company.getName() + "**.",
+                                            "",
+                                            "**Feedback do entrevistador:**",
+                                            reason
+                                    ))
                                     .send(hook);
                         }
 

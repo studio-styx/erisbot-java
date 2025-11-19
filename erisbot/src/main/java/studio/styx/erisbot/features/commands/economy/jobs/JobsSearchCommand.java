@@ -2,6 +2,7 @@ package studio.styx.erisbot.features.commands.economy.jobs;
 
 import database.utils.DatabaseUtils;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.DiscordLocale;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
@@ -10,12 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import shared.Colors;
 import studio.styx.erisbot.core.CommandInterface;
+import studio.styx.erisbot.generated.enums.Contractstatus;
 import studio.styx.erisbot.generated.tables.records.CompanyRecord;
 import studio.styx.erisbot.generated.tables.records.UserRecord;
 import studio.styx.erisbot.generated.tables.references.TablesKt;
 import studio.styx.erisbot.menus.economy.workSystem.JobsSearch;
 import utils.ComponentBuilder;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -25,11 +28,31 @@ public class JobsSearchCommand implements CommandInterface {
 
     @Override
     public SlashCommandData getSlashCommandData() {
-        return Commands.slash("job", "search for a job or get dismiss")
+        return Commands.slash("job", "💼 ✦ Search for a job or get dismiss")
                 .addSubcommands(
-                        new SubcommandData("search", "search for a job"),
-                        new SubcommandData("dismiss", "get dismiss from your job")
-                );
+                        new SubcommandData("search", "🔍 ✦ Search for a job")
+                                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "procurar")
+                                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "🔍 ✦ Procurar por um emprego")
+                                .setNameLocalization(DiscordLocale.SPANISH, "buscar")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH, "🔍 ✦ Buscar un trabajo")
+                                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "buscar")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "🔍 ✦ Buscar un trabajo"),
+                        new SubcommandData("dismiss", "🚪 ✦ Get dismiss from your job")
+                                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "demitir")
+                                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "🚪 ✦ Ser demitido do seu emprego")
+                                .setNameLocalization(DiscordLocale.SPANISH, "despedir")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH, "🚪 ✦ Ser despedido de tu trabajo")
+                                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "despedir")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "🚪 ✦ Ser despedido de tu trabajo")
+                )
+                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "emprego")
+                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "💼 ✦ Procure por um emprego ou seja demitido")
+                .setNameLocalization(DiscordLocale.SPANISH, "trabajo")
+                .setDescriptionLocalization(DiscordLocale.SPANISH, "💼 ✦ Busca un trabajo o renuncia")
+                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "trabajo")
+                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "💼 ✦ Busca un trabajo o renuncia")
+                .setNameLocalization(DiscordLocale.ENGLISH_US, "job")
+                .setDescriptionLocalization(DiscordLocale.ENGLISH_US, "💼 ✦ Search for a job or get dismiss");
     }
 
     @Override
@@ -62,9 +85,9 @@ public class JobsSearchCommand implements CommandInterface {
         event.deferReply().queue(hook -> {
             UserRecord user = DatabaseUtils.getOrCreateUser(dsl, event.getUser().getId());
             
-            Integer companyId = user.getCompanyid();
+            Integer contractId = user.getContractid();
             
-            if (companyId == null || companyId == 0) {
+            if (contractId == null) {
                 ComponentBuilder.ContainerBuilder.create()
                         .setEphemeral(true)
                         .withColor(Colors.DANGER)
@@ -73,11 +96,14 @@ public class JobsSearchCommand implements CommandInterface {
                 return;
             }
 
-            // Set the company ID to null to represent unemployment
-            user.setCompanyid(null);
+            var CONTRACT = TablesKt.getCONTRACT();
+            user.setContractid(null);
             user.update();
+            dsl.update(CONTRACT)
+                    .set(CONTRACT.getSTATUS(), Contractstatus.INACTIVE)
+                    .set(CONTRACT.getUPDATEDAT(), LocalDateTime.now())
+                    .execute();
 
-            // Send a success message
             ComponentBuilder.ContainerBuilder.create()
                     .setEphemeral(true)
                     .withColor(Colors.SUCCESS)

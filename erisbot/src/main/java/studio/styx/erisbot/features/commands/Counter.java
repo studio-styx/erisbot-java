@@ -3,6 +3,7 @@ package studio.styx.erisbot.features.commands;
 import net.dv8tion.jda.api.components.actionrow.ActionRow;
 import net.dv8tion.jda.api.components.buttons.Button;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.DiscordLocale;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -101,11 +102,28 @@ public class Counter implements CommandInterface {
 
     @Override
     public SlashCommandData getSlashCommandData() {
-        OptionData timeOption = new OptionData(OptionType.INTEGER, "time", "Tempo em segundos (1-15)", false)
+        OptionData timeOption = new OptionData(OptionType.INTEGER, "time", "⏱️ ✦ Time in seconds (1-15)", false)
                 .setMinValue(1)
-                .setMaxValue(15);
+                .setMaxValue(15)
+                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "tempo")
+                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "⏱️ ✦ Tempo em segundos (1-15)")
+                .setNameLocalization(DiscordLocale.SPANISH, "tiempo")
+                .setDescriptionLocalization(DiscordLocale.SPANISH, "⏱️ ✦ Tiempo en segundos (1-15)")
+                .setNameLocalization(DiscordLocale.ENGLISH_US, "time")
+                .setDescriptionLocalization(DiscordLocale.ENGLISH_US, "⏱️ ✦ Time in seconds (1-15)")
+                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "tiempo")
+                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "⏱️ ✦ Tiempo en segundos (1-15)");
 
-        return Commands.slash("counter", "Conto o máximo possível em X segundos (1-15)")
-                .addOptions(timeOption);
+        return Commands.slash("counter", "🔢 ✦ Make me count for you!")
+                .addOptions(timeOption)
+                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "contador")
+                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "🔢 ✦ Faça eu contar até o máximo possivel")
+                .setNameLocalization(DiscordLocale.SPANISH, "contador")
+                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "contador")
+                .setDescriptionLocalization(DiscordLocale.SPANISH, "🔢 ✦ Hazme contar hasta el máximo posible")
+                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "🔢 ✦ Hazme contar hasta el máximo posible")
+                .setNameLocalization(DiscordLocale.ENGLISH_US, "counter")
+                .setDescriptionLocalization(DiscordLocale.ENGLISH_US, "🔢 ✦ Make me count for you!");
+
     }
 }

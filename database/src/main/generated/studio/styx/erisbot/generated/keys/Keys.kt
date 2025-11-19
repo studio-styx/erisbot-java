@@ -14,6 +14,7 @@ import studio.styx.erisbot.generated.tables.Application
 import studio.styx.erisbot.generated.tables.Combathistory
 import studio.styx.erisbot.generated.tables.Combatpowerhistory
 import studio.styx.erisbot.generated.tables.Company
+import studio.styx.erisbot.generated.tables.Contract
 import studio.styx.erisbot.generated.tables.Cooldown
 import studio.styx.erisbot.generated.tables.Fish
 import studio.styx.erisbot.generated.tables.Fishingrod
@@ -29,6 +30,7 @@ import studio.styx.erisbot.generated.tables.Giveaway
 import studio.styx.erisbot.generated.tables.Guildgiveaway
 import studio.styx.erisbot.generated.tables.Guildmember
 import studio.styx.erisbot.generated.tables.Guildsettings
+import studio.styx.erisbot.generated.tables.Interview
 import studio.styx.erisbot.generated.tables.Log
 import studio.styx.erisbot.generated.tables.Mails
 import studio.styx.erisbot.generated.tables.Personalitytrait
@@ -52,6 +54,7 @@ import studio.styx.erisbot.generated.tables.Userpet
 import studio.styx.erisbot.generated.tables.Userpetpersonality
 import studio.styx.erisbot.generated.tables.Userpetpower
 import studio.styx.erisbot.generated.tables.Userpetskill
+import studio.styx.erisbot.generated.tables.Workchallenges
 import studio.styx.erisbot.generated.tables._Footballleaguetofootballteam
 import studio.styx.erisbot.generated.tables._PrismaMigrations
 import studio.styx.erisbot.generated.tables.records.AdoptioncenterRecord
@@ -59,6 +62,7 @@ import studio.styx.erisbot.generated.tables.records.ApplicationRecord
 import studio.styx.erisbot.generated.tables.records.CombathistoryRecord
 import studio.styx.erisbot.generated.tables.records.CombatpowerhistoryRecord
 import studio.styx.erisbot.generated.tables.records.CompanyRecord
+import studio.styx.erisbot.generated.tables.records.ContractRecord
 import studio.styx.erisbot.generated.tables.records.CooldownRecord
 import studio.styx.erisbot.generated.tables.records.FishRecord
 import studio.styx.erisbot.generated.tables.records.FishingrodRecord
@@ -74,6 +78,7 @@ import studio.styx.erisbot.generated.tables.records.GiveawayRecord
 import studio.styx.erisbot.generated.tables.records.GuildgiveawayRecord
 import studio.styx.erisbot.generated.tables.records.GuildmemberRecord
 import studio.styx.erisbot.generated.tables.records.GuildsettingsRecord
+import studio.styx.erisbot.generated.tables.records.InterviewRecord
 import studio.styx.erisbot.generated.tables.records.LogRecord
 import studio.styx.erisbot.generated.tables.records.MailsRecord
 import studio.styx.erisbot.generated.tables.records.PersonalitytraitRecord
@@ -97,6 +102,7 @@ import studio.styx.erisbot.generated.tables.records.UserpetRecord
 import studio.styx.erisbot.generated.tables.records.UserpetpersonalityRecord
 import studio.styx.erisbot.generated.tables.records.UserpetpowerRecord
 import studio.styx.erisbot.generated.tables.records.UserpetskillRecord
+import studio.styx.erisbot.generated.tables.records.WorkchallengesRecord
 import studio.styx.erisbot.generated.tables.records._FootballleaguetofootballteamRecord
 import studio.styx.erisbot.generated.tables.records._PrismaMigrationsRecord
 
@@ -113,6 +119,7 @@ val APPLICATION_PKEY: UniqueKey<ApplicationRecord> = Internal.createUniqueKey(Ap
 val COMBATHISTORY_PKEY: UniqueKey<CombathistoryRecord> = Internal.createUniqueKey(Combathistory.COMBATHISTORY, DSL.name("CombatHistory_pkey"), arrayOf(Combathistory.COMBATHISTORY.ID), true)
 val COMBATPOWERHISTORY_PKEY: UniqueKey<CombatpowerhistoryRecord> = Internal.createUniqueKey(Combatpowerhistory.COMBATPOWERHISTORY, DSL.name("CombatPowerHistory_pkey"), arrayOf(Combatpowerhistory.COMBATPOWERHISTORY.ID), true)
 val COMPANY_PKEY: UniqueKey<CompanyRecord> = Internal.createUniqueKey(Company.COMPANY, DSL.name("Company_pkey"), arrayOf(Company.COMPANY.ID), true)
+val CONTRACT_PKEY: UniqueKey<ContractRecord> = Internal.createUniqueKey(Contract.CONTRACT, DSL.name("Contract_pkey"), arrayOf(Contract.CONTRACT.ID), true)
 val COOLDOWN_PKEY: UniqueKey<CooldownRecord> = Internal.createUniqueKey(Cooldown.COOLDOWN, DSL.name("Cooldown_pkey"), arrayOf(Cooldown.COOLDOWN.ID), true)
 val FISH_PKEY: UniqueKey<FishRecord> = Internal.createUniqueKey(Fish.FISH, DSL.name("Fish_pkey"), arrayOf(Fish.FISH.ID), true)
 val FISHINGROD_PKEY: UniqueKey<FishingrodRecord> = Internal.createUniqueKey(Fishingrod.FISHINGROD, DSL.name("FishingRod_pkey"), arrayOf(Fishingrod.FISHINGROD.ID), true)
@@ -128,6 +135,7 @@ val GIVEAWAY_PKEY: UniqueKey<GiveawayRecord> = Internal.createUniqueKey(Giveaway
 val GUILDGIVEAWAY_PKEY: UniqueKey<GuildgiveawayRecord> = Internal.createUniqueKey(Guildgiveaway.GUILDGIVEAWAY, DSL.name("GuildGiveaway_pkey"), arrayOf(Guildgiveaway.GUILDGIVEAWAY.ID), true)
 val GUILDMEMBER_PKEY: UniqueKey<GuildmemberRecord> = Internal.createUniqueKey(Guildmember.GUILDMEMBER, DSL.name("GuildMember_pkey"), arrayOf(Guildmember.GUILDMEMBER.GUILDID, Guildmember.GUILDMEMBER.ID), true)
 val GUILDSETTINGS_PKEY: UniqueKey<GuildsettingsRecord> = Internal.createUniqueKey(Guildsettings.GUILDSETTINGS, DSL.name("GuildSettings_pkey"), arrayOf(Guildsettings.GUILDSETTINGS.ID), true)
+val INTERVIEW_PKEY: UniqueKey<InterviewRecord> = Internal.createUniqueKey(Interview.INTERVIEW, DSL.name("Interview_pkey"), arrayOf(Interview.INTERVIEW.ID), true)
 val LOG_PKEY: UniqueKey<LogRecord> = Internal.createUniqueKey(Log.LOG, DSL.name("Log_pkey"), arrayOf(Log.LOG.ID), true)
 val MAILS_PKEY: UniqueKey<MailsRecord> = Internal.createUniqueKey(Mails.MAILS, DSL.name("Mails_pkey"), arrayOf(Mails.MAILS.ID), true)
 val PERSONALITYTRAIT_PKEY: UniqueKey<PersonalitytraitRecord> = Internal.createUniqueKey(Personalitytrait.PERSONALITYTRAIT, DSL.name("PersonalityTrait_pkey"), arrayOf(Personalitytrait.PERSONALITYTRAIT.ID), true)
@@ -151,6 +159,7 @@ val USERPET_PKEY: UniqueKey<UserpetRecord> = Internal.createUniqueKey(Userpet.US
 val USERPETPERSONALITY_PKEY: UniqueKey<UserpetpersonalityRecord> = Internal.createUniqueKey(Userpetpersonality.USERPETPERSONALITY, DSL.name("UserPetPersonality_pkey"), arrayOf(Userpetpersonality.USERPETPERSONALITY.ID), true)
 val USERPETPOWER_PKEY: UniqueKey<UserpetpowerRecord> = Internal.createUniqueKey(Userpetpower.USERPETPOWER, DSL.name("UserPetPower_pkey"), arrayOf(Userpetpower.USERPETPOWER.ID), true)
 val USERPETSKILL_PKEY: UniqueKey<UserpetskillRecord> = Internal.createUniqueKey(Userpetskill.USERPETSKILL, DSL.name("UserPetSkill_pkey"), arrayOf(Userpetskill.USERPETSKILL.ID), true)
+val WORKCHALLENGES_PKEY: UniqueKey<WorkchallengesRecord> = Internal.createUniqueKey(Workchallenges.WORKCHALLENGES, DSL.name("WorkChallenges_pkey"), arrayOf(Workchallenges.WORKCHALLENGES.ID), true)
 
 // -------------------------------------------------------------------------
 // FOREIGN KEY definitions
@@ -169,6 +178,8 @@ val COMBATHISTORY__COMBATHISTORY_WINNERPETID_FKEY: ForeignKey<CombathistoryRecor
 val COMBATPOWERHISTORY__COMBATPOWERHISTORY_COMBATID_FKEY: ForeignKey<CombatpowerhistoryRecord, CombathistoryRecord> = Internal.createForeignKey(Combatpowerhistory.COMBATPOWERHISTORY, DSL.name("CombatPowerHistory_combatId_fkey"), arrayOf(Combatpowerhistory.COMBATPOWERHISTORY.COMBATID), studio.styx.erisbot.generated.keys.COMBATHISTORY_PKEY, arrayOf(Combathistory.COMBATHISTORY.ID), true)
 val COMBATPOWERHISTORY__COMBATPOWERHISTORY_PETID_FKEY: ForeignKey<CombatpowerhistoryRecord, UserpetRecord> = Internal.createForeignKey(Combatpowerhistory.COMBATPOWERHISTORY, DSL.name("CombatPowerHistory_petId_fkey"), arrayOf(Combatpowerhistory.COMBATPOWERHISTORY.PETID), studio.styx.erisbot.generated.keys.USERPET_PKEY, arrayOf(Userpet.USERPET.ID), true)
 val COMBATPOWERHISTORY__COMBATPOWERHISTORY_USERPETPOWERID_FKEY: ForeignKey<CombatpowerhistoryRecord, UserpetpowerRecord> = Internal.createForeignKey(Combatpowerhistory.COMBATPOWERHISTORY, DSL.name("CombatPowerHistory_userPetPowerId_fkey"), arrayOf(Combatpowerhistory.COMBATPOWERHISTORY.USERPETPOWERID), studio.styx.erisbot.generated.keys.USERPETPOWER_PKEY, arrayOf(Userpetpower.USERPETPOWER.ID), true)
+val CONTRACT__CONTRACT_COMPANYID_FKEY: ForeignKey<ContractRecord, CompanyRecord> = Internal.createForeignKey(Contract.CONTRACT, DSL.name("Contract_companyId_fkey"), arrayOf(Contract.CONTRACT.COMPANYID), studio.styx.erisbot.generated.keys.COMPANY_PKEY, arrayOf(Company.COMPANY.ID), true)
+val CONTRACT__CONTRACT_USERID_FKEY: ForeignKey<ContractRecord, UserRecord> = Internal.createForeignKey(Contract.CONTRACT, DSL.name("Contract_userId_fkey"), arrayOf(Contract.CONTRACT.USERID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
 val COOLDOWN__COOLDOWN_USERID_FKEY: ForeignKey<CooldownRecord, UserRecord> = Internal.createForeignKey(Cooldown.COOLDOWN, DSL.name("Cooldown_userId_fkey"), arrayOf(Cooldown.COOLDOWN.USERID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
 val FOOTBALLBET__FOOTBALLBET_MATCHID_FKEY: ForeignKey<FootballbetRecord, FootballmatchRecord> = Internal.createForeignKey(Footballbet.FOOTBALLBET, DSL.name("FootballBet_matchId_fkey"), arrayOf(Footballbet.FOOTBALLBET.MATCHID), studio.styx.erisbot.generated.keys.FOOTBALLMATCH_PKEY, arrayOf(Footballmatch.FOOTBALLMATCH.ID), true)
 val FOOTBALLBET__FOOTBALLBET_USERID_FKEY: ForeignKey<FootballbetRecord, UserRecord> = Internal.createForeignKey(Footballbet.FOOTBALLBET, DSL.name("FootballBet_userId_fkey"), arrayOf(Footballbet.FOOTBALLBET.USERID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
@@ -186,6 +197,7 @@ val GUILDGIVEAWAY__GUILDGIVEAWAY_GIVEAWAYID_FKEY: ForeignKey<GuildgiveawayRecord
 val GUILDGIVEAWAY__GUILDGIVEAWAY_GUILDID_FKEY: ForeignKey<GuildgiveawayRecord, GuildsettingsRecord> = Internal.createForeignKey(Guildgiveaway.GUILDGIVEAWAY, DSL.name("GuildGiveaway_guildId_fkey"), arrayOf(Guildgiveaway.GUILDGIVEAWAY.GUILDID), studio.styx.erisbot.generated.keys.GUILDSETTINGS_PKEY, arrayOf(Guildsettings.GUILDSETTINGS.ID), true)
 val GUILDMEMBER__GUILDMEMBER_GUILDID_FKEY: ForeignKey<GuildmemberRecord, GuildsettingsRecord> = Internal.createForeignKey(Guildmember.GUILDMEMBER, DSL.name("GuildMember_guildId_fkey"), arrayOf(Guildmember.GUILDMEMBER.GUILDID), studio.styx.erisbot.generated.keys.GUILDSETTINGS_PKEY, arrayOf(Guildsettings.GUILDSETTINGS.ID), true)
 val GUILDMEMBER__GUILDMEMBER_ID_FKEY: ForeignKey<GuildmemberRecord, UserRecord> = Internal.createForeignKey(Guildmember.GUILDMEMBER, DSL.name("GuildMember_id_fkey"), arrayOf(Guildmember.GUILDMEMBER.ID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
+val INTERVIEW__INTERVIEW_CONTRACTID_FKEY: ForeignKey<InterviewRecord, ContractRecord> = Internal.createForeignKey(Interview.INTERVIEW, DSL.name("Interview_contractId_fkey"), arrayOf(Interview.INTERVIEW.CONTRACTID), studio.styx.erisbot.generated.keys.CONTRACT_PKEY, arrayOf(Contract.CONTRACT.ID), true)
 val LOG__LOG_USERID_FKEY: ForeignKey<LogRecord, UserRecord> = Internal.createForeignKey(Log.LOG, DSL.name("Log_userId_fkey"), arrayOf(Log.LOG.USERID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
 val MAILS__MAILS_USERID_FKEY: ForeignKey<MailsRecord, UserRecord> = Internal.createForeignKey(Mails.MAILS, DSL.name("Mails_userId_fkey"), arrayOf(Mails.MAILS.USERID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
 val MAILS__MAILS_WHOSENDID_FKEY: ForeignKey<MailsRecord, UserRecord> = Internal.createForeignKey(Mails.MAILS, DSL.name("Mails_whoSendId_fkey"), arrayOf(Mails.MAILS.WHOSENDID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
@@ -202,7 +214,7 @@ val TRANSACTION__TRANSACTION_GUILDID_FKEY: ForeignKey<TransactionRecord, Guildse
 val TRANSACTION__TRANSACTION_TARGETID_FKEY: ForeignKey<TransactionRecord, UserRecord> = Internal.createForeignKey(Transaction.TRANSACTION, DSL.name("Transaction_targetId_fkey"), arrayOf(Transaction.TRANSACTION.TARGETID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
 val TRANSACTION__TRANSACTION_USERID_FKEY: ForeignKey<TransactionRecord, UserRecord> = Internal.createForeignKey(Transaction.TRANSACTION, DSL.name("Transaction_userId_fkey"), arrayOf(Transaction.TRANSACTION.USERID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
 val USER__USER_ACTIVEPETID_FKEY: ForeignKey<UserRecord, UserpetRecord> = Internal.createForeignKey(User.USER, DSL.name("User_activePetId_fkey"), arrayOf(User.USER.ACTIVEPETID), studio.styx.erisbot.generated.keys.USERPET_PKEY, arrayOf(Userpet.USERPET.ID), true)
-val USER__USER_COMPANYID_FKEY: ForeignKey<UserRecord, CompanyRecord> = Internal.createForeignKey(User.USER, DSL.name("User_companyId_fkey"), arrayOf(User.USER.COMPANYID), studio.styx.erisbot.generated.keys.COMPANY_PKEY, arrayOf(Company.COMPANY.ID), true)
+val USER__USER_CONTRACTID_FKEY: ForeignKey<UserRecord, ContractRecord> = Internal.createForeignKey(User.USER, DSL.name("User_contractId_fkey"), arrayOf(User.USER.CONTRACTID), studio.styx.erisbot.generated.keys.CONTRACT_PKEY, arrayOf(Contract.CONTRACT.ID), true)
 val USER__USER_FAVORITETEAMID_FKEY: ForeignKey<UserRecord, FootballteamRecord> = Internal.createForeignKey(User.USER, DSL.name("User_favoriteTeamId_fkey"), arrayOf(User.USER.FAVORITETEAMID), studio.styx.erisbot.generated.keys.FOOTBALLTEAM_PKEY, arrayOf(Footballteam.FOOTBALLTEAM.ID), true)
 val USERFISH__USERFISH_FISHID_FKEY: ForeignKey<UserfishRecord, FishRecord> = Internal.createForeignKey(Userfish.USERFISH, DSL.name("UserFish_fishId_fkey"), arrayOf(Userfish.USERFISH.FISHID), studio.styx.erisbot.generated.keys.FISH_PKEY, arrayOf(Fish.FISH.ID), true)
 val USERFISH__USERFISH_USERID_FKEY: ForeignKey<UserfishRecord, UserRecord> = Internal.createForeignKey(Userfish.USERFISH, DSL.name("UserFish_userId_fkey"), arrayOf(Userfish.USERFISH.USERID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
@@ -221,3 +233,4 @@ val USERPETPOWER__USERPETPOWER_POWERID_FKEY: ForeignKey<UserpetpowerRecord, Petp
 val USERPETPOWER__USERPETPOWER_USERPETID_FKEY: ForeignKey<UserpetpowerRecord, UserpetRecord> = Internal.createForeignKey(Userpetpower.USERPETPOWER, DSL.name("UserPetPower_userPetId_fkey"), arrayOf(Userpetpower.USERPETPOWER.USERPETID), studio.styx.erisbot.generated.keys.USERPET_PKEY, arrayOf(Userpet.USERPET.ID), true)
 val USERPETSKILL__USERPETSKILL_SKILLID_FKEY: ForeignKey<UserpetskillRecord, PetskillRecord> = Internal.createForeignKey(Userpetskill.USERPETSKILL, DSL.name("UserPetSkill_skillId_fkey"), arrayOf(Userpetskill.USERPETSKILL.SKILLID), studio.styx.erisbot.generated.keys.PETSKILL_PKEY, arrayOf(Petskill.PETSKILL.ID), true)
 val USERPETSKILL__USERPETSKILL_USERPETID_FKEY: ForeignKey<UserpetskillRecord, UserpetRecord> = Internal.createForeignKey(Userpetskill.USERPETSKILL, DSL.name("UserPetSkill_userPetId_fkey"), arrayOf(Userpetskill.USERPETSKILL.USERPETID), studio.styx.erisbot.generated.keys.USERPET_PKEY, arrayOf(Userpet.USERPET.ID), true)
+val WORKCHALLENGES__WORKCHALLENGES_CONTRACTID_FKEY: ForeignKey<WorkchallengesRecord, ContractRecord> = Internal.createForeignKey(Workchallenges.WORKCHALLENGES, DSL.name("WorkChallenges_contractId_fkey"), arrayOf(Workchallenges.WORKCHALLENGES.CONTRACTID), studio.styx.erisbot.generated.keys.CONTRACT_PKEY, arrayOf(Contract.CONTRACT.ID), true)

@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.components.buttons.Button;
 import net.dv8tion.jda.api.components.section.Section;
 import net.dv8tion.jda.api.components.textdisplay.TextDisplay;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.DiscordLocale;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
@@ -103,12 +104,44 @@ public class BotCommands implements CommandInterface {
 
     @Override
     public SlashCommandData getSlashCommandData() {
-        return Commands.slash("bot", "Comandos do bot")
+        return Commands.slash("bot", "🤖 ✦ Bot commands")
                 .addSubcommands(
-                        new SubcommandData("ping", "Responde com o ping do bot"),
-                        new SubcommandData("info", "Exibe informações do bot"),
-                        new SubcommandData("help", "Mostra a ajuda do bot"),
-                        new SubcommandData("commands", "Lista todos os comandos do bot")
-                );
+                        new SubcommandData("ping", "🏓 ✦ Responds with bot ping")
+                                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "ping")
+                                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "🏓 ✦ Responde com o ping do bot")
+                                .setNameLocalization(DiscordLocale.SPANISH, "ping")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH, "🏓 ✦ Responde con el ping del bot")
+                                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "ping")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "🏓 ✦ Responde con el ping del bot"),
+                        new SubcommandData("info", "ℹ️ ✦ Displays bot information")
+                                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "info")
+                                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "ℹ️ ✦ Exibe informações do bot")
+                                .setNameLocalization(DiscordLocale.SPANISH, "info")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH, "ℹ️ ✦ Muestra información del bot")
+                                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "info")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "ℹ️ ✦ Muestra información del bot"),
+                        new SubcommandData("help", "❓ ✦ Shows bot help")
+                                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "ajuda")
+                                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "❓ ✦ Mostra a ajuda do bot")
+                                .setNameLocalization(DiscordLocale.SPANISH, "ayuda")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH, "❓ ✦ Muestra la ayuda del bot")
+                                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "ayuda")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "❓ ✦ Muestra la ayuda del bot"),
+                        new SubcommandData("commands", "📋 ✦ Lists all bot commands")
+                                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "comandos")
+                                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "📋 ✦ Lista todos os comandos do bot")
+                                .setNameLocalization(DiscordLocale.SPANISH, "comandos")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH, "📋 ✦ Lista todos los comandos del bot")
+                                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "comandos")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "📋 ✦ Lista todos los comandos del bot")
+                )
+                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "bot")
+                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "🤖 ✦ Comandos do bot")
+                .setNameLocalization(DiscordLocale.SPANISH, "bot")
+                .setDescriptionLocalization(DiscordLocale.SPANISH, "🤖 ✦ Comandos del bot")
+                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "bot")
+                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "🤖 ✦ Comandos del bot")
+                .setNameLocalization(DiscordLocale.ENGLISH_US, "bot")
+                .setDescriptionLocalization(DiscordLocale.ENGLISH_US, "🤖 ✦ Bot commands");
     }
 }

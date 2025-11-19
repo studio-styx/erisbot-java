@@ -9,6 +9,7 @@ import studio.styx.erisbot.generated.tables.Application
 import studio.styx.erisbot.generated.tables.Combathistory
 import studio.styx.erisbot.generated.tables.Combatpowerhistory
 import studio.styx.erisbot.generated.tables.Company
+import studio.styx.erisbot.generated.tables.Contract
 import studio.styx.erisbot.generated.tables.Cooldown
 import studio.styx.erisbot.generated.tables.Fish
 import studio.styx.erisbot.generated.tables.Fishingrod
@@ -24,6 +25,7 @@ import studio.styx.erisbot.generated.tables.Giveaway
 import studio.styx.erisbot.generated.tables.Guildgiveaway
 import studio.styx.erisbot.generated.tables.Guildmember
 import studio.styx.erisbot.generated.tables.Guildsettings
+import studio.styx.erisbot.generated.tables.Interview
 import studio.styx.erisbot.generated.tables.Log
 import studio.styx.erisbot.generated.tables.Mails
 import studio.styx.erisbot.generated.tables.Personalitytrait
@@ -47,6 +49,7 @@ import studio.styx.erisbot.generated.tables.Userpet
 import studio.styx.erisbot.generated.tables.Userpetpersonality
 import studio.styx.erisbot.generated.tables.Userpetpower
 import studio.styx.erisbot.generated.tables.Userpetskill
+import studio.styx.erisbot.generated.tables.Workchallenges
 import studio.styx.erisbot.generated.tables._Footballleaguetofootballteam
 import studio.styx.erisbot.generated.tables._PrismaMigrations
 
@@ -86,6 +89,11 @@ val COMBATPOWERHISTORY: Combatpowerhistory = Combatpowerhistory.COMBATPOWERHISTO
  * The table <code>public.Company</code>.
  */
 val COMPANY: Company = Company.COMPANY
+
+/**
+ * The table <code>public.Contract</code>.
+ */
+val CONTRACT: Contract = Contract.CONTRACT
 
 /**
  * The table <code>public.Cooldown</code>.
@@ -161,6 +169,11 @@ val GUILDMEMBER: Guildmember = Guildmember.GUILDMEMBER
  * The table <code>public.GuildSettings</code>.
  */
 val GUILDSETTINGS: Guildsettings = Guildsettings.GUILDSETTINGS
+
+/**
+ * The table <code>public.Interview</code>.
+ */
+val INTERVIEW: Interview = Interview.INTERVIEW
 
 /**
  * The table <code>public.Log</code>.
@@ -276,3 +289,8 @@ val USERPETPOWER: Userpetpower = Userpetpower.USERPETPOWER
  * The table <code>public.UserPetSkill</code>.
  */
 val USERPETSKILL: Userpetskill = Userpetskill.USERPETSKILL
+
+/**
+ * The table <code>public.WorkChallenges</code>.
+ */
+val WORKCHALLENGES: Workchallenges = Workchallenges.WORKCHALLENGES

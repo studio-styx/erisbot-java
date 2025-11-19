@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/erisbot" />
             <option value="$PROJECT_DIR$/games" />
             <option value="$PROJECT_DIR$/gemini-service" />
+            <option value="$PROJECT_DIR$/redis" />
             <option value="$PROJECT_DIR$/redisbridge" />
             <option value="$PROJECT_DIR$/scheduler" />
           </set>

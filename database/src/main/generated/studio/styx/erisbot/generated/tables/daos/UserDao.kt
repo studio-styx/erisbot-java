@@ -70,17 +70,6 @@ open class UserDao(configuration: Configuration?) : DAOImpl<UserRecord, studio.s
     fun fetchByAfktime(vararg values: LocalDateTime): List<studio.styx.erisbot.generated.tables.pojos.User> = fetch(User.USER.AFKTIME, *values)
 
     /**
-     * Fetch records that have <code>companyId BETWEEN lowerInclusive AND
-     * upperInclusive</code>
-     */
-    fun fetchRangeOfCompanyid(lowerInclusive: Int?, upperInclusive: Int?): List<studio.styx.erisbot.generated.tables.pojos.User> = fetchRange(User.USER.COMPANYID, lowerInclusive, upperInclusive)
-
-    /**
-     * Fetch records that have <code>companyId IN (values)</code>
-     */
-    fun fetchByCompanyid(vararg values: Int): List<studio.styx.erisbot.generated.tables.pojos.User> = fetch(User.USER.COMPANYID, *values.toTypedArray())
-
-    /**
      * Fetch records that have <code>dmNotification BETWEEN lowerInclusive AND
      * upperInclusive</code>
      */
@@ -222,4 +211,15 @@ open class UserDao(configuration: Configuration?) : DAOImpl<UserRecord, studio.s
      * Fetch records that have <code>gender IN (values)</code>
      */
     fun fetchByGender(vararg values: Gender): List<studio.styx.erisbot.generated.tables.pojos.User> = fetch(User.USER.GENDER, *values)
+
+    /**
+     * Fetch records that have <code>contractId BETWEEN lowerInclusive AND
+     * upperInclusive</code>
+     */
+    fun fetchRangeOfContractid(lowerInclusive: Int?, upperInclusive: Int?): List<studio.styx.erisbot.generated.tables.pojos.User> = fetchRange(User.USER.CONTRACTID, lowerInclusive, upperInclusive)
+
+    /**
+     * Fetch records that have <code>contractId IN (values)</code>
+     */
+    fun fetchByContractid(vararg values: Int): List<studio.styx.erisbot.generated.tables.pojos.User> = fetch(User.USER.CONTRACTID, *values.toTypedArray())
 }

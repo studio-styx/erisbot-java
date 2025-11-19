@@ -15,6 +15,7 @@ import studio.styx.erisbot.generated.sequences.ADOPTIONCENTER_ID_SEQ
 import studio.styx.erisbot.generated.sequences.COMBATHISTORY_ID_SEQ
 import studio.styx.erisbot.generated.sequences.COMBATPOWERHISTORY_ID_SEQ
 import studio.styx.erisbot.generated.sequences.COMPANY_ID_SEQ
+import studio.styx.erisbot.generated.sequences.CONTRACT_ID_SEQ
 import studio.styx.erisbot.generated.sequences.COOLDOWN_ID_SEQ
 import studio.styx.erisbot.generated.sequences.FISHINGROD_ID_SEQ
 import studio.styx.erisbot.generated.sequences.FISH_ID_SEQ
@@ -28,6 +29,7 @@ import studio.styx.erisbot.generated.sequences.FOOTBALLTEAM_ID_SEQ
 import studio.styx.erisbot.generated.sequences.GENETICS_ID_SEQ
 import studio.styx.erisbot.generated.sequences.GIVEAWAY_ID_SEQ
 import studio.styx.erisbot.generated.sequences.GUILDGIVEAWAY_ID_SEQ
+import studio.styx.erisbot.generated.sequences.INTERVIEW_ID_SEQ
 import studio.styx.erisbot.generated.sequences.LOG_ID_SEQ
 import studio.styx.erisbot.generated.sequences.MAILS_ID_SEQ
 import studio.styx.erisbot.generated.sequences.PERSONALITYTRAIT_ID_SEQ
@@ -50,11 +52,13 @@ import studio.styx.erisbot.generated.sequences.USERPETPERSONALITY_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERPETPOWER_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERPETSKILL_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERPET_ID_SEQ
+import studio.styx.erisbot.generated.sequences.WORKCHALLENGES_ID_SEQ
 import studio.styx.erisbot.generated.tables.Adoptioncenter
 import studio.styx.erisbot.generated.tables.Application
 import studio.styx.erisbot.generated.tables.Combathistory
 import studio.styx.erisbot.generated.tables.Combatpowerhistory
 import studio.styx.erisbot.generated.tables.Company
+import studio.styx.erisbot.generated.tables.Contract
 import studio.styx.erisbot.generated.tables.Cooldown
 import studio.styx.erisbot.generated.tables.Fish
 import studio.styx.erisbot.generated.tables.Fishingrod
@@ -70,6 +74,7 @@ import studio.styx.erisbot.generated.tables.Giveaway
 import studio.styx.erisbot.generated.tables.Guildgiveaway
 import studio.styx.erisbot.generated.tables.Guildmember
 import studio.styx.erisbot.generated.tables.Guildsettings
+import studio.styx.erisbot.generated.tables.Interview
 import studio.styx.erisbot.generated.tables.Log
 import studio.styx.erisbot.generated.tables.Mails
 import studio.styx.erisbot.generated.tables.Personalitytrait
@@ -93,6 +98,7 @@ import studio.styx.erisbot.generated.tables.Userpet
 import studio.styx.erisbot.generated.tables.Userpetpersonality
 import studio.styx.erisbot.generated.tables.Userpetpower
 import studio.styx.erisbot.generated.tables.Userpetskill
+import studio.styx.erisbot.generated.tables.Workchallenges
 import studio.styx.erisbot.generated.tables._Footballleaguetofootballteam
 import studio.styx.erisbot.generated.tables._PrismaMigrations
 
@@ -144,6 +150,11 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
      * The table <code>public.Company</code>.
      */
     val COMPANY: Company get() = Company.COMPANY
+
+    /**
+     * The table <code>public.Contract</code>.
+     */
+    val CONTRACT: Contract get() = Contract.CONTRACT
 
     /**
      * The table <code>public.Cooldown</code>.
@@ -219,6 +230,11 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
      * The table <code>public.GuildSettings</code>.
      */
     val GUILDSETTINGS: Guildsettings get() = Guildsettings.GUILDSETTINGS
+
+    /**
+     * The table <code>public.Interview</code>.
+     */
+    val INTERVIEW: Interview get() = Interview.INTERVIEW
 
     /**
      * The table <code>public.Log</code>.
@@ -335,6 +351,11 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
      */
     val USERPETSKILL: Userpetskill get() = Userpetskill.USERPETSKILL
 
+    /**
+     * The table <code>public.WorkChallenges</code>.
+     */
+    val WORKCHALLENGES: Workchallenges get() = Workchallenges.WORKCHALLENGES
+
     override fun getCatalog(): Catalog = DefaultCatalog.DEFAULT_CATALOG
 
     override fun getSequences(): List<Sequence<*>> = listOf(
@@ -342,6 +363,7 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         COMBATHISTORY_ID_SEQ,
         COMBATPOWERHISTORY_ID_SEQ,
         COMPANY_ID_SEQ,
+        CONTRACT_ID_SEQ,
         COOLDOWN_ID_SEQ,
         FISH_ID_SEQ,
         FISHINGROD_ID_SEQ,
@@ -355,6 +377,7 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         GENETICS_ID_SEQ,
         GIVEAWAY_ID_SEQ,
         GUILDGIVEAWAY_ID_SEQ,
+        INTERVIEW_ID_SEQ,
         LOG_ID_SEQ,
         MAILS_ID_SEQ,
         PERSONALITYTRAIT_ID_SEQ,
@@ -376,7 +399,8 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         USERPET_ID_SEQ,
         USERPETPERSONALITY_ID_SEQ,
         USERPETPOWER_ID_SEQ,
-        USERPETSKILL_ID_SEQ
+        USERPETSKILL_ID_SEQ,
+        WORKCHALLENGES_ID_SEQ
     )
 
     override fun getTables(): List<Table<*>> = listOf(
@@ -387,6 +411,7 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         Combathistory.COMBATHISTORY,
         Combatpowerhistory.COMBATPOWERHISTORY,
         Company.COMPANY,
+        Contract.CONTRACT,
         Cooldown.COOLDOWN,
         Fish.FISH,
         Fishingrod.FISHINGROD,
@@ -402,6 +427,7 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         Guildgiveaway.GUILDGIVEAWAY,
         Guildmember.GUILDMEMBER,
         Guildsettings.GUILDSETTINGS,
+        Interview.INTERVIEW,
         Log.LOG,
         Mails.MAILS,
         Personalitytrait.PERSONALITYTRAIT,
@@ -424,6 +450,7 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         Userpet.USERPET,
         Userpetpersonality.USERPETPERSONALITY,
         Userpetpower.USERPETPOWER,
-        Userpetskill.USERPETSKILL
+        Userpetskill.USERPETSKILL,
+        Workchallenges.WORKCHALLENGES
     )
 }

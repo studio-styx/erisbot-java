@@ -3,6 +3,7 @@ package studio.styx.erisbot.features.commands.economy;
 import database.utils.DatabaseUtils;
 import database.utils.LogManage;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.DiscordLocale;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import org.jooq.DSLContext;
@@ -291,6 +292,14 @@ public class Daily implements CommandInterface {
 
     @Override
     public SlashCommandData getSlashCommandData() {
-        return Commands.slash("daily", "Pegue seu bônus diário");
+        return Commands.slash("daily", "🎁 ✦ Claim your daily bonus")
+                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "diário")
+                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "🎁 ✦ Pegue seu bônus diário")
+                .setNameLocalization(DiscordLocale.SPANISH, "diario")
+                .setDescriptionLocalization(DiscordLocale.SPANISH, "🎁 ✦ Reclama tu bono diario")
+                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "diario")
+                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "🎁 ✦ Reclama tu bono diario")
+                .setNameLocalization(DiscordLocale.ENGLISH_US, "daily")
+                .setDescriptionLocalization(DiscordLocale.ENGLISH_US, "🎁 ✦ Claim your daily bonus");
     }
 }

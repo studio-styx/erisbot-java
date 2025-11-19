@@ -64,4 +64,12 @@ class ContainerRes {
             .addText(text)
             .editOriginal(event)
     }
+
+    fun edit(hook: InteractionHook) {
+        ComponentBuilder.ContainerBuilder.create()
+            .setEphemeral(ephemeral)
+            .withColor(color)
+            .addText(text)
+            .reply(hook)
+    }
 }

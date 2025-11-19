@@ -33,6 +33,11 @@ val COMBATPOWERHISTORY_ID_SEQ: Sequence<Int> = Internal.createSequence("CombatPo
 val COMPANY_ID_SEQ: Sequence<Int> = Internal.createSequence("Company_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
 
 /**
+ * The sequence <code>public.Contract_id_seq</code>
+ */
+val CONTRACT_ID_SEQ: Sequence<Int> = Internal.createSequence("Contract_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
+
+/**
  * The sequence <code>public.Cooldown_id_seq</code>
  */
 val COOLDOWN_ID_SEQ: Sequence<Int> = Internal.createSequence("Cooldown_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
@@ -96,6 +101,11 @@ val GIVEAWAY_ID_SEQ: Sequence<Int> = Internal.createSequence("Giveaway_id_seq", 
  * The sequence <code>public.GuildGiveaway_id_seq</code>
  */
 val GUILDGIVEAWAY_ID_SEQ: Sequence<Int> = Internal.createSequence("GuildGiveaway_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
+
+/**
+ * The sequence <code>public.Interview_id_seq</code>
+ */
+val INTERVIEW_ID_SEQ: Sequence<Int> = Internal.createSequence("Interview_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
 
 /**
  * The sequence <code>public.Log_id_seq</code>
@@ -206,3 +216,8 @@ val USERPETPOWER_ID_SEQ: Sequence<Int> = Internal.createSequence("UserPetPower_i
  * The sequence <code>public.UserPetSkill_id_seq</code>
  */
 val USERPETSKILL_ID_SEQ: Sequence<Int> = Internal.createSequence("UserPetSkill_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
+
+/**
+ * The sequence <code>public.WorkChallenges_id_seq</code>
+ */
+val WORKCHALLENGES_ID_SEQ: Sequence<Int> = Internal.createSequence("WorkChallenges_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)

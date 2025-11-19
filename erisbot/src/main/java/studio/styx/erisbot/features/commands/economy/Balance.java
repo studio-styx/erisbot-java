@@ -4,6 +4,7 @@ import database.utils.DatabaseUtils;
 import database.utils.LogManage;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.DiscordLocale;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -71,7 +72,21 @@ public class Balance implements CommandInterface {
 
     @Override
     public SlashCommandData getSlashCommandData() {
-        return Commands.slash("balance", "Verifica o seu saldo ou o de outro usuário")
-                .addOption(OptionType.USER, "user", "O usuário para verificar o saldo", false);
+        return Commands.slash("balance", "💳 ✦ Check your balance or another user's balance")
+                .addOption(OptionType.USER, "user", "👤 ✦ User to check balance", false)
+                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "usuário")
+                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "👤 ✦ O usuário para verificar o saldo")
+                .setNameLocalization(DiscordLocale.SPANISH, "usuario")
+                .setDescriptionLocalization(DiscordLocale.SPANISH, "👤 ✦ El usuario para verificar el saldo")
+                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "usuario")
+                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "👤 ✦ El usuario para verificar el saldo")
+                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "saldo")
+                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "💳 ✦ Verifica o seu saldo ou o de outro usuário")
+                .setNameLocalization(DiscordLocale.SPANISH, "saldo")
+                .setDescriptionLocalization(DiscordLocale.SPANISH, "💳 ✦ Verifica tu saldo o el de otro usuario")
+                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "saldo")
+                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "💳 ✦ Verifica tu saldo o el de otro usuario")
+                .setNameLocalization(DiscordLocale.ENGLISH_US, "balance")
+                .setDescriptionLocalization(DiscordLocale.ENGLISH_US, "💳 ✦ Check your balance or another user's balance");
     }
 }

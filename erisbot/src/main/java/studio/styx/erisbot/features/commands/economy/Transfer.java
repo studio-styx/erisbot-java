@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.components.buttons.Button;
 import net.dv8tion.jda.api.components.selections.EntitySelectMenu;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.DiscordLocale;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -221,11 +222,31 @@ public class Transfer implements CommandInterface {
 
     @Override
     public SlashCommandData getSlashCommandData() {
-        return Commands.slash("transfer", "Inicia uma transferência de stx")
+        return Commands.slash("transfer", "💸 ✦ Starts a stx transfer")
                 .addOptions(
-                        new OptionData(OptionType.NUMBER, "amount", "Quantidade de stx para transferir", true)
-                                .setMinValue(20),
-                        new OptionData(OptionType.USER, "user", "Usuário para transferir (opcional)", false)
-                );
+                        new OptionData(OptionType.NUMBER, "amount", "💰 ✦ Amount of stx to transfer", true)
+                                .setMinValue(20)
+                                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "quantidade")
+                                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "💰 ✦ Quantidade de stx para transferir")
+                                .setNameLocalization(DiscordLocale.SPANISH, "cantidad")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH, "💰 ✦ Cantidad de stx para transferir")
+                                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "cantidad")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "💰 ✦ Cantidad de stx para transferir"),
+                        new OptionData(OptionType.USER, "user", "👤 ✦ User to transfer to (optional)", false)
+                                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "usuário")
+                                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "👤 ✦ Usuário para transferir (opcional)")
+                                .setNameLocalization(DiscordLocale.SPANISH, "usuario")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH, "👤 ✦ Usuario para transferir (opcional)")
+                                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "usuario")
+                                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "👤 ✦ Usuario para transferir (opcional)")
+                )
+                .setNameLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "transferir")
+                .setDescriptionLocalization(DiscordLocale.PORTUGUESE_BRAZILIAN, "💸 ✦ Inicia uma transferência de stx")
+                .setNameLocalization(DiscordLocale.SPANISH, "transferir")
+                .setDescriptionLocalization(DiscordLocale.SPANISH, "💸 ✦ Inicia una transferencia de stx")
+                .setNameLocalization(DiscordLocale.SPANISH_LATAM, "transferir")
+                .setDescriptionLocalization(DiscordLocale.SPANISH_LATAM, "💸 ✦ Inicia una transferencia de stx")
+                .setNameLocalization(DiscordLocale.ENGLISH_US, "transfer")
+                .setDescriptionLocalization(DiscordLocale.ENGLISH_US, "💸 ✦ Starts a stx transfer");
     }
 }

@@ -37,6 +37,7 @@ import org.jooq.impl.TableImpl
 import studio.styx.erisbot.generated.Public
 import studio.styx.erisbot.generated.enums.Gender
 import studio.styx.erisbot.generated.indexes.USER_ACTIVEPETID_KEY
+import studio.styx.erisbot.generated.indexes.USER_CONTRACTID_KEY
 import studio.styx.erisbot.generated.keys.APPLICATION__APPLICATION_OWNERID_FKEY
 import studio.styx.erisbot.generated.keys.COMBATHISTORY__COMBATHISTORY_USER1ID_FKEY
 import studio.styx.erisbot.generated.keys.COMBATHISTORY__COMBATHISTORY_USER2ID_FKEY
@@ -55,11 +56,11 @@ import studio.styx.erisbot.generated.keys.USERFISH__USERFISH_USERID_FKEY
 import studio.styx.erisbot.generated.keys.USERGIVEAWAY__USERGIVEAWAY_USERID_FKEY
 import studio.styx.erisbot.generated.keys.USER_PKEY
 import studio.styx.erisbot.generated.keys.USER__USER_ACTIVEPETID_FKEY
-import studio.styx.erisbot.generated.keys.USER__USER_COMPANYID_FKEY
+import studio.styx.erisbot.generated.keys.USER__USER_CONTRACTID_FKEY
 import studio.styx.erisbot.generated.keys.USER__USER_FAVORITETEAMID_FKEY
 import studio.styx.erisbot.generated.tables.Application.ApplicationPath
 import studio.styx.erisbot.generated.tables.Combathistory.CombathistoryPath
-import studio.styx.erisbot.generated.tables.Company.CompanyPath
+import studio.styx.erisbot.generated.tables.Contract.ContractPath
 import studio.styx.erisbot.generated.tables.Cooldown.CooldownPath
 import studio.styx.erisbot.generated.tables.Footballbet.FootballbetPath
 import studio.styx.erisbot.generated.tables.Footballbetlog.FootballbetlogPath
@@ -130,11 +131,6 @@ open class User(
     val AFKTIME: TableField<UserRecord, LocalDateTime?> = createField(DSL.name("afkTime"), SQLDataType.LOCALDATETIME(3), this, "")
 
     /**
-     * The column <code>public.User.companyId</code>.
-     */
-    val COMPANYID: TableField<UserRecord, Int?> = createField(DSL.name("companyId"), SQLDataType.INTEGER, this, "")
-
-    /**
      * The column <code>public.User.dmNotification</code>.
      */
     val DMNOTIFICATION: TableField<UserRecord, Boolean?> = createField(DSL.name("dmNotification"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("false"), SQLDataType.BOOLEAN)), this, "")
@@ -199,6 +195,11 @@ open class User(
      */
     val GENDER: TableField<UserRecord, Gender?> = createField(DSL.name("gender"), SQLDataType.VARCHAR.asEnumDataType(Gender::class.java), this, "")
 
+    /**
+     * The column <code>public.User.contractId</code>.
+     */
+    val CONTRACTID: TableField<UserRecord, Int?> = createField(DSL.name("contractId"), SQLDataType.INTEGER, this, "")
+
     private constructor(alias: Name, aliased: Table<UserRecord>?): this(alias, null, null, null, aliased, null, null)
     private constructor(alias: Name, aliased: Table<UserRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, null, aliased, parameters, null)
     private constructor(alias: Name, aliased: Table<UserRecord>?, where: Condition?): this(alias, null, null, null, aliased, null, where)
@@ -231,9 +232,9 @@ open class User(
         override fun `as`(alias: Table<*>): UserPath = UserPath(alias.qualifiedName, this)
     }
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
-    override fun getIndexes(): List<Index> = listOf(USER_ACTIVEPETID_KEY)
+    override fun getIndexes(): List<Index> = listOf(USER_ACTIVEPETID_KEY, USER_CONTRACTID_KEY)
     override fun getPrimaryKey(): UniqueKey<UserRecord> = USER_PKEY
-    override fun getReferences(): List<ForeignKey<UserRecord, *>> = listOf(USER__USER_ACTIVEPETID_FKEY, USER__USER_COMPANYID_FKEY, USER__USER_FAVORITETEAMID_FKEY)
+    override fun getReferences(): List<ForeignKey<UserRecord, *>> = listOf(USER__USER_ACTIVEPETID_FKEY, USER__USER_CONTRACTID_FKEY, USER__USER_FAVORITETEAMID_FKEY)
 
     private lateinit var _userpet: UserpetPath
 
@@ -250,20 +251,20 @@ open class User(
     val userpet: UserpetPath
         get(): UserpetPath = userpet()
 
-    private lateinit var _company: CompanyPath
+    private lateinit var _contract: ContractPath
 
     /**
-     * Get the implicit join path to the <code>public.Company</code> table.
+     * Get the implicit join path to the <code>public.Contract</code> table.
      */
-    fun company(): CompanyPath {
-        if (!this::_company.isInitialized)
-            _company = CompanyPath(this, USER__USER_COMPANYID_FKEY, null)
+    fun contract(): ContractPath {
+        if (!this::_contract.isInitialized)
+            _contract = ContractPath(this, USER__USER_CONTRACTID_FKEY, null)
 
-        return _company;
+        return _contract;
     }
 
-    val company: CompanyPath
-        get(): CompanyPath = company()
+    val contract: ContractPath
+        get(): ContractPath = contract()
 
     private lateinit var _footballteam: FootballteamPath
 

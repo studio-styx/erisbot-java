@@ -21,7 +21,6 @@ data class User(
     var id: String? = null,
     var afkreasson: String? = null,
     var afktime: LocalDateTime? = null,
-    var companyid: Int? = null,
     var dmnotification: Boolean? = null,
     var money: BigDecimal? = null,
     var token: JSONB? = null,
@@ -34,7 +33,8 @@ data class User(
     var favoriteteamid: Long? = null,
     var readfootballbetterms: Boolean? = null,
     var shownameinpresence: Boolean? = null,
-    var gender: Gender? = null
+    var gender: Gender? = null,
+    var contractid: Int? = null
 ): Serializable {
 
 
@@ -63,12 +63,6 @@ data class User(
                 return false
         }
         else if (this.afktime != o.afktime)
-            return false
-        if (this.companyid == null) {
-            if (o.companyid != null)
-                return false
-        }
-        else if (this.companyid != o.companyid)
             return false
         if (this.dmnotification == null) {
             if (o.dmnotification != null)
@@ -148,6 +142,12 @@ data class User(
         }
         else if (this.gender != o.gender)
             return false
+        if (this.contractid == null) {
+            if (o.contractid != null)
+                return false
+        }
+        else if (this.contractid != o.contractid)
+            return false
         return true
     }
 
@@ -157,7 +157,6 @@ data class User(
         result = prime * result + (if (this.id == null) 0 else this.id.hashCode())
         result = prime * result + (if (this.afkreasson == null) 0 else this.afkreasson.hashCode())
         result = prime * result + (if (this.afktime == null) 0 else this.afktime.hashCode())
-        result = prime * result + (if (this.companyid == null) 0 else this.companyid.hashCode())
         result = prime * result + (if (this.dmnotification == null) 0 else this.dmnotification.hashCode())
         result = prime * result + (if (this.money == null) 0 else this.money.hashCode())
         result = prime * result + (if (this.token == null) 0 else this.token.hashCode())
@@ -171,6 +170,7 @@ data class User(
         result = prime * result + (if (this.readfootballbetterms == null) 0 else this.readfootballbetterms.hashCode())
         result = prime * result + (if (this.shownameinpresence == null) 0 else this.shownameinpresence.hashCode())
         result = prime * result + (if (this.gender == null) 0 else this.gender.hashCode())
+        result = prime * result + (if (this.contractid == null) 0 else this.contractid.hashCode())
         return result
     }
 
@@ -180,7 +180,6 @@ data class User(
         sb.append(id)
         sb.append(", ").append(afkreasson)
         sb.append(", ").append(afktime)
-        sb.append(", ").append(companyid)
         sb.append(", ").append(dmnotification)
         sb.append(", ").append(money)
         sb.append(", ").append(token)
@@ -194,6 +193,7 @@ data class User(
         sb.append(", ").append(readfootballbetterms)
         sb.append(", ").append(shownameinpresence)
         sb.append(", ").append(gender)
+        sb.append(", ").append(contractid)
 
         sb.append(")")
         return sb.toString()
