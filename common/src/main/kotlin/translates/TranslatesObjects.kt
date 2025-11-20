@@ -1,5 +1,7 @@
 package translates
 
+import translates.commands.economy.cassino.CoinflipCommandInterface
+import translates.commands.economy.cassino.CoinflipCommandTranslate
 import translates.commands.economy.general.BalanceTranslate
 import translates.commands.economy.general.BalanceTranslateInterface
 import translates.commands.economy.general.DailyTranslate
@@ -110,6 +112,25 @@ object TranslatesObjects {
             }
             else -> {
                 ManyTransferInteraction.enus()
+            }
+        }
+
+        return result
+    }
+
+    @JvmStatic
+    fun getCoinflip(locale: String = "enus"): CoinflipCommandInterface {
+        val transformed = LanguageUtils.transform(locale)
+
+        val result = when (transformed) {
+            "ptbr" -> {
+                CoinflipCommandTranslate.ptbr()
+            }
+            "eses" -> {
+                CoinflipCommandTranslate.eses()
+            }
+            else -> {
+                CoinflipCommandTranslate.enus()
             }
         }
 
