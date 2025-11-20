@@ -5,11 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90219cdd-834f-4824-84ac-e9a08a1b9da2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/cassino/Coinflip.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/cassino/Coinflip.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/cassino/HorseRacing.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/cassino/SlotsMachine.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/cassino/Slots.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackCardObject.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackEndGameResultType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackErisMood.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackGame.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackIA.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackPlayer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ContainerRes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ContainerRes.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/translates/TranslatesObjects.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/TranslatesObjects.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/games/src/main/kotlin/Main.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +49,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Object" />
-        <option value="Kotlin Class" />
-        <option value="Kotlin File" />
         <option value="Class" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+        <option value="Kotlin Enum" />
       </list>
     </option>
   </component>

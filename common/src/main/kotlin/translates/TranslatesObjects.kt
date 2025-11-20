@@ -2,6 +2,10 @@ package translates
 
 import translates.commands.economy.cassino.CoinflipCommandInterface
 import translates.commands.economy.cassino.CoinflipCommandTranslate
+import translates.commands.economy.cassino.HorseRacingTranslate
+import translates.commands.economy.cassino.HorseRacingTranslateInterface
+import translates.commands.economy.cassino.SlotMachineTranslate
+import translates.commands.economy.cassino.SlotMachineTranslateInterface
 import translates.commands.economy.general.BalanceTranslate
 import translates.commands.economy.general.BalanceTranslateInterface
 import translates.commands.economy.general.DailyTranslate
@@ -131,6 +135,44 @@ object TranslatesObjects {
             }
             else -> {
                 CoinflipCommandTranslate.enus()
+            }
+        }
+
+        return result
+    }
+
+    @JvmStatic
+    fun getSlotsMachine(locale: String = "enus"): SlotMachineTranslateInterface {
+        val transformed = LanguageUtils.transform(locale)
+
+        val result = when (transformed) {
+            "ptbr" -> {
+                SlotMachineTranslate.ptbr()
+            }
+            "eses" -> {
+                SlotMachineTranslate.eses()
+            }
+            else -> {
+                SlotMachineTranslate.enus()
+            }
+        }
+
+        return result
+    }
+
+    @JvmStatic
+    fun getHorseRacing(locale: String = "enus"): HorseRacingTranslateInterface {
+        val transformed = LanguageUtils.transform(locale)
+
+        val result = when (transformed) {
+            "ptbr" -> {
+                HorseRacingTranslate.ptbr()
+            }
+            "eses" -> {
+                HorseRacingTranslate.eses()
+            }
+            else -> {
+                HorseRacingTranslate.enus()
             }
         }
 
