@@ -104,13 +104,14 @@ object Utils {
     }
 
     @JvmStatic
-    fun brBuilder(vararg texts: String): String {
-        return texts.joinToString("\n")
+    fun brBuilder(vararg texts: String?): String {
+        val nonNullTexts = texts.filterNotNull()
+        return nonNullTexts.joinToString("\n")
     }
 
     @JvmStatic
-    fun brBuilder(vararg texts: String, replacements: Map<String, String>): String {
-        var result = texts.joinToString("\n")
+    fun brBuilder(vararg texts: String?, replacements: Map<String, String>): String {
+        var result = texts.filterNotNull().joinToString("\n")
         replacements.forEach { (key, value) ->
             result = result.replace("{$key}", value)
         }

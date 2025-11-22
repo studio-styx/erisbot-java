@@ -55,8 +55,8 @@ class BlackjackGame(
         var ases = 0
 
         for (card in hand) {
-            total += card.getNumber()
-            if (card.getCard() === "A") ases++
+            total += card.number
+            if (card.card === "A") ases++
         }
 
         // Se estourar, transformar Ases de 11 em 1
