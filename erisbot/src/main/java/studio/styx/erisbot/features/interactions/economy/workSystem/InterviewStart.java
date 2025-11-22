@@ -3,7 +3,6 @@ package studio.styx.erisbot.features.interactions.economy.workSystem;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.genai.types.GenerateContentResponse;
-import com.google.gson.Gson;
 import database.utils.DatabaseUtils;
 import net.dv8tion.jda.api.components.actionrow.ActionRow;
 import net.dv8tion.jda.api.components.buttons.Button;
@@ -23,7 +22,6 @@ import studio.styx.erisbot.menus.economy.workSystem.JobsSearch;
 import studio.styx.erisbot.services.gemini.GeminiRequest;
 import utils.ComponentBuilder;
 import utils.ContainerRes;
-import studio.styx.sx.sx;
 
 import java.util.List;
 import java.util.Map;

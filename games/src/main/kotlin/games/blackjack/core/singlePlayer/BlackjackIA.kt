@@ -8,23 +8,7 @@ enum class Action {
     STAND
 }
 
-data class ActionResult(var action: Action, var card: BlackjackCardObject?) {
-    fun getCard(): BlackjackCardObject? {
-        return card
-    }
-
-    fun getAction(): Action {
-        return action
-    }
-
-    fun setCard(card: BlackjackCardObject?): ActionResult = apply {
-        this.card = card
-    }
-
-    fun setAction(action: Action): ActionResult = apply {
-        this.action = action
-    }
-}
+data class ActionResult(var action: Action, var card: BlackjackCardObject?) {}
 
 class BlackjackIA(private val game: BlackjackGame) {
 

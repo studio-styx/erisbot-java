@@ -6,6 +6,10 @@ import translates.commands.economy.cassino.HorseRacingTranslate
 import translates.commands.economy.cassino.HorseRacingTranslateInterface
 import translates.commands.economy.cassino.SlotMachineTranslate
 import translates.commands.economy.cassino.SlotMachineTranslateInterface
+import translates.commands.economy.cassino.blackjack.BlackjackPreStart
+import translates.commands.economy.cassino.blackjack.BlackjackPreStartInterface
+import translates.commands.economy.cassino.blackjack.BlackjackTranslate
+import translates.commands.economy.cassino.blackjack.BlackjackTranslateInterface
 import translates.commands.economy.general.BalanceTranslate
 import translates.commands.economy.general.BalanceTranslateInterface
 import translates.commands.economy.general.DailyTranslate
@@ -177,6 +181,24 @@ object TranslatesObjects {
         }
 
         return result
+    }
+
+    @JvmStatic
+    fun getBlackjack(locale: String = "enus"): BlackjackTranslateInterface {
+        return when (LanguageUtils.transform(locale)) {
+            "ptbr" -> BlackjackTranslate.ptbr()
+            "eses" -> BlackjackTranslate.eses()
+            else -> BlackjackTranslate.enus()
+        }
+    }
+
+    @JvmStatic
+    fun getBlackjackPreStart(locale: String = "enus"): BlackjackPreStartInterface {
+        return when (LanguageUtils.transform(locale)) {
+            "ptbr" -> BlackjackPreStart.ptbr()
+            "eses" -> BlackjackPreStart.eses()
+            else -> BlackjackPreStart.enus()
+        }
     }
 }
 

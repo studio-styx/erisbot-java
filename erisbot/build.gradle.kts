@@ -37,7 +37,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.4")
     implementation("com.google.genai:google-genai:1.0.0")
 
-    implementation("studio.styx.schemaEXtended:SchemaEXtended:1.1.0")
+    implementation("studio.styx.schemaEXtended:SchemaEXtended:1.2.0")
 
     implementation("redis.clients:jedis:4.4.0")
 

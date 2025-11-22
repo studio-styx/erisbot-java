@@ -2,6 +2,7 @@ package studio.styx.erisbot;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.components.container.Container;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
@@ -23,12 +24,14 @@ import org.springframework.context.ApplicationContext;
 import schedules.transactionExpires.IntervalCheckKt;
 import shared.Colors;
 import studio.styx.erisbot.core.*;
+import studio.styx.schemaEXtended.core.exceptions.SchemaIllegalArgumentException;
 import utils.ComponentBuilder;
 
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class Main implements CommandLineRunner {
@@ -159,6 +162,30 @@ public class Main implements CommandLineRunner {
                 if (event.getName().equals(command.getSlashCommandData().getName())) {
                     try {
                         command.execute(event);
+                    } catch (SchemaIllegalArgumentException e) {
+                        String errorMessages;
+
+                        // Verifica se tem erros de campo (ObjectSchema)
+                        if (e.hasFieldErrors()) {
+                            errorMessages = e.getFieldErrors().entrySet().stream()
+                                    .map(entry -> "- **`" + entry.getKey() + ": " + entry.getValue() + "`**")
+                                    .collect(Collectors.joining("\n"));
+                        }
+                        // Verifica se tem erros simples (StringSchema, NumberSchema, etc)
+                        else if (e.hasSimpleErrors()) {
+                            errorMessages = e.getErrors().stream()
+                                    .map(msg -> "- **`" + msg + "`**")
+                                    .collect(Collectors.joining("\n"));
+                        }
+                        // Fallback
+                        else {
+                            errorMessages = "Erro de validação desconhecido";
+                        }
+
+                        ComponentBuilder.ContainerBuilder.create()
+                                .addText("## Informações inválidas!\n" + errorMessages)
+                                .withColor(Colors.DANGER)
+                                .reply(event);
                     } catch (Exception e) {
                         System.err.println("Erro ao executar comando " + event.getName() + ": " + e.getMessage());
                         ComponentBuilder.ContainerBuilder.create()

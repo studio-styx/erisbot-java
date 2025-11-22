@@ -19,8 +19,10 @@ import studio.styx.erisbot.generated.enums.Transactionstatus;
 import studio.styx.erisbot.generated.tables.records.TransactionRecord;
 import studio.styx.erisbot.generated.tables.records.UserRecord;
 import studio.styx.erisbot.generated.tables.references.TablesKt;
-import studio.styx.sx.javaAdapter.Sx;
-import studio.styx.sx.sx;
+import studio.styx.schemaEXtended.core.schemas.BooleanSchema;
+import studio.styx.schemaEXtended.core.schemas.NumberSchema;
+import studio.styx.schemaEXtended.core.schemas.ObjectSchema;
+import studio.styx.schemaEXtended.core.schemas.StringSchema;
 import translates.TranslatesObjects;
 import translates.interactions.economy.ExpectedUserTransactionInteraction;
 import translates.interactions.economy.TransactionTransferInteractionInterface;
@@ -28,6 +30,7 @@ import utils.ComponentBuilder;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class AcceptTransferInteraction implements ResponderInterface {
@@ -45,11 +48,28 @@ public class AcceptTransferInteraction implements ResponderInterface {
         String customId = event.getCustomId();
         String[] parts = customId.split("/");
 
-        var transactionId = Sx.coerceInt().parse(parts[2]);
-        var authorId = sx.string(null).parse(parts[3]);
-        var authorAccepted = Sx.coerceBoolean().parse(parts[4]);
-        var targetId = sx.string(null).parse(parts[5]);
-        var targetAccepted = Sx.coerceBoolean().parse(parts[6]);
+        var schema = new ObjectSchema()
+                .addProperty("transactionId", new NumberSchema()
+                        .integer()
+                        .coerce())
+                .addProperty("authorId", new StringSchema())
+                .addProperty("authorAccepted", new BooleanSchema().coerce())
+                .addProperty("targetId", new StringSchema())
+                .addProperty("targetAccepted", new BooleanSchema().coerce());
+
+        var result = schema.parseOrThrow(Map.of(
+                "transactionId", parts[1],
+                "authorId", parts[2],
+                "authorAccepted", parts[3],
+                "targetId", parts[4],
+                "targetAccepted", parts[5]
+        ));
+
+        Integer transactionId = (Integer) result.get("transactionId");
+        String authorId = (String) result.get("authorId");
+        Boolean authorAccepted = (Boolean) result.get("authorAccepted");
+        String targetId = (String) result.get("targetId");
+        Boolean targetAccepted = (Boolean) result.get("targetAccepted");
 
         TransactionTransferInteractionInterface t = TranslatesObjects.getTransactionInteraction(event.getUserLocale().getLocale());
 
