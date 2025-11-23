@@ -3,6 +3,7 @@ package utils
 import net.dv8tion.jda.api.components.container.Container
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
+import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent
 import net.dv8tion.jda.api.interactions.InteractionHook
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction
 
@@ -72,6 +73,14 @@ class ContainerRes {
             .withColor(color)
             .addText(text)
             .reply(hook)
+    }
+
+    fun send(event: EntitySelectInteractionEvent) {
+        ComponentBuilder.ContainerBuilder.create()
+            .setEphemeral(ephemeral)
+            .withColor(color)
+            .addText(text)
+            .reply(event)
     }
 
     fun build(): Container {

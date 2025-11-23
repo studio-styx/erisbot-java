@@ -69,7 +69,7 @@ public class BlackjackPreStart {
                                 t.erisHard()
                         ).withDisabled(games >= 8),
                         Button.danger(Utils.replaceText(
-                                        "blackjack/start/0/{userId}/{amount}",
+                                        "blackjack/start/4/{userId}/{amount}",
                                         Map.of(
                                                 "userId", userId,
                                                 "amount", amount.toString()

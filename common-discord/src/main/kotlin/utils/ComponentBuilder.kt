@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.components.thumbnail.Thumbnail
 import net.dv8tion.jda.api.entities.Message.MentionType
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
+import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent
 import net.dv8tion.jda.api.interactions.InteractionHook
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction
 import java.awt.Color
@@ -113,6 +114,18 @@ object ComponentBuilder {
                 edit.setAllowedMentions(EnumSet.noneOf(MentionType::class.java)).queue()
             } else {
                 edit.queue()
+            }
+        }
+
+        fun reply(event: EntitySelectInteractionEvent) = apply {
+            val reply = event.replyComponents(build())
+                .useComponentsV2()
+                .setEphemeral(isEphemeral)
+
+            if (disallowedMentions) {
+                reply.setAllowedMentions(EnumSet.noneOf(MentionType::class.java)).queue()
+            } else {
+                reply.queue()
             }
         }
 

@@ -65,11 +65,11 @@ public class AcceptTransferInteraction implements ResponderInterface {
                 "targetAccepted", parts[5]
         ));
 
-        Integer transactionId = (Integer) result.get("transactionId");
-        String authorId = (String) result.get("authorId");
-        Boolean authorAccepted = (Boolean) result.get("authorAccepted");
-        String targetId = (String) result.get("targetId");
-        Boolean targetAccepted = (Boolean) result.get("targetAccepted");
+        Integer transactionId = result.get("transactionId");
+        String authorId =  result.get("authorId");
+        Boolean authorAccepted = result.get("authorAccepted");
+        String targetId = result.get("targetId");
+        Boolean targetAccepted = result.get("targetAccepted");
 
         TransactionTransferInteractionInterface t = TranslatesObjects.getTransactionInteraction(event.getUserLocale().getLocale());
 

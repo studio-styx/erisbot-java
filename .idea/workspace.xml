@@ -5,17 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90219cdd-834f-4824-84ac-e9a08a1b9da2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/cassino/blackjack/BlackjackGame.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/commands/economy/cassino/BlackjackCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/cassino/blackjack/BlackjackAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/cassino/blackjack/BlackjackGame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/interactions/economy/cassino/blackjack/singlePlayer/BlackjackStartInteraction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/translates/TranslatesObjects.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/TranslatesObjects.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ComponentBuilder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ComponentBuilder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ContainerRes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ContainerRes.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erisbot/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/interactions/economy/AcceptTransferInteraction.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/interactions/economy/AcceptTransferInteraction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/interactions/economy/workSystem/InterviewStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/interactions/economy/workSystem/InterviewStart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackIA.kt" beforeDir="false" afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackIA.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/cassino/blackjack/BlackjackPreStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/cassino/blackjack/BlackjackPreStart.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,30 +71,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Coverage&quot;,
-    &quot;Application.StartByMain.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build ErisbotJava.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build ModuleTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ErisbotJava:database [:database:TestConnectionKt.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ErisbotJava:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ModuleTest:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/guilherme/Documentos/projetos/ErisbotJava&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/home/guilherme/Documentos/projetos/ErisbotJava/redis/src/main/kotlin/Main.kt&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;proofread&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Coverage",
+    "Application.StartByMain.executor": "Run",
+    "Gradle.Build ErisbotJava.executor": "Run",
+    "Gradle.Build ModuleTest.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.ErisbotJava:database [:database:TestConnectionKt.main()].executor": "Run",
+    "Gradle.ErisbotJava:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor": "Run",
+    "Gradle.ModuleTest:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/guilherme/Documentos/projetos/ErisbotJava",
+    "onboarding.tips.debug.path": "/home/guilherme/Documentos/projetos/ErisbotJava/redis/src/main/kotlin/Main.kt",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "proofread"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
