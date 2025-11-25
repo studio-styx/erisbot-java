@@ -2,16 +2,13 @@ package studio.styx.erisbot;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.components.container.Container;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.component.GenericSelectMenuInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
-import net.dv8tion.jda.api.interactions.components.selections.SelectMenuInteraction;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.jooq.DSLContext;
 import org.reflections.Reflections;
@@ -24,6 +21,9 @@ import org.springframework.context.ApplicationContext;
 import schedules.transactionExpires.IntervalCheckKt;
 import shared.Colors;
 import studio.styx.erisbot.core.*;
+import studio.styx.erisbot.core.abstractClasses.AbstractCommand;
+import studio.styx.erisbot.core.interfaces.CommandInterface;
+import studio.styx.erisbot.core.interfaces.ResponderInterface;
 import studio.styx.schemaEXtended.core.exceptions.SchemaIllegalArgumentException;
 import utils.ComponentBuilder;
 
@@ -93,7 +93,7 @@ public class Main implements CommandLineRunner {
 
     private List<CommandInterface> loadCommands() {
         List<CommandInterface> commands = new ArrayList<>();
-        Reflections reflections = new Reflections("studio.styx.erisbot.features.commands", new SubTypesScanner(false));
+        Reflections reflections = new Reflections("studio.styx.erisbot.discord.features.commands", new SubTypesScanner(false));
         Set<Class<? extends CommandInterface>> commandClasses = reflections.getSubTypesOf(CommandInterface.class);
 
         for (Class<? extends CommandInterface> commandClass : commandClasses) {
@@ -131,7 +131,7 @@ public class Main implements CommandLineRunner {
 
     private List<ResponderInterface> loadResponders() {
         List<ResponderInterface> responders = new ArrayList<>();
-        Reflections reflections = new Reflections("studio.styx.erisbot.features.interactions", new SubTypesScanner(false));
+        Reflections reflections = new Reflections("studio.styx.erisbot.discord.features.interactions", new SubTypesScanner(false));
         Set<Class<? extends ResponderInterface>> responderClasses = reflections.getSubTypesOf(ResponderInterface.class);
 
         for (Class<? extends ResponderInterface> responderClass : responderClasses) {

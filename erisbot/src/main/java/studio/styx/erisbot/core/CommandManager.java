@@ -3,6 +3,8 @@ package studio.styx.erisbot.core;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import studio.styx.erisbot.core.abstractClasses.AbstractCommand;
+import studio.styx.erisbot.core.interfaces.CommandInterface;
 
 import java.util.List;
 

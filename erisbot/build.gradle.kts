@@ -1,6 +1,7 @@
 plugins {
     id("org.springframework.boot") version "3.3.4"
     id("io.spring.dependency-management") version "1.1.6"
+    kotlin("jvm")
 }
 
 group = "studio.styx.erisbot"
@@ -27,9 +28,13 @@ dependencies {
     implementation(project(":redis"))
 
     implementation("net.dv8tion:JDA:6.1.0")
+    implementation("club.minnced:jda-ktx:0.13.0")
     implementation("org.reflections:reflections:0.10.2")
     implementation("io.github.cdimascio:java-dotenv:5.2.2")
     implementation("org.json:json:20240303")
+
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2")
 
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
