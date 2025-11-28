@@ -16,7 +16,7 @@ import studio.styx.erisbot.generated.enums.Contractstatus
 import studio.styx.erisbot.generated.tables.records.CompanyRecord
 import studio.styx.erisbot.generated.tables.references.COMPANY
 import studio.styx.erisbot.generated.tables.references.CONTRACT
-import studio.styx.erisbot.menus.economy.workSystem.JobsSearch
+import studio.styx.erisbot.discord.menus.workSystem.JobsSearch
 import utils.ComponentBuilder.ContainerBuilder.Companion.create
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -68,8 +68,8 @@ class JobsSearch : CommandInterface {
     }
 
     private fun search(event: SlashCommandInteractionEvent) {
-        event.deferReply().queue(Consumer { hook: InteractionHook? ->
-            val companys: MutableList<CompanyRecord?> = dsl.selectFrom<CompanyRecord>(COMPANY)
+        event.deferReply().queue(Consumer { hook: InteractionHook ->
+            val companys: MutableList<CompanyRecord?> = dsl.selectFrom(COMPANY)
                 .where(COMPANY.ISENABLED.eq(true))
                 .orderBy<Int?, Int?, BigDecimal?>(
                     COMPANY.EXPERIENCE.asc(),
@@ -78,7 +78,8 @@ class JobsSearch : CommandInterface {
                 )
                 .fetch()
             val menuContext = JobsSearch()
-            hook!!.editOriginalComponents(menuContext.jobsContainer(event.user.id, companys, 1))
+            hook.editOriginalComponents(menuContext.jobsContainer(event.user.id,
+                companys as MutableList<CompanyRecord>, 1))
                 .useComponentsV2().queue()
         })
     }

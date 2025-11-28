@@ -16,7 +16,7 @@ import shared.Cache.get
 import shared.Colors
 import shared.utils.Icon
 import studio.styx.erisbot.core.interfaces.CommandInterface
-import studio.styx.erisbot.menus.economy.cassino.blackjack.BlackjackPreStart
+import studio.styx.erisbot.discord.menus.blackjack.BlackjackPreStart
 import translates.TranslatesObjects.getBlackjackPreStart
 import utils.ComponentBuilder.ContainerBuilder.Companion.create
 
@@ -27,7 +27,7 @@ class BlackjackCommand : CommandInterface {
     lateinit var dsl: DSLContext
 
     override fun getSlashCommandData(): SlashCommandData {
-        val amount = OptionData(OptionType.NUMBER, "amount", "valor a apostar")
+        val amount = OptionData(OptionType.NUMBER, "amount", "valor a apostar", true)
             .setMinValue(50)
 
         return Commands.slash("blackjack", "jogue uma partida de blackjack")
@@ -35,7 +35,7 @@ class BlackjackCommand : CommandInterface {
     }
 
     override fun execute(event: SlashCommandInteractionEvent) {
-        val game = get<BlackjackGame?>("blackjack:game:singlePlayer:" + event.getUser().getId())
+        val game = get<BlackjackGame?>("blackjack:game:singlePlayer:${event.user.id}")
 
         if (game != null) {
             create()

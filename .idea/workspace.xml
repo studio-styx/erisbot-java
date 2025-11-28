@@ -5,13 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90219cdd-834f-4824-84ac-e9a08a1b9da2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/interactions/economy/cassino/blackjack/singlePlayer/BlackjackStartInteraction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/singlePlayer/BlackjackInteraction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/singlePlayer/BlackjackStartInteraction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/menus/blackjack/BlackjackAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/menus/blackjack/BlackjackGameMenu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/menus/blackjack/BlackjackPreStart.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/menus/workSystem/JobsSearch.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ComponentBuilder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ComponentBuilder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ContainerRes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ContainerRes.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/interactions/economy/AcceptTransferInteraction.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/features/interactions/economy/AcceptTransferInteraction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/cassino/blackjack/BlackjackPreStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/cassino/blackjack/BlackjackPreStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/cassino/blackjack/BlackjackGame.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/cassino/blackjack/BlackjackGame.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/singlePlayer/BlackjackStartInteraction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/cassino/blackjack/BlackjackAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/cassino/blackjack/BlackjackGame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/cassino/blackjack/BlackjackPreStart.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/workSystem/JobsSearch.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/cassino/BlackjackCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/cassino/BlackjackCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/jobs/JobsSearch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/jobs/JobsSearch.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/jobs/Work.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/jobs/Work.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/WorkSystem/InterviewStart.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/WorkSystem/InterviewStart.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackIA.kt" beforeDir="false" afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackIA.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,8 +59,8 @@
         <option value="Kotlin Enum" />
         <option value="Kotlin Data Class" />
         <option value="Kotlin File" />
-        <option value="Kotlin Class" />
         <option value="Class" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -79,7 +91,7 @@
     "Gradle.Build ModuleTest.executor": "Run",
     "Gradle.Download Sources.executor": "Run",
     "Gradle.ErisbotJava:database [:database:TestConnectionKt.main()].executor": "Run",
-    "Gradle.ErisbotJava:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor": "Run",
+    "Gradle.ErisbotJava:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor": "Debug",
     "Gradle.ModuleTest:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -104,11 +116,11 @@
       <recent name="$PROJECT_DIR$/erisbot/src/main/resources" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="studio.styx.erisbot.discord.menus.workSystem" />
+      <recent name="studio.styx.erisbot.discord.menus.blackjack" />
+      <recent name="studio.styx.erisbot.discord.features.interactions.economy.cassino.blackjack.singlePlayer" />
       <recent name="shared" />
       <recent name="shareds" />
-      <recent name="shared.s" />
-      <recent name="shared.utis" />
-      <recent name="shared.utils" />
     </key>
   </component>
   <component name="RunManager">

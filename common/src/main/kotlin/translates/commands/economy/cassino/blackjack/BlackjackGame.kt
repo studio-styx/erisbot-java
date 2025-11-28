@@ -100,8 +100,8 @@ class PtBrBlackjack : BlackjackTranslateInterface {
 
     override fun winsMessage(wins: String, amount: Double, multiplier: Double): String {
         return when (wins) {
-            "eris" -> "## Você apostou: $amount stx e perdeu!"
-            "user" -> {
+            "bot" -> "## Você apostou: $amount stx e perdeu!"
+            "player" -> {
                 val winAmount = amount * multiplier
                 val formattedAmount = if (winAmount % 1 == 0.0)
                     winAmount.toInt().toString()
@@ -195,8 +195,8 @@ class EnUsBlackjack : BlackjackTranslateInterface {
 
     override fun winsMessage(wins: String, amount: Double, multiplier: Double): String {
         return when (wins) {
-            "eris" -> "## You bet: $amount stx and lost!"
-            "user" -> {
+            "bot" -> "## You bet: $amount stx and lost!"
+            "player" -> {
                 val winAmount = amount * multiplier
                 val formattedAmount = if (winAmount % 1 == 0.0)
                     winAmount.toInt().toString()
@@ -290,8 +290,8 @@ class EsEsBlackjack : BlackjackTranslateInterface {
 
     override fun winsMessage(wins: String, amount: Double, multiplier: Double): String {
         return when (wins) {
-            "eris" -> "## Apostaste: $amount stx y perdiste!"
-            "user" -> {
+            "bot" -> "## Apostaste: $amount stx y perdiste!"
+            "player" -> {
                 val winAmount = amount * multiplier
                 val formattedAmount = if (winAmount % 1 == 0.0)
                     winAmount.toInt().toString()

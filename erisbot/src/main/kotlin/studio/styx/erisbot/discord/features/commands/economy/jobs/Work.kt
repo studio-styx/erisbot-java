@@ -25,7 +25,7 @@ import studio.styx.erisbot.core.interfaces.CommandInterface
 import studio.styx.erisbot.generated.enums.Rarity
 import studio.styx.erisbot.generated.tables.records.*
 import studio.styx.erisbot.generated.tables.references.*
-import studio.styx.erisbot.services.gemini.GeminiRequest
+import services.gemini.GeminiRequest
 import utils.ComponentBuilder.ContainerBuilder.Companion.create
 import utils.ContainerRes
 import java.math.BigDecimal

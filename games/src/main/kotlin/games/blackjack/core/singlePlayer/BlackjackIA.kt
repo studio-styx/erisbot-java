@@ -142,7 +142,10 @@ class BlackjackIA(private val game: BlackjackGame) {
         }
     }
 
-    fun getErisComentary(wins: BlackjackEndGameResultType): ComentaryTraductions {
+    fun getErisComentary(): ComentaryTraductions {
+        return getErisComentary(null)
+    }
+    fun getErisComentary(wins: BlackjackEndGameResultType?): ComentaryTraductions {
         val erisHand = game.calculateHandValue(game.erisCards);
         val userHand = game.calculateHandValue(game.userCards);
         val humorModifier = this.getHumorModifier();

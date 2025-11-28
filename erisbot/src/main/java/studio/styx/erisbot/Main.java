@@ -188,6 +188,9 @@ public class Main implements CommandLineRunner {
                                 .reply(event);
                     } catch (Exception e) {
                         System.err.println("Erro ao executar comando " + event.getName() + ": " + e.getMessage());
+
+                        e.printStackTrace();
+
                         ComponentBuilder.ContainerBuilder.create()
                                 .addText("Um erro ocorreu ao executar esse comando: **`" + e.getMessage() + "`**")
                                 .withColor(Colors.DANGER)

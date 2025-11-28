@@ -21,7 +21,7 @@ import shared.utils.Utils.replaceText
 import studio.styx.erisbot.core.interfaces.ResponderInterface
 import studio.styx.erisbot.generated.tables.records.CompanyRecord
 import studio.styx.erisbot.generated.tables.references.COMPANY
-import studio.styx.erisbot.menus.economy.workSystem.JobsSearch
+import studio.styx.erisbot.discord.menus.workSystem.JobsSearch
 import utils.ComponentBuilder.ContainerBuilder.Companion.create
 import utils.ContainerRes
 import java.math.BigDecimal
@@ -47,7 +47,7 @@ class InterviewStart : ResponderInterface {
 
         if (userId != event.getUser().getId()) {
             event.deferReply(true).queue(Consumer { hook: InteractionHook ->
-                val companys: MutableList<CompanyRecord?> = dsl!!.selectFrom<CompanyRecord>(COMPANY)
+                val companys: MutableList<CompanyRecord?> = dsl.selectFrom(COMPANY)
                     .where(COMPANY.ISENABLED.eq(true))
                     .orderBy<Int?, Int?, BigDecimal?>(
                         COMPANY.EXPERIENCE.asc(),
@@ -56,7 +56,8 @@ class InterviewStart : ResponderInterface {
                     )
                     .fetch()
                 val menuContext = JobsSearch()
-                hook.editOriginalComponents(menuContext.jobsContainer(event.getUser().getId(), companys, 1))
+                hook.editOriginalComponents(menuContext.jobsContainer(event.getUser().getId(),
+                    companys as MutableList<CompanyRecord>, 1))
                     .useComponentsV2().queue()
             })
             return
