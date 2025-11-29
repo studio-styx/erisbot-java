@@ -5,25 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90219cdd-834f-4824-84ac-e9a08a1b9da2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/singlePlayer/BlackjackInteraction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/singlePlayer/BlackjackStartInteraction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/menus/blackjack/BlackjackAction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/menus/blackjack/BlackjackGameMenu.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/menus/blackjack/BlackjackPreStart.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/menus/workSystem/JobsSearch.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-server/src/main/kotlin/server/Application.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-server/src/main/kotlin/server/core/security/Security.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-server/src/main/kotlin/server/core/security/jwt/JwtConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-server/src/main/kotlin/server/core/security/jwt/JwtManage.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-server/src/main/kotlin/server/core/security/v2/auth/AuthMiddleware.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/cassino/blackjack/BlackjackGame.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/cassino/blackjack/BlackjackGame.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/database/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/singlePlayer/BlackjackStartInteraction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/cassino/blackjack/BlackjackAction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/cassino/blackjack/BlackjackGame.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/cassino/blackjack/BlackjackPreStart.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/menus/economy/workSystem/JobsSearch.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/cassino/BlackjackCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/cassino/BlackjackCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/jobs/JobsSearch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/jobs/JobsSearch.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/jobs/Work.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/jobs/Work.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/WorkSystem/InterviewStart.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/WorkSystem/InterviewStart.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackIA.kt" beforeDir="false" afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackIA.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redisbridge/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/redisbridge/src/main/kotlin/Main.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,8 +52,8 @@
         <option value="Kotlin Object" />
         <option value="Kotlin Enum" />
         <option value="Kotlin Data Class" />
-        <option value="Kotlin File" />
         <option value="Class" />
+        <option value="Kotlin File" />
         <option value="Kotlin Class" />
       </list>
     </option>
@@ -83,30 +77,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Coverage",
-    "Application.StartByMain.executor": "Run",
-    "Gradle.Build ErisbotJava.executor": "Run",
-    "Gradle.Build ModuleTest.executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "Gradle.ErisbotJava:database [:database:TestConnectionKt.main()].executor": "Run",
-    "Gradle.ErisbotJava:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor": "Debug",
-    "Gradle.ModuleTest:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/guilherme/Documentos/projetos/ErisbotJava",
-    "onboarding.tips.debug.path": "/home/guilherme/Documentos/projetos/ErisbotJava/redis/src/main/kotlin/Main.kt",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "proofread"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Coverage&quot;,
+    &quot;Application.StartByMain.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build ErisbotJava.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build ModuleTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ErisbotJava:database [:database:TestConnectionKt.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ErisbotJava:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.ModuleTest:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/guilherme/Documentos/projetos/ErisbotJava&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/home/guilherme/Documentos/projetos/ErisbotJava/api-server/src/main/kotlin/Main.kt&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;proofread&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -116,11 +110,11 @@
       <recent name="$PROJECT_DIR$/erisbot/src/main/resources" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="server.core.security.v2.auth" />
       <recent name="studio.styx.erisbot.discord.menus.workSystem" />
       <recent name="studio.styx.erisbot.discord.menus.blackjack" />
       <recent name="studio.styx.erisbot.discord.features.interactions.economy.cassino.blackjack.singlePlayer" />
       <recent name="shared" />
-      <recent name="shareds" />
     </key>
   </component>
   <component name="RunManager">
