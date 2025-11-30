@@ -20,7 +20,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import schedules.transactionExpires.IntervalCheckKt;
 import server.ApplicationKt;
-import server.core.start.ApiServer;
 import shared.Colors;
 import studio.styx.erisbot.core.*;
 import studio.styx.erisbot.core.abstractClasses.AbstractCommand;
@@ -55,9 +54,6 @@ public class Main implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // === INICIA O SERVIDOR API ===
-        ApplicationKt.main();
-
         // === CRIA O JDA ===
         jda = JDABuilder.createLight(discordConfig.getToken(), EnumSet.of(
                         GatewayIntent.GUILD_MESSAGES,
@@ -69,6 +65,9 @@ public class Main implements CommandLineRunner {
 
         jda.awaitReady();
         System.out.println("Bot iniciado: " + jda.getSelfUser().getName());
+
+        // === INICIA O SERVIDOR API ===
+        ApplicationKt.main(jda, dsl);
 
         // === CARREGA COMANDOS ===
         List<CommandInterface> commands = loadCommands();

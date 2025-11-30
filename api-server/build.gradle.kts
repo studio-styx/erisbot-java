@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm")
     id("io.ktor.plugin") version "2.3.9"
+    kotlin("plugin.serialization") version "2.2.20"
 }
 
 group = "studio.styx.erisbot"
@@ -28,6 +29,8 @@ dependencies {
     // --- KTOR CORE ---
     implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
+    implementation("io.ktor:ktor-server-rate-limit:${ktorVersion}")
+    implementation("io.ktor:ktor-server-cors-jvm:$ktorVersion")
 
     // --- JSON ---
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
@@ -51,10 +54,9 @@ dependencies {
     implementation("redis.clients:jedis:4.4.0")
 
     // --- BANCO DE DADOS ---
-    // jOOQ core (obrigatório)
     implementation("org.jooq:jooq:3.19.9")
 
-    // jOOQ Kotlin Extensions (opcional)
+    // jOOQ Kotlin Extensions
     implementation("org.jooq:jooq-kotlin:3.19.9")
 
     implementation("org.postgresql:postgresql:42.7.4")

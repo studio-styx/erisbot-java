@@ -33,7 +33,6 @@ fun Route.v2Auth(dsl: DSLContext) {
         }
 
         call.attributes.put(AppKey, app)
-
     }
 }
 
