@@ -36,14 +36,8 @@ import studio.styx.erisbot.generated.Public
 import studio.styx.erisbot.generated.enums.Gender
 import studio.styx.erisbot.generated.indexes.USERPET_SPOUSEID_KEY
 import studio.styx.erisbot.generated.keys.ADOPTIONCENTER__ADOPTIONCENTER_USERPETID_FKEY
-import studio.styx.erisbot.generated.keys.COMBATHISTORY__COMBATHISTORY_LOSERPETID_FKEY
-import studio.styx.erisbot.generated.keys.COMBATHISTORY__COMBATHISTORY_PET1ID_FKEY
-import studio.styx.erisbot.generated.keys.COMBATHISTORY__COMBATHISTORY_PET2ID_FKEY
-import studio.styx.erisbot.generated.keys.COMBATHISTORY__COMBATHISTORY_WINNERPETID_FKEY
-import studio.styx.erisbot.generated.keys.COMBATPOWERHISTORY__COMBATPOWERHISTORY_PETID_FKEY
 import studio.styx.erisbot.generated.keys.PETGENETICS__PETGENETICS_USERPETID_FKEY
 import studio.styx.erisbot.generated.keys.USERPETPERSONALITY__USERPETPERSONALITY_USERPETID_FKEY
-import studio.styx.erisbot.generated.keys.USERPETPOWER__USERPETPOWER_USERPETID_FKEY
 import studio.styx.erisbot.generated.keys.USERPETSKILL__USERPETSKILL_USERPETID_FKEY
 import studio.styx.erisbot.generated.keys.USERPET_PKEY
 import studio.styx.erisbot.generated.keys.USERPET__USERPET_PARENT1ID_FKEY
@@ -52,14 +46,11 @@ import studio.styx.erisbot.generated.keys.USERPET__USERPET_PETID_FKEY
 import studio.styx.erisbot.generated.keys.USERPET__USERPET_SPOUSEID_FKEY
 import studio.styx.erisbot.generated.keys.USERPET__USERPET_USERID_FKEY
 import studio.styx.erisbot.generated.tables.Adoptioncenter.AdoptioncenterPath
-import studio.styx.erisbot.generated.tables.Combathistory.CombathistoryPath
-import studio.styx.erisbot.generated.tables.Combatpowerhistory.CombatpowerhistoryPath
 import studio.styx.erisbot.generated.tables.Pet.PetPath
 import studio.styx.erisbot.generated.tables.Petgenetics.PetgeneticsPath
 import studio.styx.erisbot.generated.tables.User.UserPath
 import studio.styx.erisbot.generated.tables.Userpet.UserpetPath
 import studio.styx.erisbot.generated.tables.Userpetpersonality.UserpetpersonalityPath
-import studio.styx.erisbot.generated.tables.Userpetpower.UserpetpowerPath
 import studio.styx.erisbot.generated.tables.Userpetskill.UserpetskillPath
 import studio.styx.erisbot.generated.tables.records.UserpetRecord
 
@@ -326,90 +317,6 @@ open class Userpet(
     val adoptioncenter: AdoptioncenterPath
         get(): AdoptioncenterPath = adoptioncenter()
 
-    private lateinit var _combathistoryLoserpetidFkey: CombathistoryPath
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.CombatHistory</code> table, via the
-     * <code>CombatHistory_loserPetId_fkey</code> key
-     */
-    fun combathistoryLoserpetidFkey(): CombathistoryPath {
-        if (!this::_combathistoryLoserpetidFkey.isInitialized)
-            _combathistoryLoserpetidFkey = CombathistoryPath(this, null, COMBATHISTORY__COMBATHISTORY_LOSERPETID_FKEY.inverseKey)
-
-        return _combathistoryLoserpetidFkey;
-    }
-
-    val combathistoryLoserpetidFkey: CombathistoryPath
-        get(): CombathistoryPath = combathistoryLoserpetidFkey()
-
-    private lateinit var _combathistoryPet1idFkey: CombathistoryPath
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.CombatHistory</code> table, via the
-     * <code>CombatHistory_pet1Id_fkey</code> key
-     */
-    fun combathistoryPet1idFkey(): CombathistoryPath {
-        if (!this::_combathistoryPet1idFkey.isInitialized)
-            _combathistoryPet1idFkey = CombathistoryPath(this, null, COMBATHISTORY__COMBATHISTORY_PET1ID_FKEY.inverseKey)
-
-        return _combathistoryPet1idFkey;
-    }
-
-    val combathistoryPet1idFkey: CombathistoryPath
-        get(): CombathistoryPath = combathistoryPet1idFkey()
-
-    private lateinit var _combathistoryPet2idFkey: CombathistoryPath
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.CombatHistory</code> table, via the
-     * <code>CombatHistory_pet2Id_fkey</code> key
-     */
-    fun combathistoryPet2idFkey(): CombathistoryPath {
-        if (!this::_combathistoryPet2idFkey.isInitialized)
-            _combathistoryPet2idFkey = CombathistoryPath(this, null, COMBATHISTORY__COMBATHISTORY_PET2ID_FKEY.inverseKey)
-
-        return _combathistoryPet2idFkey;
-    }
-
-    val combathistoryPet2idFkey: CombathistoryPath
-        get(): CombathistoryPath = combathistoryPet2idFkey()
-
-    private lateinit var _combathistoryWinnerpetidFkey: CombathistoryPath
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.CombatHistory</code> table, via the
-     * <code>CombatHistory_winnerPetId_fkey</code> key
-     */
-    fun combathistoryWinnerpetidFkey(): CombathistoryPath {
-        if (!this::_combathistoryWinnerpetidFkey.isInitialized)
-            _combathistoryWinnerpetidFkey = CombathistoryPath(this, null, COMBATHISTORY__COMBATHISTORY_WINNERPETID_FKEY.inverseKey)
-
-        return _combathistoryWinnerpetidFkey;
-    }
-
-    val combathistoryWinnerpetidFkey: CombathistoryPath
-        get(): CombathistoryPath = combathistoryWinnerpetidFkey()
-
-    private lateinit var _combatpowerhistory: CombatpowerhistoryPath
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.CombatPowerHistory</code> table
-     */
-    fun combatpowerhistory(): CombatpowerhistoryPath {
-        if (!this::_combatpowerhistory.isInitialized)
-            _combatpowerhistory = CombatpowerhistoryPath(this, null, COMBATPOWERHISTORY__COMBATPOWERHISTORY_PETID_FKEY.inverseKey)
-
-        return _combatpowerhistory;
-    }
-
-    val combatpowerhistory: CombatpowerhistoryPath
-        get(): CombatpowerhistoryPath = combatpowerhistory()
-
     private lateinit var _petgenetics: PetgeneticsPath
 
     /**
@@ -441,22 +348,6 @@ open class Userpet(
 
     val userpetpersonality: UserpetpersonalityPath
         get(): UserpetpersonalityPath = userpetpersonality()
-
-    private lateinit var _userpetpower: UserpetpowerPath
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.UserPetPower</code> table
-     */
-    fun userpetpower(): UserpetpowerPath {
-        if (!this::_userpetpower.isInitialized)
-            _userpetpower = UserpetpowerPath(this, null, USERPETPOWER__USERPETPOWER_USERPETID_FKEY.inverseKey)
-
-        return _userpetpower;
-    }
-
-    val userpetpower: UserpetpowerPath
-        get(): UserpetpowerPath = userpetpower()
 
     private lateinit var _userpetskill: UserpetskillPath
 

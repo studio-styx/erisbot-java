@@ -12,8 +12,7 @@ import org.jooq.Table
 import org.jooq.impl.SchemaImpl
 
 import studio.styx.erisbot.generated.sequences.ADOPTIONCENTER_ID_SEQ
-import studio.styx.erisbot.generated.sequences.COMBATHISTORY_ID_SEQ
-import studio.styx.erisbot.generated.sequences.COMBATPOWERHISTORY_ID_SEQ
+import studio.styx.erisbot.generated.sequences.COMMAND_ID_SEQ
 import studio.styx.erisbot.generated.sequences.COMPANY_ID_SEQ
 import studio.styx.erisbot.generated.sequences.CONTRACT_ID_SEQ
 import studio.styx.erisbot.generated.sequences.COOLDOWN_ID_SEQ
@@ -32,31 +31,25 @@ import studio.styx.erisbot.generated.sequences.GUILDGIVEAWAY_ID_SEQ
 import studio.styx.erisbot.generated.sequences.INTERVIEW_ID_SEQ
 import studio.styx.erisbot.generated.sequences.LOG_ID_SEQ
 import studio.styx.erisbot.generated.sequences.MAILS_ID_SEQ
+import studio.styx.erisbot.generated.sequences.PAGECOMPONENT_ID_SEQ
 import studio.styx.erisbot.generated.sequences.PERSONALITYTRAIT_ID_SEQ
 import studio.styx.erisbot.generated.sequences.PETGENETICS_ID_SEQ
-import studio.styx.erisbot.generated.sequences.PETPOWEREFFECTIVENESS_ID_SEQ
-import studio.styx.erisbot.generated.sequences.PETPOWER_ID_SEQ
 import studio.styx.erisbot.generated.sequences.PETSKILL_ID_SEQ
 import studio.styx.erisbot.generated.sequences.PET_ID_SEQ
 import studio.styx.erisbot.generated.sequences.REQUISITION_ID_SEQ
 import studio.styx.erisbot.generated.sequences.ROLEMULTIPLEENTRY_ID_SEQ
-import studio.styx.erisbot.generated.sequences.STOCKHISTORY_ID_SEQ
-import studio.styx.erisbot.generated.sequences.STOCKHOLDING_ID_SEQ
-import studio.styx.erisbot.generated.sequences.STOCK_ID_SEQ
 import studio.styx.erisbot.generated.sequences.TRANSACTION_ID_SEQ
 import studio.styx.erisbot.generated.sequences.TRYVIAQUESTIONS_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERFISHINGROD_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERFISH_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERGIVEAWAY_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERPETPERSONALITY_ID_SEQ
-import studio.styx.erisbot.generated.sequences.USERPETPOWER_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERPETSKILL_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERPET_ID_SEQ
 import studio.styx.erisbot.generated.sequences.WORKCHALLENGES_ID_SEQ
 import studio.styx.erisbot.generated.tables.Adoptioncenter
 import studio.styx.erisbot.generated.tables.Application
-import studio.styx.erisbot.generated.tables.Combathistory
-import studio.styx.erisbot.generated.tables.Combatpowerhistory
+import studio.styx.erisbot.generated.tables.Command
 import studio.styx.erisbot.generated.tables.Company
 import studio.styx.erisbot.generated.tables.Contract
 import studio.styx.erisbot.generated.tables.Cooldown
@@ -77,17 +70,13 @@ import studio.styx.erisbot.generated.tables.Guildsettings
 import studio.styx.erisbot.generated.tables.Interview
 import studio.styx.erisbot.generated.tables.Log
 import studio.styx.erisbot.generated.tables.Mails
+import studio.styx.erisbot.generated.tables.Pagecomponent
 import studio.styx.erisbot.generated.tables.Personalitytrait
 import studio.styx.erisbot.generated.tables.Pet
 import studio.styx.erisbot.generated.tables.Petgenetics
-import studio.styx.erisbot.generated.tables.Petpower
-import studio.styx.erisbot.generated.tables.Petpowereffectiveness
 import studio.styx.erisbot.generated.tables.Petskill
 import studio.styx.erisbot.generated.tables.Requisition
 import studio.styx.erisbot.generated.tables.Rolemultipleentry
-import studio.styx.erisbot.generated.tables.Stock
-import studio.styx.erisbot.generated.tables.Stockhistory
-import studio.styx.erisbot.generated.tables.Stockholding
 import studio.styx.erisbot.generated.tables.Transaction
 import studio.styx.erisbot.generated.tables.Tryviaquestions
 import studio.styx.erisbot.generated.tables.User
@@ -96,7 +85,6 @@ import studio.styx.erisbot.generated.tables.Userfishingrod
 import studio.styx.erisbot.generated.tables.Usergiveaway
 import studio.styx.erisbot.generated.tables.Userpet
 import studio.styx.erisbot.generated.tables.Userpetpersonality
-import studio.styx.erisbot.generated.tables.Userpetpower
 import studio.styx.erisbot.generated.tables.Userpetskill
 import studio.styx.erisbot.generated.tables.Workchallenges
 import studio.styx.erisbot.generated.tables._Footballleaguetofootballteam
@@ -137,14 +125,9 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
     val APPLICATION: Application get() = Application.APPLICATION
 
     /**
-     * The table <code>public.CombatHistory</code>.
+     * The table <code>public.Command</code>.
      */
-    val COMBATHISTORY: Combathistory get() = Combathistory.COMBATHISTORY
-
-    /**
-     * The table <code>public.CombatPowerHistory</code>.
-     */
-    val COMBATPOWERHISTORY: Combatpowerhistory get() = Combatpowerhistory.COMBATPOWERHISTORY
+    val COMMAND: Command get() = Command.COMMAND
 
     /**
      * The table <code>public.Company</code>.
@@ -247,6 +230,11 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
     val MAILS: Mails get() = Mails.MAILS
 
     /**
+     * The table <code>public.PageComponent</code>.
+     */
+    val PAGECOMPONENT: Pagecomponent get() = Pagecomponent.PAGECOMPONENT
+
+    /**
      * The table <code>public.PersonalityTrait</code>.
      */
     val PERSONALITYTRAIT: Personalitytrait get() = Personalitytrait.PERSONALITYTRAIT
@@ -262,16 +250,6 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
     val PETGENETICS: Petgenetics get() = Petgenetics.PETGENETICS
 
     /**
-     * The table <code>public.PetPower</code>.
-     */
-    val PETPOWER: Petpower get() = Petpower.PETPOWER
-
-    /**
-     * The table <code>public.PetPowerEffectiveness</code>.
-     */
-    val PETPOWEREFFECTIVENESS: Petpowereffectiveness get() = Petpowereffectiveness.PETPOWEREFFECTIVENESS
-
-    /**
      * The table <code>public.PetSkill</code>.
      */
     val PETSKILL: Petskill get() = Petskill.PETSKILL
@@ -285,21 +263,6 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
      * The table <code>public.RoleMultipleEntry</code>.
      */
     val ROLEMULTIPLEENTRY: Rolemultipleentry get() = Rolemultipleentry.ROLEMULTIPLEENTRY
-
-    /**
-     * The table <code>public.Stock</code>.
-     */
-    val STOCK: Stock get() = Stock.STOCK
-
-    /**
-     * The table <code>public.StockHistory</code>.
-     */
-    val STOCKHISTORY: Stockhistory get() = Stockhistory.STOCKHISTORY
-
-    /**
-     * The table <code>public.StockHolding</code>.
-     */
-    val STOCKHOLDING: Stockholding get() = Stockholding.STOCKHOLDING
 
     /**
      * The table <code>public.Transaction</code>.
@@ -342,11 +305,6 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
     val USERPETPERSONALITY: Userpetpersonality get() = Userpetpersonality.USERPETPERSONALITY
 
     /**
-     * The table <code>public.UserPetPower</code>.
-     */
-    val USERPETPOWER: Userpetpower get() = Userpetpower.USERPETPOWER
-
-    /**
      * The table <code>public.UserPetSkill</code>.
      */
     val USERPETSKILL: Userpetskill get() = Userpetskill.USERPETSKILL
@@ -360,8 +318,7 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
 
     override fun getSequences(): List<Sequence<*>> = listOf(
         ADOPTIONCENTER_ID_SEQ,
-        COMBATHISTORY_ID_SEQ,
-        COMBATPOWERHISTORY_ID_SEQ,
+        COMMAND_ID_SEQ,
         COMPANY_ID_SEQ,
         CONTRACT_ID_SEQ,
         COOLDOWN_ID_SEQ,
@@ -380,17 +337,13 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         INTERVIEW_ID_SEQ,
         LOG_ID_SEQ,
         MAILS_ID_SEQ,
+        PAGECOMPONENT_ID_SEQ,
         PERSONALITYTRAIT_ID_SEQ,
         PET_ID_SEQ,
         PETGENETICS_ID_SEQ,
-        PETPOWER_ID_SEQ,
-        PETPOWEREFFECTIVENESS_ID_SEQ,
         PETSKILL_ID_SEQ,
         REQUISITION_ID_SEQ,
         ROLEMULTIPLEENTRY_ID_SEQ,
-        STOCK_ID_SEQ,
-        STOCKHISTORY_ID_SEQ,
-        STOCKHOLDING_ID_SEQ,
         TRANSACTION_ID_SEQ,
         TRYVIAQUESTIONS_ID_SEQ,
         USERFISH_ID_SEQ,
@@ -398,7 +351,6 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         USERGIVEAWAY_ID_SEQ,
         USERPET_ID_SEQ,
         USERPETPERSONALITY_ID_SEQ,
-        USERPETPOWER_ID_SEQ,
         USERPETSKILL_ID_SEQ,
         WORKCHALLENGES_ID_SEQ
     )
@@ -408,8 +360,7 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         _PrismaMigrations._PRISMA_MIGRATIONS,
         Adoptioncenter.ADOPTIONCENTER,
         Application.APPLICATION,
-        Combathistory.COMBATHISTORY,
-        Combatpowerhistory.COMBATPOWERHISTORY,
+        Command.COMMAND,
         Company.COMPANY,
         Contract.CONTRACT,
         Cooldown.COOLDOWN,
@@ -430,17 +381,13 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         Interview.INTERVIEW,
         Log.LOG,
         Mails.MAILS,
+        Pagecomponent.PAGECOMPONENT,
         Personalitytrait.PERSONALITYTRAIT,
         Pet.PET,
         Petgenetics.PETGENETICS,
-        Petpower.PETPOWER,
-        Petpowereffectiveness.PETPOWEREFFECTIVENESS,
         Petskill.PETSKILL,
         Requisition.REQUISITION,
         Rolemultipleentry.ROLEMULTIPLEENTRY,
-        Stock.STOCK,
-        Stockhistory.STOCKHISTORY,
-        Stockholding.STOCKHOLDING,
         Transaction.TRANSACTION,
         Tryviaquestions.TRYVIAQUESTIONS,
         User.USER,
@@ -449,7 +396,6 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         Usergiveaway.USERGIVEAWAY,
         Userpet.USERPET,
         Userpetpersonality.USERPETPERSONALITY,
-        Userpetpower.USERPETPOWER,
         Userpetskill.USERPETSKILL,
         Workchallenges.WORKCHALLENGES
     )

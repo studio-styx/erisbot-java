@@ -10,7 +10,7 @@ import org.jooq.impl.Internal
 
 import studio.styx.erisbot.generated.tables.Adoptioncenter
 import studio.styx.erisbot.generated.tables.Application
-import studio.styx.erisbot.generated.tables.Combathistory
+import studio.styx.erisbot.generated.tables.Command
 import studio.styx.erisbot.generated.tables.Contract
 import studio.styx.erisbot.generated.tables.Cooldown
 import studio.styx.erisbot.generated.tables.Footballarea
@@ -21,10 +21,9 @@ import studio.styx.erisbot.generated.tables.Footballplayer
 import studio.styx.erisbot.generated.tables.Footballteam
 import studio.styx.erisbot.generated.tables.Giveaway
 import studio.styx.erisbot.generated.tables.Guildgiveaway
+import studio.styx.erisbot.generated.tables.Pagecomponent
 import studio.styx.erisbot.generated.tables.Personalitytrait
 import studio.styx.erisbot.generated.tables.Rolemultipleentry
-import studio.styx.erisbot.generated.tables.Stockhistory
-import studio.styx.erisbot.generated.tables.Stockholding
 import studio.styx.erisbot.generated.tables.Tryviaquestions
 import studio.styx.erisbot.generated.tables.User
 import studio.styx.erisbot.generated.tables.Userfishingrod
@@ -41,7 +40,7 @@ import studio.styx.erisbot.generated.tables._Footballleaguetofootballteam
 val _FOOTBALLLEAGUETOFOOTBALLTEAM_B_INDEX: Index = Internal.createIndex(DSL.name("_FootballLeagueToFootballTeam_B_index"), _Footballleaguetofootballteam._FOOTBALLLEAGUETOFOOTBALLTEAM, arrayOf(_Footballleaguetofootballteam._FOOTBALLLEAGUETOFOOTBALLTEAM.B), false)
 val ADOPTIONCENTER_USERPETID_KEY: Index = Internal.createIndex(DSL.name("AdoptionCenter_userPetId_key"), Adoptioncenter.ADOPTIONCENTER, arrayOf(Adoptioncenter.ADOPTIONCENTER.USERPETID), true)
 val APPLICATION_TOKEN_KEY: Index = Internal.createIndex(DSL.name("Application_token_key"), Application.APPLICATION, arrayOf(Application.APPLICATION.TOKEN), true)
-val COMBATHISTORY_MESSAGEID_KEY: Index = Internal.createIndex(DSL.name("CombatHistory_messageId_key"), Combathistory.COMBATHISTORY, arrayOf(Combathistory.COMBATHISTORY.MESSAGEID), true)
+val COMMAND_NAME_SUBCOMMANDGROUP_SUBCOMMAND_KEY: Index = Internal.createIndex(DSL.name("Command_name_subCommandGroup_subCommand_key"), Command.COMMAND, arrayOf(Command.COMMAND.NAME, Command.COMMAND.SUBCOMMANDGROUP, Command.COMMAND.SUBCOMMAND), true)
 val CONTRACT_USERID_KEY: Index = Internal.createIndex(DSL.name("Contract_userId_key"), Contract.CONTRACT, arrayOf(Contract.CONTRACT.USERID), true)
 val COOLDOWN_USERID_NAME_KEY: Index = Internal.createIndex(DSL.name("Cooldown_userId_name_key"), Cooldown.COOLDOWN, arrayOf(Cooldown.COOLDOWN.USERID, Cooldown.COOLDOWN.NAME), true)
 val FOOTBALLAREA_CODE_KEY: Index = Internal.createIndex(DSL.name("FootballArea_code_key"), Footballarea.FOOTBALLAREA, arrayOf(Footballarea.FOOTBALLAREA.CODE), true)
@@ -54,10 +53,9 @@ val FOOTBALLTEAM_APIID_KEY: Index = Internal.createIndex(DSL.name("FootballTeam_
 val GIVEAWAY_EXPIRESAT_IDX: Index = Internal.createIndex(DSL.name("Giveaway_expiresAt_idx"), Giveaway.GIVEAWAY, arrayOf(Giveaway.GIVEAWAY.EXPIRESAT), false)
 val GUILDGIVEAWAY_GUILDID_GIVEAWAYID_KEY: Index = Internal.createIndex(DSL.name("GuildGiveaway_guildId_giveawayId_key"), Guildgiveaway.GUILDGIVEAWAY, arrayOf(Guildgiveaway.GUILDGIVEAWAY.GUILDID, Guildgiveaway.GUILDGIVEAWAY.GIVEAWAYID), true)
 val GUILDGIVEAWAY_MESSAGEID_KEY: Index = Internal.createIndex(DSL.name("GuildGiveaway_messageId_key"), Guildgiveaway.GUILDGIVEAWAY, arrayOf(Guildgiveaway.GUILDGIVEAWAY.MESSAGEID), true)
+val PAGECOMPONENT_NAME_KEY: Index = Internal.createIndex(DSL.name("PageComponent_name_key"), Pagecomponent.PAGECOMPONENT, arrayOf(Pagecomponent.PAGECOMPONENT.NAME), true)
 val PERSONALITYTRAIT_NAME_KEY: Index = Internal.createIndex(DSL.name("PersonalityTrait_name_key"), Personalitytrait.PERSONALITYTRAIT, arrayOf(Personalitytrait.PERSONALITYTRAIT.NAME), true)
 val ROLEMULTIPLEENTRY_GIVEAWAYID_ROLEID_KEY: Index = Internal.createIndex(DSL.name("RoleMultipleEntry_giveawayId_roleId_key"), Rolemultipleentry.ROLEMULTIPLEENTRY, arrayOf(Rolemultipleentry.ROLEMULTIPLEENTRY.GIVEAWAYID, Rolemultipleentry.ROLEMULTIPLEENTRY.ROLEID), true)
-val STOCKHISTORY_STOCKID_DATE_KEY: Index = Internal.createIndex(DSL.name("StockHistory_stockId_date_key"), Stockhistory.STOCKHISTORY, arrayOf(Stockhistory.STOCKHISTORY.STOCKID, Stockhistory.STOCKHISTORY.DATE), true)
-val STOCKHOLDING_USERID_STOCKID_KEY: Index = Internal.createIndex(DSL.name("StockHolding_userId_stockId_key"), Stockholding.STOCKHOLDING, arrayOf(Stockholding.STOCKHOLDING.USERID, Stockholding.STOCKHOLDING.STOCKID), true)
 val TRYVIAQUESTIONS_QUESTION_TYPE_KEY: Index = Internal.createIndex(DSL.name("TryviaQuestions_question_type_key"), Tryviaquestions.TRYVIAQUESTIONS, arrayOf(Tryviaquestions.TRYVIAQUESTIONS.QUESTION, Tryviaquestions.TRYVIAQUESTIONS.TYPE), true)
 val USER_ACTIVEPETID_KEY: Index = Internal.createIndex(DSL.name("User_activePetId_key"), User.USER, arrayOf(User.USER.ACTIVEPETID), true)
 val USER_CONTRACTID_KEY: Index = Internal.createIndex(DSL.name("User_contractId_key"), User.USER, arrayOf(User.USER.CONTRACTID), true)

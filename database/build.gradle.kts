@@ -71,7 +71,7 @@ if (sourceCerts.exists()) {
 }
 
 val clientCrt = jooqCertsDir.resolve("client.crt")
-val clientKey = jooqCertsDir.resolve("client.key")
+val clientKey = jooqCertsDir.resolve("client.der")
 val caCrt = jooqCertsDir.resolve("ca.crt")
 
 if (!clientCrt.exists() || !clientKey.exists() || !caCrt.exists()) {

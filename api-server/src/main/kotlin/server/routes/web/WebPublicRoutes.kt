@@ -9,6 +9,8 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.route
 import net.dv8tion.jda.api.JDA
 import org.jooq.DSLContext
+import server.core.security.frontOnly.frontMiddleware
+import server.routes.web.publicWeb.commands.getCommandsRoute
 
 fun Route.webPublicRoutes(jda: JDA, dsl: DSLContext) {
     route("/web") {
@@ -31,7 +33,8 @@ fun Route.webPublicRoutes(jda: JDA, dsl: DSLContext) {
             allowCredentials = true
         }
         rateLimit(RateLimitName("web_public")) {
-
+            frontMiddleware()
+            getCommandsRoute(dsl)
         }
     }
 

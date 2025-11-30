@@ -18,14 +18,9 @@ import studio.styx.erisbot.generated.Public
 val ADOPTIONCENTER_ID_SEQ: Sequence<Int> = Internal.createSequence("AdoptionCenter_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
 
 /**
- * The sequence <code>public.CombatHistory_id_seq</code>
+ * The sequence <code>public.Command_id_seq</code>
  */
-val COMBATHISTORY_ID_SEQ: Sequence<Int> = Internal.createSequence("CombatHistory_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.CombatPowerHistory_id_seq</code>
- */
-val COMBATPOWERHISTORY_ID_SEQ: Sequence<Int> = Internal.createSequence("CombatPowerHistory_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
+val COMMAND_ID_SEQ: Sequence<Int> = Internal.createSequence("Command_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
 
 /**
  * The sequence <code>public.Company_id_seq</code>
@@ -118,6 +113,11 @@ val LOG_ID_SEQ: Sequence<Int> = Internal.createSequence("Log_id_seq", Public.PUB
 val MAILS_ID_SEQ: Sequence<Int> = Internal.createSequence("Mails_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
 
 /**
+ * The sequence <code>public.PageComponent_id_seq</code>
+ */
+val PAGECOMPONENT_ID_SEQ: Sequence<Int> = Internal.createSequence("PageComponent_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
+
+/**
  * The sequence <code>public.PersonalityTrait_id_seq</code>
  */
 val PERSONALITYTRAIT_ID_SEQ: Sequence<Int> = Internal.createSequence("PersonalityTrait_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
@@ -133,16 +133,6 @@ val PET_ID_SEQ: Sequence<Int> = Internal.createSequence("Pet_id_seq", Public.PUB
 val PETGENETICS_ID_SEQ: Sequence<Int> = Internal.createSequence("PetGenetics_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
 
 /**
- * The sequence <code>public.PetPower_id_seq</code>
- */
-val PETPOWER_ID_SEQ: Sequence<Int> = Internal.createSequence("PetPower_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.PetPowerEffectiveness_id_seq</code>
- */
-val PETPOWEREFFECTIVENESS_ID_SEQ: Sequence<Int> = Internal.createSequence("PetPowerEffectiveness_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
  * The sequence <code>public.PetSkill_id_seq</code>
  */
 val PETSKILL_ID_SEQ: Sequence<Int> = Internal.createSequence("PetSkill_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
@@ -156,21 +146,6 @@ val REQUISITION_ID_SEQ: Sequence<Int> = Internal.createSequence("Requisition_id_
  * The sequence <code>public.RoleMultipleEntry_id_seq</code>
  */
 val ROLEMULTIPLEENTRY_ID_SEQ: Sequence<Int> = Internal.createSequence("RoleMultipleEntry_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.Stock_id_seq</code>
- */
-val STOCK_ID_SEQ: Sequence<Int> = Internal.createSequence("Stock_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.StockHistory_id_seq</code>
- */
-val STOCKHISTORY_ID_SEQ: Sequence<Int> = Internal.createSequence("StockHistory_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.StockHolding_id_seq</code>
- */
-val STOCKHOLDING_ID_SEQ: Sequence<Int> = Internal.createSequence("StockHolding_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
 
 /**
  * The sequence <code>public.Transaction_id_seq</code>
@@ -206,11 +181,6 @@ val USERPET_ID_SEQ: Sequence<Int> = Internal.createSequence("UserPet_id_seq", Pu
  * The sequence <code>public.UserPetPersonality_id_seq</code>
  */
 val USERPETPERSONALITY_ID_SEQ: Sequence<Int> = Internal.createSequence("UserPetPersonality_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.UserPetPower_id_seq</code>
- */
-val USERPETPOWER_ID_SEQ: Sequence<Int> = Internal.createSequence("UserPetPower_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
 
 /**
  * The sequence <code>public.UserPetSkill_id_seq</code>

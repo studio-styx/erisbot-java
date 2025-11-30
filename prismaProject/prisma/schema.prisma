@@ -1,0 +1,820 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./eris"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ------------------------
+// USUÁRIO
+// ------------------------
+
+model User {
+  id                 String         @id
+  money              Decimal        @default(0.0) @db.Decimal(12, 2)
+  xp                 Int            @default(0)
+  contractId         Int?           @unique
+  token              Json?
+  afkReasson         String?
+  afkTime            DateTime?
+  dmNotification     Boolean        @default(false)
+  activePetId        Int?           @unique
+  blacklist          Json?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  showNameInPresence Boolean        @default(false)
+  gender             Gender?
+
+  contract           Contract?     @relation("ActiveContract", fields: [contractId], references: [id], onDelete: SetNull)
+
+  contracts          Contract[]    @relation("UserContracts") // histórico
+
+  activePet          UserPet?       @relation("ActivePetRelation", fields: [activePetId], references: [id], onDelete: SetNull)
+
+  logs               Log[]
+  cooldowns          Cooldown[]
+  mails              Mails[]        @relation("ReceivedMails")
+  sendedMails        Mails[]        @relation("SentMails")
+  applications       Application[]
+  guilds             GuildMember[]
+  transactionsSent   Transaction[]  @relation("UserTransactions")
+  transactionsReceived Transaction[] @relation("TargetTransactions")
+  giveaways          UserGiveaway[]
+  fishs              UserFish[]
+  fishingRods        UserFishingRod[]
+  pets               UserPet[]      @relation("UserPetsRelation")
+
+  readFootballBetTerms  Boolean @default(false)
+  acceptedFootballTermsAt DateTime?
+  favoriteTeamId     BigInt?
+  favoriteTeam       FootballTeam? @relation(fields: [favoriteTeamId], references: [id], onDelete: SetNull)
+
+  bets               FootballBet[]
+  betsLogs           FootballBetLog[]
+}
+
+model Contract {
+  id        Int      @id @default(autoincrement())
+  userId    String   @unique
+  companyId Int
+
+  user      User      @relation("UserContracts", fields: [userId], references: [id])
+  activeFor User?     @relation("ActiveContract")
+  company   Company  @relation(fields: [companyId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  expiresAt DateTime?
+
+  salary    Decimal  @db.Decimal(12, 2)
+  status    ContractStatus
+
+  interview Interview[]
+  challenges WorkChallenges[]
+}
+
+
+enum ContractStatus {
+  EXPIRED
+  ACTIVE
+  INACTIVE
+  FIRED
+}
+
+model WorkChallenges {
+  id        Int      @id @default(autoincrement())
+  contractId Int
+
+  contract  Contract @relation(fields: [contractId], references: [id])
+
+  challenge String
+  response  String
+
+  bonus     Int       @default(0)
+
+  createdAt DateTime @default(now())
+}
+
+model Interview {
+  id        Int      @id @default(autoincrement())
+  contractId  Int
+
+  answer    String
+  response  String
+
+  createdAt DateTime @default(now())
+
+  contract  Contract  @relation(fields: [contractId], references: [id])
+}
+
+model TryviaQuestions {
+  id        Int   @id   @default(autoincrement())
+  question  String
+  difficulty  TryviaDifficulty
+  type  TryviaTypes   @default(WRITEINCHAT)
+  correct   Boolean?
+  tags  String[]
+  correctAnswer  String
+  correctAnswersVariation   String[] @default([])
+  explanation   String
+  incorrectAnswers   String[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now())
+  status      TryviaStatus
+  origin      TryviaOrigin
+
+  @@unique([question, type])
+}
+
+enum TryviaStatus {
+  APPROVED
+  PENDING
+  REJECTED
+}
+
+enum TryviaTypes {
+  BOOLEAN
+  MULTIPLE
+  WRITEINCHAT
+}
+
+enum TryviaOrigin {
+  USER
+  API
+  IA
+  ADMIN
+}
+
+enum TryviaDifficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model Application {
+  id        String          @id
+  money     Decimal         @default(0.0) @db.Decimal(12, 2)
+  token     String?          @unique
+  ownerId    String
+  owner      User            @relation(fields: [ownerId], references: [id])
+  requisitions Requisition[]
+  permissions       String[] @default([])
+}
+
+model Requisition {
+  id        Int          @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  url       String
+  Application Application     @relation(fields: [applicationId], references: [id])
+  applicationId String
+}
+
+model Log {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  message   String
+  timestamp DateTime @default(now())
+  level     Int      @default(0)
+  type      String   @default("info")
+  tags      String[] @default([])
+}
+
+model Transaction {
+  id        Int      @id @default(autoincrement())
+
+  userId    String
+  user      User     @relation("UserTransactions", fields: [userId], references: [id])
+
+  targetId  String?
+  target    User?     @relation("TargetTransactions", fields: [targetId], references: [id])
+
+  amount    Float
+  quitType  TransactionQuitType?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  expiresAt DateTime?
+  
+  guildId   String? 
+  guild     GuildSettings?   @relation(fields: [guildId], references: [id], onDelete: Cascade)
+
+  channelId String?
+  messageId String?
+
+  reason    String? 
+  type      TransactionType    @default(USER)
+  status    TransactionStatus  @default(PENDING)
+}
+
+enum TransactionType {
+  API
+  USER
+  ADMIN
+  BUY
+  SELL
+}
+
+enum TransactionQuitType {
+  SUB
+  SUM
+}
+
+enum TransactionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+model Cooldown {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  name      String
+  timestamp DateTime @default(now())
+  willEndIn DateTime
+
+  @@unique([userId, name])
+}
+
+model Company {
+  id           Int     @id @default(autoincrement())
+  name         String
+  description  String?
+  difficulty   Int     @default(1)
+  experience   Int     @default(0)
+  wage         Decimal @default(100.0) @db.Decimal(12, 2)
+  expectations Json
+  flags         String[] @default([])
+  isEnabled     Boolean @default(true)
+
+  contracts     Contract[]
+}
+
+model GuildSettings {
+  id                             String   @id
+  
+  channelsCommandDisabled        String[] @default([])
+  channelsCommandDisabledIsHabilited Boolean @default(false)
+  
+  channelsCommandEnabled         String[] @default([])
+  channelsCommandEnabledIsHabilited Boolean @default(false)
+  
+  xpSystemEnabled                Boolean  @default(false)
+  difficulty                     Float    @default(1.0)
+  
+  rolesXpBonus                   Json     @default("[]")
+  rolesNotWinXp                  String[] @default([])
+  
+  channelsXpBonus                Json     @default("[]")
+  channelsNotWinXp               String[] @default([])
+
+  warnLevelUp                    Json     @default("{}")
+  levelGrant                     Json     @default("[]")
+  
+  members                        GuildMember[]
+  transactions                   Transaction[]
+  connectedGiveaways             GuildGiveaway[]
+}
+
+model GuildMember {
+  id      String
+  guildId String
+
+  guild   GuildSettings @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  user    User? @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  xp      Int @default(0)
+  tryviaPoints Int @default(0)
+  tryviaGames  Int @default(0)
+  tryviaWins   Int @default(0)
+
+  @@id([guildId, id])
+}
+
+model Mails {
+  id        Int @id @default(autoincrement())
+
+  userId       String
+  user         User     @relation("ReceivedMails", fields: [userId], references: [id], onDelete: Cascade)
+
+  content      String
+  asRead       Boolean  @default(false)
+  tags         String[]
+
+  whoSendId    String?
+  whoSendUser  User?     @relation("SentMails", fields: [whoSendId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+model Giveaway {
+  id                 Int                @id @default(autoincrement())
+  localId            Int                // ID do sorteio no servidor host
+  title              String
+  description        String?
+  participants       UserGiveaway[]
+  connectedGuilds    GuildGiveaway[]
+  roleEntries        RoleMultipleEntry[]
+  ended              Boolean            @default(false)
+  
+  serverStayRequired Boolean            @default(false) // se o usuário precisa estar em todos os servidores conectados
+  usersWins          Int                @default(1)     // quantidade de vencedores
+  
+  expiresAt          DateTime
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt()
+
+  @@index([expiresAt])
+}
+
+model UserGiveaway {
+  id         Int       @id @default(autoincrement())
+  userId     String
+  giveawayId Int
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  giveaway   Giveaway  @relation(fields: [giveawayId], references: [id], onDelete: Cascade)
+
+  isWinner   Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+
+  @@unique([userId, giveawayId])
+}
+
+model GuildGiveaway {
+  id            Int            @id @default(autoincrement())
+  guildId       String
+  channelId     String
+  messageId     String         @unique
+  giveawayId    Int
+  isHost        Boolean        @default(false)
+
+  guild         GuildSettings  @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  giveaway      Giveaway       @relation(fields: [giveawayId], references: [id], onDelete: Cascade)
+
+  blackListRoles        String[]
+  xpRequired            Int?
+
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt()
+
+  @@unique([guildId, giveawayId])
+}
+
+model RoleMultipleEntry {
+  id         Int      @id @default(autoincrement())
+  giveawayId Int
+  roleId     String
+  extraEntries Int
+
+  giveaway   Giveaway @relation(fields: [giveawayId], references: [id], onDelete: Cascade)
+
+  @@unique([giveawayId, roleId])
+}
+
+model UserFish {
+  id        Int @id @default(autoincrement())
+  userId    String
+  fishId    Int
+  createdAt DateTime   @default(now())
+  
+  fish      Fish @relation(fields: [fishId], references: [id], onDelete: Cascade)
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Fish {
+  id        Int @id @default(autoincrement())
+  name      String
+  rarity    Rarity
+  price     Float
+  createdAt DateTime   @default(now())
+
+  owners    UserFish[]
+}
+
+enum Rarity {
+  LEGENDARY
+  EPIC
+  RARE
+  UNCOMUM
+  COMUM
+}
+
+model UserFishingRod {
+  id             Int   @id   @default(autoincrement())
+  fishingRodId   Int
+  userId         String
+  durability     Int
+  createdAt      DateTime   @default(now())
+  
+  user           User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fishingRod     FishingRod   @relation(fields: [fishingRodId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, fishingRodId])
+}
+
+model FishingRod {
+  id              Int   @id   @default(autoincrement())
+  price           Float
+  name            String
+  rarity          Rarity
+  durability      Int
+  createdAt       DateTime   @default(now())
+
+  owners          UserFishingRod[]
+}
+
+// ------------------------
+// PETS
+// ------------------------
+
+model Pet {
+  id        Int       @id @default(autoincrement())
+  name      String
+  rarity    Rarity
+  price     Float
+  animal    Animal
+  specie    String
+  createdAt DateTime  @default(now())
+  flags     String[]  @default([])
+  isEnabled Boolean   @default(true)
+
+  userPets  UserPet[]
+  genetics  Genetics[]
+}
+
+
+// ------------------------
+// PETS DE USUÁRIO
+// ------------------------
+
+model UserPet {
+  id          Int       @id @default(autoincrement())
+  flags       String[]  @default([])
+  userId      String
+  petId       Int
+  name        String
+  hungry      Int       @default(100)
+  life        Int       @default(100)
+  happiness   Int       @default(100)
+  energy      Int       @default(100)
+  isDead      Boolean   @default(false)
+  gender      Gender
+  humor       String    @default("normal")
+  isPregnant  Boolean   @default(false)
+  pregnantEndAt DateTime?
+  spouseId    Int?      @unique
+  parent1Id   Int?
+  parent2Id   Int?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relações diretas
+  user        User      @relation("UserPetsRelation", fields: [userId], references: [id], onDelete: Cascade)
+  pet         Pet       @relation(fields: [petId], references: [id], onDelete: Cascade)
+  spouse      UserPet?  @relation("SpouseRelation", fields: [spouseId], references: [id])
+  spouseOf    UserPet?  @relation("SpouseRelation")
+  activeUser  User?     @relation("ActivePetRelation")
+
+  // Hereditariedade
+  parent1     UserPet?  @relation("Parent1Relation", fields: [parent1Id], references: [id])
+  parent2     UserPet?  @relation("Parent2Relation", fields: [parent2Id], references: [id])
+  childsAsParent1 UserPet[] @relation("Parent1Relation")
+  childsAsParent2 UserPet[] @relation("Parent2Relation")
+
+  // Outras relações
+  genetics    PetGenetics[]
+  skills      UserPetSkill[]
+  personality UserPetPersonality[]
+  adoption    AdoptionCenter?
+}
+
+model UserPetPersonality {
+  id        Int @id @default(autoincrement())
+  userPetId Int
+  traitId   Int
+
+  userPet  UserPet         @relation(fields: [userPetId], references: [id], onDelete: Cascade)
+  trait    PersonalityTrait @relation(fields: [traitId], references: [id], onDelete: Cascade)
+}
+
+model Genetics {
+  id        Int      @id @default(autoincrement())
+  petId     Int
+  trait     String   // Ex.: "Olhos Azuis", "Pelo Branco"
+  colorPart PetGeneticsColorPart
+  geneType  GeneType @default(NEUTRAL)  // Novo enum substituindo booleans
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
+  petGenetics PetGenetics[]
+}
+
+model PersonalityTrait {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  geneType  GeneType @default(NEUTRAL)
+  personalityConflictNames  String[]
+
+  userPetPersonalities UserPetPersonality[]
+}
+
+enum GeneType {
+  DOMINANT
+  RECESSIVE
+  CODOMINANT
+  NEUTRAL
+}
+
+model PetGenetics {
+  id        Int      @id @default(autoincrement())
+  userPetId Int
+  geneId    Int
+  inheritedFromParent1 Boolean?
+  inheritedFromParent2 Boolean?
+  createdAt DateTime @default(now())
+
+  userPet  UserPet  @relation(fields: [userPetId], references: [id], onDelete: Cascade)
+  gene     Genetics @relation(fields: [geneId], references: [id], onDelete: Cascade)
+}
+
+model PetSkill {
+  id        Int @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+
+  userPetSkills UserPetSkill[]
+}
+
+model UserPetSkill {
+  id        Int @id @default(autoincrement())
+  userPetId Int
+  skillId   Int
+  level     Int @default(1)
+  xp        Int @default(0)
+  createdAt DateTime @default(now())
+  
+  userPet UserPet @relation(fields: [userPetId], references: [id], onDelete: Cascade)
+  skill   PetSkill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+}
+
+model AdoptionCenter {
+  id         Int @id @default(autoincrement())
+  userPetId  Int @unique
+  createdAt  DateTime @default(now())
+  deleteIn   DateTime
+  deletedAt  DateTime?
+
+  userPet UserPet @relation(fields: [userPetId], references: [id], onDelete: Cascade)
+}
+
+enum PetGeneticsColorPart {
+  COLOR1
+  COLOR2
+  EYE 
+}
+
+enum Animal {
+  CAT
+  DOG
+  BIRD
+  HAMSTER
+  RABBIT
+  DRAGON
+  LION
+  JAGUAR
+
+  // 🎃 Halloween Event Exclusives
+  BAT
+  RAVEN
+  SPIDER
+  WOLF
+  BLACK_CAT
+  GHOST_DOG
+  ZOMBIE_RABBIT
+  SKELETON_HORSE
+  PUMPKIN_GOLEM
+}
+enum Gender {
+  MALE
+  FEMALE
+}
+
+// ------------------------
+// SISTEMA DE APOSTAS DE FUTEBOL EM JOGOS REAIS
+// ------------------------
+
+model FootballLeague {
+  id        BigInt   @id @default(autoincrement())
+  apiId     BigInt   @unique
+  name      String
+  code      String   @unique
+  type      String   @default("LEAGUE")
+  emblem    String?
+  areaId    Int   @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt()
+
+  area      FootballArea @relation(fields: [areaId], references: [id], onDelete: Cascade)
+  teams     FootballTeam[]
+  matches   FootballMatch[]
+}
+
+// ==== TIME DE FUTEBOL ====
+model FootballTeam {
+  id         BigInt   @id @default(autoincrement())
+  apiId      BigInt   @unique
+  name       String
+  shortName  String   @default("Unknown")
+  tla        String   @default("UNK")
+  crest      String   @default("")
+  address    String   @default("Desconhecido")
+  clubColors String?
+  venue      String   @default("Desconhecido")
+  areaId     Int   @default(0)
+  points     Int      @default(0)
+
+  area           FootballArea           @relation(fields: [areaId], references: [id], onDelete: Cascade)
+  competitions   FootballLeague[]
+  players        FootballPlayer[]
+  matchesAsHome  FootballMatch[]        @relation("MatchesAsHome")
+  matchesAsAway  FootballMatch[]        @relation("MatchesAsAway")
+  favoritedUsers User[]
+}
+
+// ==== Jogadores de futebol ==== //
+model FootballPlayer {
+  id            BigInt  @id   @default(autoincrement())
+  name          String
+  firstName     String
+  lastName      String
+  position      String
+  dateOfBirth   DateTime?
+  nationality   String
+  shirtNumber   Int?
+  marketValue   Int?
+  apiId         Int     @unique
+  contractStarted DateTime?
+  contractUntil DateTime?
+  points         Int       @default(0)
+
+  teamId        BigInt
+  team          FootballTeam @relation(fields: [teamId], references: [id], onDelete: Cascade)
+}
+
+// ==== Jogos de futebol ==== //
+model FootballMatch {
+  id            BigInt  @id   @default(autoincrement())
+  apiId         Int     @unique
+  startAt       DateTime
+  status        MatchStatus @default(SCHEDULED)
+  homeTeamId    BigInt
+  awayTeamId    BigInt
+  competitionId BigInt
+  goalsHome     Int?
+  goalsAway     Int?
+  venue         String?
+  oddsHomeWin   Float?
+  oddsDraw      Float?
+  oddsAwayWin   Float?
+
+  homeTeam      FootballTeam @relation("MatchesAsHome", fields: [homeTeamId], references: [id], onDelete: Cascade)
+  awayTeam      FootballTeam @relation("MatchesAsAway", fields: [awayTeamId], references: [id], onDelete: Cascade)
+  competition   FootballLeague @relation(fields: [competitionId], references: [id], onDelete: Cascade)
+  bets          FootballBet[]
+  betsLogs      FootballBetLog[]
+}
+
+// ==== Areas ==== //
+model FootballArea {
+  id            Int   @id   @default(autoincrement())
+  name          String
+  code          String  @unique
+  flag          String?
+
+  leagues       FootballLeague[]
+  teams         FootballTeam[]
+}
+
+// ==== Status de jogos ==== //
+enum MatchStatus {
+  SCHEDULED
+  LIVE
+  IN_PLAY
+  PAUSED
+  FINISHED
+  POSTPONED
+  SUSPENDED
+  CANCELED
+  AWARDED
+}
+
+// ==== Apostas nos jogos ==== //
+model FootballBet {
+  id            BigInt  @id   @default(autoincrement())
+  matchId       BigInt
+  userId        String
+  
+  amount        Decimal @db.Decimal(12, 2)
+  type          FootballBetType
+  odds          Decimal @db.Decimal(12, 2)
+  status           FootballBetStatus @default(PENDING)
+
+  quantity      String?    // Depois pode ser parseado para number
+
+  match         FootballMatch @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt @default(now())
+
+  logs           FootballBetLog[]
+
+
+  @@unique([type, userId, matchId])
+}
+
+enum FootballBetType {
+  HOME_WIN
+  DRAW
+  AWAY_WIN
+  EXACT_GOALS
+  GOALS_HOME
+  GOALS_AWAY
+}
+
+enum FootballBetStatus {
+  PENDING
+  WON
+  LOST
+  CANCELED
+}
+
+model FootballBetLog {
+  id            BigInt  @id   @default(autoincrement())
+
+  matchId       BigInt
+  userId        String
+  betId         BigInt
+
+  match         FootballMatch @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bet           FootballBet @relation(fields: [betId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  action        FootballBetLogAction
+  description   String
+}
+
+enum FootballBetLogAction {
+  CREATED
+  UPDATED
+  CANCELED
+}
+
+// ------------------------
+// COMANDOS
+// ------------------------
+
+model Command {
+  id            Int @id @default(autoincrement())
+  name          String
+  ptbrName        String?
+  subCommandGroup String?
+  subCommandGroupPtbr String?
+  subCommand    String?
+  subCommandPtbr String?
+  discordId     String
+  description   String
+  descriptionPtbr String?
+  explanation   Json?
+  isEnabled     Boolean @default(true)
+  category      String
+
+  @@unique([name, subCommandGroup, subCommand])
+}
+
+// ------------------------
+// COMPONENTES DINÂMICOS DO SITE
+// ------------------------
+
+model PageComponent {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+
+  components    Json
+}

@@ -17,6 +17,9 @@ import kotlinx.serialization.Serializable
 import server.routes.v2.v2Routes
 import server.routes.web.webProtectedRoutes
 import server.routes.web.webPublicRoutes
+import settings.Settings
+import studio.styx.erisbot.generated.tables.references.COMMAND
+import studio.styx.erisbot.generated.tables.references.USER
 import kotlin.time.Duration.Companion.seconds
 
 
@@ -24,7 +27,10 @@ import kotlin.time.Duration.Companion.seconds
 data class StatusResponse(
     val servers: Int,
     val users: Int,
-    val version: String
+    val usersMediaPerServer: Double,
+    val version: String,
+    val usersInDb: Int,
+    val commands: Int,
 )
 
 fun main(jda: JDA, dsl: DSLContext) {
@@ -65,16 +71,21 @@ fun main(jda: JDA, dsl: DSLContext) {
             get("/") {
                 val countServers = jda.guilds.size
                 val countUsers = jda.guilds.sumOf { guild -> guild.memberCount }
-                val version = "1.0.0"
+                val version = Settings.app.getVersion()
+                val countUsersInDb = dsl.fetchCount(USER)
+                val commandsCount = dsl.fetchCount(COMMAND)
 
                 val response = StatusResponse(
                     servers = countServers,
                     users = countUsers,
-                    version = version
+                    usersMediaPerServer = countUsers.toDouble() / countServers,
+                    version = version,
+                    usersInDb = countUsersInDb,
+                    commands = commandsCount
                 )
                 call.respond(response)
             }
         }
 
-    }.start(wait = true)
+    }.start(wait = false)
 }

@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionE
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
@@ -20,11 +21,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import schedules.transactionExpires.IntervalCheckKt;
 import server.ApplicationKt;
+import shared.Cache;
 import shared.Colors;
 import studio.styx.erisbot.core.*;
 import studio.styx.erisbot.core.abstractClasses.AbstractCommand;
 import studio.styx.erisbot.core.interfaces.CommandInterface;
 import studio.styx.erisbot.core.interfaces.ResponderInterface;
+import studio.styx.erisbot.discord.core.init.InitCommandsAndCache;
+import studio.styx.erisbot.generated.tables.records.CommandRecord;
+import studio.styx.erisbot.generated.tables.references.TablesKt;
 import studio.styx.schemaEXtended.core.exceptions.SchemaIllegalArgumentException;
 import utils.ComponentBuilder;
 
@@ -38,13 +43,13 @@ import java.util.stream.Collectors;
 public class Main implements CommandLineRunner {
 
     @Autowired
-    private ApplicationContext context; // ← para pegar beans do Spring
+    private ApplicationContext context;
 
     @Autowired
-    private DSLContext dsl; // ← seu JOOQ pronto
+    private DSLContext dsl;
 
     @Autowired
-    private DiscordConfig discordConfig; // ← seu token
+    private DiscordConfig discordConfig;
 
     private JDA jda;
 
@@ -64,7 +69,6 @@ public class Main implements CommandLineRunner {
                 .build();
 
         jda.awaitReady();
-        System.out.println("Bot iniciado: " + jda.getSelfUser().getName());
 
         // === INICIA O SERVIDOR API ===
         ApplicationKt.main(jda, dsl);
@@ -82,7 +86,9 @@ public class Main implements CommandLineRunner {
         List<ResponderInterface> responders = loadResponders();
 
         // === CARREGA AGENDAMENTOS ===
+        System.out.println("Carregando agendamentos");
         IntervalCheckKt.startIntervalCheck(dsl, jda); // Carrega agendamentos para expirar transações
+        System.out.println("Agendamentos carregados");
     }
 
     // === INJETA O DSL NOS COMANDOS QUE HERDAM DE AbstractCommand ===
@@ -128,9 +134,15 @@ public class Main implements CommandLineRunner {
         }
 
         jda.updateCommands().addCommands(commandDataList).queue(
-                success -> System.out.println("Comandos registrados com sucesso no Discord!"),
+                success -> {
+                    System.out.println("Comandos registrados com sucesso no Discord!");
+                    jda.retrieveCommands().queue(discordCommands ->
+                            new InitCommandsAndCache().registerCommandsInDb(dsl, discordCommands)
+                    );
+                },
                 error -> System.err.println("Erro ao registrar comandos: " + error.getMessage())
         );
+
     }
 
     private List<ResponderInterface> loadResponders() {
@@ -161,10 +173,51 @@ public class Main implements CommandLineRunner {
         private final List<ResponderInterface> responders = loadResponders();
 
         @Override
-        public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
+        public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
             for (CommandInterface command : commands) {
                 if (event.getName().equals(command.getSlashCommandData().getName())) {
                     try {
+                        // Pegar o cache de comandos
+                        List<CommandRecord> cachedCommands = Cache.get("commands");
+
+                        String commandName = event.getName(); // nome do comando principal
+                        String subcommandGroup = event.getSubcommandGroup(); // grupo do subcomando (pode ser null)
+                        String subcommandName = event.getSubcommandName(); // nome do subcomando (pode ser null)
+
+                        if (cachedCommands == null) {
+                            command.execute(event);
+                            return;
+                        }
+                        // Buscar pelo comando considerando a hierarquia
+                        CommandRecord cachedCommand = cachedCommands.stream()
+                                .filter(cmd -> commandName.equals(cmd.getName()))
+                                .filter(cmd -> {
+                                    // Se existe grupo de subcomando no evento, verifica se bate com o comando
+                                    if (subcommandGroup != null) {
+                                        return subcommandGroup.equals(cmd.getSubcommandgroup());
+                                    }
+                                    // Se não tem grupo no evento, o comando também não deve ter
+                                    return cmd.getSubcommandgroup() == null;
+                                })
+                                .filter(cmd -> {
+                                    // Se existe subcomando no evento, verifica se bate com o comando
+                                    if (subcommandName != null) {
+                                        return subcommandName.equals(cmd.getSubcommand());
+                                    }
+                                    // Se não tem subcomando no evento, o comando também não deve ter
+                                    return cmd.getSubcommand() == null;
+                                })
+                                .findFirst()
+                                .orElse(null);
+
+                        if (cachedCommand != null && cachedCommand.getIsenabled() != null && !cachedCommand.getIsenabled()) {
+                            ComponentBuilder.ContainerBuilder.create()
+                                    .addText("Ops! esse comando foi desativado pelos meus desenvolvedores!")
+                                    .withColor(Colors.DANGER)
+                                    .reply(event);
+                            return;
+                        }
+
                         command.execute(event);
                     } catch (SchemaIllegalArgumentException e) {
                         String errorMessages;

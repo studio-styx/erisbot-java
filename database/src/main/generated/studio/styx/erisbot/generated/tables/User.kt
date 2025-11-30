@@ -39,8 +39,6 @@ import studio.styx.erisbot.generated.enums.Gender
 import studio.styx.erisbot.generated.indexes.USER_ACTIVEPETID_KEY
 import studio.styx.erisbot.generated.indexes.USER_CONTRACTID_KEY
 import studio.styx.erisbot.generated.keys.APPLICATION__APPLICATION_OWNERID_FKEY
-import studio.styx.erisbot.generated.keys.COMBATHISTORY__COMBATHISTORY_USER1ID_FKEY
-import studio.styx.erisbot.generated.keys.COMBATHISTORY__COMBATHISTORY_USER2ID_FKEY
 import studio.styx.erisbot.generated.keys.COOLDOWN__COOLDOWN_USERID_FKEY
 import studio.styx.erisbot.generated.keys.FOOTBALLBETLOG__FOOTBALLBETLOG_USERID_FKEY
 import studio.styx.erisbot.generated.keys.FOOTBALLBET__FOOTBALLBET_USERID_FKEY
@@ -48,7 +46,6 @@ import studio.styx.erisbot.generated.keys.GUILDMEMBER__GUILDMEMBER_ID_FKEY
 import studio.styx.erisbot.generated.keys.LOG__LOG_USERID_FKEY
 import studio.styx.erisbot.generated.keys.MAILS__MAILS_USERID_FKEY
 import studio.styx.erisbot.generated.keys.MAILS__MAILS_WHOSENDID_FKEY
-import studio.styx.erisbot.generated.keys.STOCKHOLDING__STOCKHOLDING_USERID_FKEY
 import studio.styx.erisbot.generated.keys.TRANSACTION__TRANSACTION_TARGETID_FKEY
 import studio.styx.erisbot.generated.keys.TRANSACTION__TRANSACTION_USERID_FKEY
 import studio.styx.erisbot.generated.keys.USERFISHINGROD__USERFISHINGROD_USERID_FKEY
@@ -59,7 +56,6 @@ import studio.styx.erisbot.generated.keys.USER__USER_ACTIVEPETID_FKEY
 import studio.styx.erisbot.generated.keys.USER__USER_CONTRACTID_FKEY
 import studio.styx.erisbot.generated.keys.USER__USER_FAVORITETEAMID_FKEY
 import studio.styx.erisbot.generated.tables.Application.ApplicationPath
-import studio.styx.erisbot.generated.tables.Combathistory.CombathistoryPath
 import studio.styx.erisbot.generated.tables.Contract.ContractPath
 import studio.styx.erisbot.generated.tables.Cooldown.CooldownPath
 import studio.styx.erisbot.generated.tables.Footballbet.FootballbetPath
@@ -69,7 +65,6 @@ import studio.styx.erisbot.generated.tables.Guildmember.GuildmemberPath
 import studio.styx.erisbot.generated.tables.Guildsettings.GuildsettingsPath
 import studio.styx.erisbot.generated.tables.Log.LogPath
 import studio.styx.erisbot.generated.tables.Mails.MailsPath
-import studio.styx.erisbot.generated.tables.Stockholding.StockholdingPath
 import studio.styx.erisbot.generated.tables.Transaction.TransactionPath
 import studio.styx.erisbot.generated.tables.Userfish.UserfishPath
 import studio.styx.erisbot.generated.tables.Userfishingrod.UserfishingrodPath
@@ -297,40 +292,6 @@ open class User(
     val application: ApplicationPath
         get(): ApplicationPath = application()
 
-    private lateinit var _combathistoryUser1idFkey: CombathistoryPath
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.CombatHistory</code> table, via the
-     * <code>CombatHistory_user1Id_fkey</code> key
-     */
-    fun combathistoryUser1idFkey(): CombathistoryPath {
-        if (!this::_combathistoryUser1idFkey.isInitialized)
-            _combathistoryUser1idFkey = CombathistoryPath(this, null, COMBATHISTORY__COMBATHISTORY_USER1ID_FKEY.inverseKey)
-
-        return _combathistoryUser1idFkey;
-    }
-
-    val combathistoryUser1idFkey: CombathistoryPath
-        get(): CombathistoryPath = combathistoryUser1idFkey()
-
-    private lateinit var _combathistoryUser2idFkey: CombathistoryPath
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.CombatHistory</code> table, via the
-     * <code>CombatHistory_user2Id_fkey</code> key
-     */
-    fun combathistoryUser2idFkey(): CombathistoryPath {
-        if (!this::_combathistoryUser2idFkey.isInitialized)
-            _combathistoryUser2idFkey = CombathistoryPath(this, null, COMBATHISTORY__COMBATHISTORY_USER2ID_FKEY.inverseKey)
-
-        return _combathistoryUser2idFkey;
-    }
-
-    val combathistoryUser2idFkey: CombathistoryPath
-        get(): CombathistoryPath = combathistoryUser2idFkey()
-
     private lateinit var _cooldown: CooldownPath
 
     /**
@@ -441,22 +402,6 @@ open class User(
 
     val mailsWhosendidFkey: MailsPath
         get(): MailsPath = mailsWhosendidFkey()
-
-    private lateinit var _stockholding: StockholdingPath
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>public.StockHolding</code> table
-     */
-    fun stockholding(): StockholdingPath {
-        if (!this::_stockholding.isInitialized)
-            _stockholding = StockholdingPath(this, null, STOCKHOLDING__STOCKHOLDING_USERID_FKEY.inverseKey)
-
-        return _stockholding;
-    }
-
-    val stockholding: StockholdingPath
-        get(): StockholdingPath = stockholding()
 
     private lateinit var _transactionTargetidFkey: TransactionPath
 

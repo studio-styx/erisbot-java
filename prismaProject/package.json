@@ -1,0 +1,20 @@
+{
+  "name": "prismaproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "prisma": "^7.0.1"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.0.1"
+  }
+}

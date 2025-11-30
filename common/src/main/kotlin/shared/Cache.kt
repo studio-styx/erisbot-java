@@ -6,12 +6,11 @@ import java.util.concurrent.TimeUnit
 object Cache {
     private val cache = ConcurrentHashMap<String, CacheEntry<Any>>()
 
-    private data class CacheEntry<V>(val value: V, val expirationTime: Long)
+    private data class CacheEntry<V>(val value: V, val expirationTime: Long?)
 
     // Método principal SET
     @JvmStatic
-    @JvmOverloads
-    fun set(key: String, value: Any, durationInSeconds: Long = 600) {
+    fun set(key: String, value: Any, durationInSeconds: Long) {
         val expirationTime = System.currentTimeMillis() + (durationInSeconds * 1000)
         cache[key] = CacheEntry(value, expirationTime)
     }
@@ -23,13 +22,19 @@ object Cache {
         set(key, value, durationInSeconds)
     }
 
+    @JvmStatic
+    fun set(key: String, value: Any) {
+        cache[key] = CacheEntry(value, null)
+    }
+
     // Método principal GET
     @JvmStatic
     @Suppress("UNCHECKED_CAST")
     fun <T> get(key: String): T? {
         val entry = cache[key] ?: return null
 
-        if (System.currentTimeMillis() > entry.expirationTime) {
+        val expirationTime = entry.expirationTime
+        if (expirationTime != null && System.currentTimeMillis() > expirationTime) {
             cache.remove(key)
             return null
         }
@@ -65,7 +70,9 @@ object Cache {
         val iterator = cache.entries.iterator()
         while (iterator.hasNext()) {
             val entry = iterator.next()
-            if (now > entry.value.expirationTime) {
+            val cacheEntry = entry.value
+            val expirationTime = cacheEntry.expirationTime
+            if (expirationTime != null && now > expirationTime) {
                 iterator.remove()
             }
         }

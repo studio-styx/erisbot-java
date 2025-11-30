@@ -6,8 +6,7 @@ package studio.styx.erisbot.generated.tables.references
 
 import studio.styx.erisbot.generated.tables.Adoptioncenter
 import studio.styx.erisbot.generated.tables.Application
-import studio.styx.erisbot.generated.tables.Combathistory
-import studio.styx.erisbot.generated.tables.Combatpowerhistory
+import studio.styx.erisbot.generated.tables.Command
 import studio.styx.erisbot.generated.tables.Company
 import studio.styx.erisbot.generated.tables.Contract
 import studio.styx.erisbot.generated.tables.Cooldown
@@ -28,17 +27,13 @@ import studio.styx.erisbot.generated.tables.Guildsettings
 import studio.styx.erisbot.generated.tables.Interview
 import studio.styx.erisbot.generated.tables.Log
 import studio.styx.erisbot.generated.tables.Mails
+import studio.styx.erisbot.generated.tables.Pagecomponent
 import studio.styx.erisbot.generated.tables.Personalitytrait
 import studio.styx.erisbot.generated.tables.Pet
 import studio.styx.erisbot.generated.tables.Petgenetics
-import studio.styx.erisbot.generated.tables.Petpower
-import studio.styx.erisbot.generated.tables.Petpowereffectiveness
 import studio.styx.erisbot.generated.tables.Petskill
 import studio.styx.erisbot.generated.tables.Requisition
 import studio.styx.erisbot.generated.tables.Rolemultipleentry
-import studio.styx.erisbot.generated.tables.Stock
-import studio.styx.erisbot.generated.tables.Stockhistory
-import studio.styx.erisbot.generated.tables.Stockholding
 import studio.styx.erisbot.generated.tables.Transaction
 import studio.styx.erisbot.generated.tables.Tryviaquestions
 import studio.styx.erisbot.generated.tables.User
@@ -47,7 +42,6 @@ import studio.styx.erisbot.generated.tables.Userfishingrod
 import studio.styx.erisbot.generated.tables.Usergiveaway
 import studio.styx.erisbot.generated.tables.Userpet
 import studio.styx.erisbot.generated.tables.Userpetpersonality
-import studio.styx.erisbot.generated.tables.Userpetpower
 import studio.styx.erisbot.generated.tables.Userpetskill
 import studio.styx.erisbot.generated.tables.Workchallenges
 import studio.styx.erisbot.generated.tables._Footballleaguetofootballteam
@@ -76,14 +70,9 @@ val ADOPTIONCENTER: Adoptioncenter = Adoptioncenter.ADOPTIONCENTER
 val APPLICATION: Application = Application.APPLICATION
 
 /**
- * The table <code>public.CombatHistory</code>.
+ * The table <code>public.Command</code>.
  */
-val COMBATHISTORY: Combathistory = Combathistory.COMBATHISTORY
-
-/**
- * The table <code>public.CombatPowerHistory</code>.
- */
-val COMBATPOWERHISTORY: Combatpowerhistory = Combatpowerhistory.COMBATPOWERHISTORY
+val COMMAND: Command = Command.COMMAND
 
 /**
  * The table <code>public.Company</code>.
@@ -186,6 +175,11 @@ val LOG: Log = Log.LOG
 val MAILS: Mails = Mails.MAILS
 
 /**
+ * The table <code>public.PageComponent</code>.
+ */
+val PAGECOMPONENT: Pagecomponent = Pagecomponent.PAGECOMPONENT
+
+/**
  * The table <code>public.PersonalityTrait</code>.
  */
 val PERSONALITYTRAIT: Personalitytrait = Personalitytrait.PERSONALITYTRAIT
@@ -201,16 +195,6 @@ val PET: Pet = Pet.PET
 val PETGENETICS: Petgenetics = Petgenetics.PETGENETICS
 
 /**
- * The table <code>public.PetPower</code>.
- */
-val PETPOWER: Petpower = Petpower.PETPOWER
-
-/**
- * The table <code>public.PetPowerEffectiveness</code>.
- */
-val PETPOWEREFFECTIVENESS: Petpowereffectiveness = Petpowereffectiveness.PETPOWEREFFECTIVENESS
-
-/**
  * The table <code>public.PetSkill</code>.
  */
 val PETSKILL: Petskill = Petskill.PETSKILL
@@ -224,21 +208,6 @@ val REQUISITION: Requisition = Requisition.REQUISITION
  * The table <code>public.RoleMultipleEntry</code>.
  */
 val ROLEMULTIPLEENTRY: Rolemultipleentry = Rolemultipleentry.ROLEMULTIPLEENTRY
-
-/**
- * The table <code>public.Stock</code>.
- */
-val STOCK: Stock = Stock.STOCK
-
-/**
- * The table <code>public.StockHistory</code>.
- */
-val STOCKHISTORY: Stockhistory = Stockhistory.STOCKHISTORY
-
-/**
- * The table <code>public.StockHolding</code>.
- */
-val STOCKHOLDING: Stockholding = Stockholding.STOCKHOLDING
 
 /**
  * The table <code>public.Transaction</code>.
@@ -279,11 +248,6 @@ val USERPET: Userpet = Userpet.USERPET
  * The table <code>public.UserPetPersonality</code>.
  */
 val USERPETPERSONALITY: Userpetpersonality = Userpetpersonality.USERPETPERSONALITY
-
-/**
- * The table <code>public.UserPetPower</code>.
- */
-val USERPETPOWER: Userpetpower = Userpetpower.USERPETPOWER
 
 /**
  * The table <code>public.UserPetSkill</code>.
