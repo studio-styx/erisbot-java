@@ -43,11 +43,9 @@ class ManyTransfers : ResponderInterface {
     @Autowired
     lateinit var dsl: DSLContext
 
-    override fun getCustomId(): String {
-        return "manyTransfer/selectUsers/:userId/:amount"
-    }
+    override val customId = "manyTransfer/selectUsers/:userId/:amount"
 
-    override fun execute(event: EntitySelectInteractionEvent) {
+    override suspend fun execute(event: EntitySelectInteractionEvent) {
         val parts = event.getCustomId().split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val authorId = parts[2]
         val amountPerUser = parts[3].toDouble()

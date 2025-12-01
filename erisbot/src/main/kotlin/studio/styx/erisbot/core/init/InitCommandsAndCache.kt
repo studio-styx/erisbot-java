@@ -1,4 +1,4 @@
-package studio.styx.erisbot.discord.core.init
+package studio.styx.erisbot.core.init
 
 import net.dv8tion.jda.api.interactions.DiscordLocale
 import net.dv8tion.jda.api.interactions.commands.Command

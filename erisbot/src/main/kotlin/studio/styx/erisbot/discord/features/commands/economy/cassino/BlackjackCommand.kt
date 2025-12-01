@@ -34,7 +34,7 @@ class BlackjackCommand : CommandInterface {
             .addOptions(amount)
     }
 
-    override fun execute(event: SlashCommandInteractionEvent) {
+    override suspend fun execute(event: SlashCommandInteractionEvent) {
         val game = get<BlackjackGame?>("blackjack:game:singlePlayer:${event.user.id}")
 
         if (game != null) {

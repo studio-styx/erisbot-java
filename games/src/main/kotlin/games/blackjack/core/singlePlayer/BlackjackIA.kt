@@ -1,5 +1,7 @@
 package games.blackjack.core.singlePlayer
 
+import games.blackjack.core.dtos.BlackjackCardObject
+import games.blackjack.core.dtos.ComentaryTraductions
 import shared.utils.Icon
 import shared.utils.Utils
 
@@ -95,21 +97,32 @@ class BlackjackIA(private val game: BlackjackGame) {
             }
             4 -> {
                 // Eris Pesadelo: Altamente estratégica, considera probabilidade de estourar
+                println("==== CHANCE DA ÉRIS PEGAR UMA CARTA ====")
+                chance = 0.7
+                println("chance de pegar uma carta: $chance")
                 if (erisHand > 17) chance -= 0.6
                 if (erisHand > 19) chance -= 0.4
                 if (playerVisibleCardValue >= 10) chance += 0.4
                 if (playerVisibleCardValue <= 6) chance -= 0.4
                 if (isSoftHand && erisHand <= 17) chance += 0.3
+                println("chance de pegar uma carta após calculos simples: $chance")
 
                 // Calcula probabilidade de estourar
                 val bustRisk = game.remainingCards.count { card ->
                     card.number + erisHand > 21
                 }.toDouble() / game.remainingCards.size
-                if (bustRisk > 0.5 && erisHand >= 16) chance -= 0.3
+                if (bustRisk > 0.5 && erisHand >= 16) chance -= 0.25
+                if (erisHand < 16) chance += 0.3
+                // alterar um pouco as chances de pegar uma carta
+                val chanceOfError = Utils.getRandomDouble(-0.1, 0.1)
+                chance += chanceOfError
+                if (erisHand == 21) chance = 0.0
+                println("chance de pegar uma carta após calculos complexos: $chance")
 
                 chance = chance.coerceIn(0.0, 1.0)
+                println("chance de pegar uma carta final: $chance")
 
-                if (Math.random() > chance) {
+                if (chance > 90 || Math.random() > chance) {
                     return ActionResult(Action.STAND, null)
                 }
 

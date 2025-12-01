@@ -2,6 +2,7 @@ package studio.styx.erisbot.discord.features.commands.economy
 
 import database.utils.DatabaseUtils.getOrCreateUser
 import database.utils.LogManage.CreateLog
+import dev.minn.jda.ktx.coroutines.await
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.DiscordLocale
 import net.dv8tion.jda.api.interactions.commands.build.Commands
@@ -32,8 +33,6 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDateTime
 import java.time.ZoneOffset
-import java.util.*
-import java.util.List
 import java.util.Map
 import kotlin.math.floor
 import kotlin.math.max
@@ -44,43 +43,53 @@ class Daily : CommandInterface {
     @Autowired
     lateinit var dsl: DSLContext
 
-    override fun execute(event: SlashCommandInteractionEvent) {
-        val userId = event.getUser().getId()
-        val t = getDaily(event.getUserLocale().getLocale())
+    override suspend fun execute(event: SlashCommandInteractionEvent) {
+        val userId = event.user.id
+        val t = getDaily(event.userLocale.locale)
 
-        val cacheKey = "user:daily:manyAttempts:" + userId
+        // 1. CHECAGEM DE CACHE (RÁPIDA)
+        val cacheKey = "user:daily:manyAttempts:$userId"
         val attempts = get<Int?>(cacheKey)
         if (attempts != null) {
-            val message = t.manyAttempts(attempts)
-            if (message == null) return
+            val message = t.manyAttempts(attempts) ?: return
             ComponentBuilder.ContainerBuilder.create()
                 .addText(message)
                 .setEphemeral(true)
                 .withColor(Colors.DANGER)
-                .reply(event)
+                .reply(event) // Responde normal (Ephemeral)
             set(cacheKey, attempts + 1, (60 * 2).toLong())
             return
         }
 
+        event.deferReply(false).await()
+
+        val cooldown = dsl.selectFrom(COOLDOWN)
+            .where(COOLDOWN.USERID.eq(userId).and(COOLDOWN.NAME.eq("daily")))
+            .fetchOne()
+
+        val now = LocalDateTime.now()
+
+        if (cooldown?.willendin != null && cooldown.willendin!!.isAfter(now)) {
+            set(cacheKey, 1)
+            ComponentBuilder.ContainerBuilder.create()
+                .addText(t.cooldown(cooldown.willendin!!.toEpochSecond(ZoneOffset.UTC)))
+                .withColor(Colors.DANGER)
+                .disableMentions()
+                .setEphemeral(true)
+                .reply(event)
+            return
+        }
+
+
+        // 4. INICIA A TRANSAÇÃO (LENTA)
         dsl.transaction { config: Configuration? ->
             val tx = config!!.dsl()
-            val now = LocalDateTime.now()
 
             val user = getOrCreateUser(tx, userId)
-            val cooldown = getCooldown(tx, userId)
 
-            if (cooldown != null && cooldown.willendin != null && cooldown.willendin!!.isAfter(now)) {
-                set(cacheKey, 1) // inicia contador
-                ComponentBuilder.ContainerBuilder.create()
-                    .addText(t.cooldown(cooldown.willendin!!.toEpochSecond(ZoneOffset.UTC)))
-                    .withColor(Colors.DANGER)
-                    .disableMentions()
-                    .setEphemeral(true)
-                    .reply(event)
-                return@transaction;
-            }
-
+            // Logica do Pet
             val activePetId = user.activepetid
+            // Atualiza para garantir consistência
             user.activepetid = activePetId
             val petData = getActivePetWithSkills(tx, activePetId)
 
@@ -90,14 +99,14 @@ class Daily : CommandInterface {
             var nextDaily = now.plusHours(24)
             var hours = 24
 
-            if (petData != null && petData.rarity != null) {
+            if (petData?.rarity != null) {
                 val rarityMult = RARITY_BONUS.getOrDefault(petData.rarity, 1.0)!!
-                val bonusLevel = if (petData.dailyBonusLevel != null) petData.dailyBonusLevel else 0
+                val bonusLevel = petData.dailyBonusLevel ?: 0
                 val levelMult = 1 + (bonusLevel * 0.05)
                 val maxDailyValue = floor(baseMax * rarityMult * levelMult).toInt()
                 dailyValue = getRandomInt(30, maxDailyValue)
 
-                val cooldownLevel = if (petData.cooldownReductionLevel != null) petData.cooldownReductionLevel else 0
+                val cooldownLevel = petData.cooldownReductionLevel ?: 0
                 val baseCooldownMult = RARITY_COOLDOWN.getOrDefault(petData.rarity, 1.0)!!
                 val reduction = min(cooldownLevel * 0.02, 0.5)
                 val finalCooldownMult = baseCooldownMult - reduction
@@ -107,32 +116,30 @@ class Daily : CommandInterface {
 
             val bonus = BigDecimal.valueOf(dailyValue.toLong())
 
-            user.money = Objects.requireNonNullElse<BigDecimal?>(user.money, BigDecimal.ZERO).add(bonus)
+            user.money = (user.money ?: BigDecimal.ZERO).add(bonus)
             user.updatedat = now
             user.store()
 
             upsertCooldown(tx, userId, nextDaily)
 
             var petName: String? = "seu pet"
-            if (petData != null && petData.name != null && !petData.name.trim { it <= ' ' }.isEmpty()) {
+            if (petData?.name != null && petData.name.trim().isNotEmpty()) {
                 petName = petData.name
             }
 
             var gender = DailyGender.MASC
-            if (petData != null && petData.gender != null) {
+            if (petData?.gender != null) {
                 gender = if (petData.gender == Gender.MALE) DailyGender.MASC else DailyGender.FEM
             }
 
-            val hasBonus = petData != null && petData.dailyBonusLevel != null && petData.dailyBonusLevel > 0
-            val hasCooldownReduction =
-                petData != null && petData.cooldownReductionLevel != null && petData.cooldownReductionLevel > 0
+            val hasBonus = (petData?.dailyBonusLevel ?: 0) > 0
+            val hasCooldownReduction = (petData?.cooldownReductionLevel ?: 0) > 0
 
             val abilities = PetDailyAbilities(hasBonus, hasCooldownReduction)
 
-            val message: String?
-            try {
+            val message: String = try {
                 if (hasBonus || hasCooldownReduction) {
-                    message = t.message(
+                    t.message(
                         bonus.toInt(),
                         user.money!!.setScale(2, RoundingMode.HALF_UP).toDouble(),
                         petName!!,
@@ -140,7 +147,7 @@ class Daily : CommandInterface {
                         abilities
                     )
                 } else {
-                    message = t.message(
+                    t.message(
                         bonus.toInt(),
                         user.money!!.setScale(2, RoundingMode.HALF_UP).toDouble()
                     )
@@ -156,17 +163,17 @@ class Daily : CommandInterface {
                 .setEphemeral(false)
                 .reply(event)
 
-            val tags =
-                List.of("daily", "economy", "reward:" + bonus.toInt())
-            val log = CreateLog.create()
-                .setLevel(2)
+            val tags = mutableListOf("daily", "economy", "reward:" + bonus.toInt())
 
-            if (petData != null && petData.name != null) {
+            val log = CreateLog.create().setLevel(2)
+
+            if (petData?.name != null) {
                 log.setMessage(t.log(bonus.toInt(), petData.name, gender, abilities))
-                tags.add("pet:" + petData.name)
+                tags.add("pet:" + petData.name) // Agora funciona!
             } else {
                 log.setMessage(t.log(bonus.toInt()))
             }
+
             log.setUserId(userId)
                 .setTags(tags)
                 .insert(tx)

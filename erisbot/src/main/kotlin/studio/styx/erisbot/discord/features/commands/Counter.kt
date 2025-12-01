@@ -23,7 +23,7 @@ import java.util.function.Consumer
 
 @Component
 class Counter : CommandInterface {
-    override fun execute(event: SlashCommandInteractionEvent) {
+    override suspend fun execute(event: SlashCommandInteractionEvent) {
         var seconds = if (event.getOption("time") != null) event.getOption("time")!!.getAsInt() else 1
         seconds = Math.clamp(seconds.toLong(), 1, 15)
 

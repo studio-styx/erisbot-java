@@ -10,10 +10,13 @@ import net.dv8tion.jda.api.components.textdisplay.TextDisplay
 import net.dv8tion.jda.api.components.thumbnail.Thumbnail
 import net.dv8tion.jda.api.entities.Message.MentionType
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent
 import net.dv8tion.jda.api.interactions.InteractionHook
+import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction
+import net.dv8tion.jda.api.utils.messages.MessageEditData
 import java.awt.Color
 import java.util.*
 
@@ -84,75 +87,160 @@ object ComponentBuilder {
         }
 
         // === Métodos de reply ===
-        fun reply(event: SlashCommandInteraction) = apply {
-            val reply = event.replyComponents(build())
-                .useComponentsV2()
-                .setEphemeral(isEphemeral)
+        fun reply(event: SlashCommandInteractionEvent) = apply {
+            if (event.isAcknowledged) {
+                // Se já tem defer, edita a original via Hook
+                val edit = event.hook.editOriginalComponents(build())
+                    .useComponentsV2()
+                // Nota: setEphemeral não funciona aqui pois já foi definido no defer
 
-            if (disallowedMentions) {
-                reply.setAllowedMentions(EnumSet.noneOf(MentionType::class.java)).queue()
+                if (disallowedMentions) {
+                    edit.setAllowedMentions(emptyList()).queue()
+                } else {
+                    edit.queue()
+                }
             } else {
-                reply.queue()
+                // Se não tem defer, responde criando a mensagem
+                val reply = event.replyComponents(build())
+                    .useComponentsV2()
+                    .setEphemeral(isEphemeral)
+
+                if (disallowedMentions) {
+                    reply.setAllowedMentions(emptyList()).queue()
+                } else {
+                    reply.queue()
+                }
             }
         }
 
         fun reply(event: ButtonInteractionEvent) = apply {
-            val reply = event.replyComponents(build())
-                .useComponentsV2()
-                .setEphemeral(isEphemeral)
+            if (event.isAcknowledged) {
+                val edit = event.hook.editOriginalComponents(build())
+                    .useComponentsV2()
 
-            if (disallowedMentions) {
-                reply.setAllowedMentions(EnumSet.noneOf(MentionType::class.java)).queue()
+                if (disallowedMentions) {
+                    edit.setAllowedMentions(emptyList()).queue()
+                } else {
+                    edit.queue()
+                }
             } else {
-                reply.queue()
-            }
-        }
+                val reply = event.replyComponents(build())
+                    .useComponentsV2()
+                    .setEphemeral(isEphemeral)
 
-        fun reply(event: InteractionHook) = apply {
-            val edit = event.editOriginalComponents(build()).useComponentsV2()
-            if (disallowedMentions) {
-                edit.setAllowedMentions(EnumSet.noneOf(MentionType::class.java)).queue()
-            } else {
-                edit.queue()
+                if (disallowedMentions) {
+                    reply.setAllowedMentions(emptyList()).queue()
+                } else {
+                    reply.queue()
+                }
             }
         }
 
         fun reply(event: EntitySelectInteractionEvent) = apply {
-            val reply = event.replyComponents(build())
-                .useComponentsV2()
-                .setEphemeral(isEphemeral)
+            if (event.isAcknowledged) {
+                val edit = event.hook.editOriginalComponents(build())
+                    .useComponentsV2()
 
-            if (disallowedMentions) {
-                reply.setAllowedMentions(EnumSet.noneOf(MentionType::class.java)).queue()
+                if (disallowedMentions) {
+                    edit.setAllowedMentions(emptyList()).queue()
+                } else {
+                    edit.queue()
+                }
             } else {
-                reply.queue()
+                val reply = event.replyComponents(build())
+                    .useComponentsV2()
+                    .setEphemeral(isEphemeral)
+
+                if (disallowedMentions) {
+                    reply.setAllowedMentions(emptyList()).queue()
+                } else {
+                    reply.queue()
+                }
             }
         }
 
+        // Para Modal, geralmente se responde com texto ou embed, mas se seu build() retorna componentes:
         fun reply(event: ModalInteractionEvent) = apply {
-            val edit = event.replyComponents(build()).useComponentsV2()
+            if (event.isAcknowledged) {
+                val edit = event.hook.editOriginalComponents(build())
+                    .useComponentsV2()
+
+                if (disallowedMentions) {
+                    edit.setAllowedMentions(emptyList()).queue()
+                } else {
+                    edit.queue()
+                }
+            } else {
+                val reply = event.replyComponents(build())
+                    .useComponentsV2()
+                    .setEphemeral(isEphemeral)
+
+                if (disallowedMentions) {
+                    reply.setAllowedMentions(emptyList()).queue()
+                } else {
+                    reply.queue()
+                }
+            }
+        }
+
+        // Método direto para Hook (sempre é edição)
+        fun reply(hook: InteractionHook) = apply {
+            val edit = hook.editOriginalComponents(build())
+                .useComponentsV2()
+
             if (disallowedMentions) {
-                edit.setAllowedMentions(EnumSet.noneOf(MentionType::class.java)).queue()
+                edit.setAllowedMentions(emptyList()).queue()
             } else {
                 edit.queue()
             }
         }
+
+
+// === Métodos de editOriginal (Atualização da mensagem onde o componente está) ===
 
         fun editOriginal(event: ButtonInteractionEvent) = apply {
-            val edit = event.editComponents(build()).useComponentsV2()
-            if (disallowedMentions) {
-                edit.setAllowedMentions(EnumSet.noneOf(MentionType::class.java)).queue()
+            if (event.isAcknowledged) {
+                // Se usou deferEdit(), usamos o hook
+                val edit = event.hook.editOriginalComponents(build())
+                    .useComponentsV2()
+
+                if (disallowedMentions) {
+                    edit.setAllowedMentions(emptyList()).queue()
+                } else {
+                    edit.queue()
+                }
             } else {
-                edit.queue()
+                // Se não, editamos a mensagem diretamente via evento
+                val edit = event.editComponents(build())
+                    .useComponentsV2()
+
+                if (disallowedMentions) {
+                    edit.setAllowedMentions(emptyList()).queue()
+                } else {
+                    edit.queue()
+                }
             }
         }
 
         fun editOriginal(event: ModalInteractionEvent) = apply {
-            val edit = event.editComponents(build()).useComponentsV2()
-            if (disallowedMentions) {
-                edit.setAllowedMentions(EnumSet.noneOf(MentionType::class.java)).queue()
+            if (event.isAcknowledged) {
+                val edit = event.hook.editOriginalComponents(build())
+                    .useComponentsV2()
+
+                if (disallowedMentions) {
+                    edit.setAllowedMentions(emptyList()).queue()
+                } else {
+                    edit.queue()
+                }
             } else {
-                edit.queue()
+                val edit = event.editComponents(build())
+                    .useComponentsV2()
+
+                if (disallowedMentions) {
+                    edit.setAllowedMentions(emptyList()).queue()
+                } else {
+                    edit.queue()
+                }
             }
         }
 

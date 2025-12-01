@@ -17,7 +17,7 @@ import java.util.function.Consumer
 
 @Component
 class CounterInteraction : ResponderInterface {
-    override fun execute(event: ButtonInteractionEvent) {
+    override suspend fun execute(event: ButtonInteractionEvent) {
         val componentId = event.getComponentId()
         val seconds = extractSeconds(componentId)
 
@@ -91,9 +91,7 @@ class CounterInteraction : ResponderInterface {
         }
     }
 
-    override fun getCustomId(): String {
-        return "counter/retry/:seconds"
-    }
+    override val customId = "counter/retry/:seconds"
 
     private fun extractSeconds(customId: String): Int {
         try {

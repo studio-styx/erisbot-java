@@ -58,7 +58,7 @@ class Work : CommandInterface {
             .setDescriptionLocalization(DiscordLocale.ENGLISH_US, "⚒️ ✦ Work at your company")
     }
 
-    override fun execute(event: SlashCommandInteractionEvent) {
+    override suspend fun execute(event: SlashCommandInteractionEvent) {
         // Verificar cooldown do IA
         if (cooldowns.containsKey(event.user.id)) {
             res.setColor(Colors.DANGER)

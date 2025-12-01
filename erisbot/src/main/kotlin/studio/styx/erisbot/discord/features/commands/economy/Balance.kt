@@ -24,7 +24,7 @@ class Balance : CommandInterface {
     @Autowired
     lateinit var dsl: DSLContext
 
-    override fun execute(event: SlashCommandInteractionEvent) {
+    override suspend fun execute(event: SlashCommandInteractionEvent) {
         val userOption = event.getOption("user")
         val targetUser = userOption?.asUser ?: event.user
 
@@ -60,6 +60,7 @@ class Balance : CommandInterface {
         LogManage.CreateLog.create()
             .setMessage(String.format(t.log(userId, targetUser.id)))
             .setLevel(1)
+            .setUserId(userId)
             .setTags(listOf("balance", "economy", "view", "target:" + targetUser.id))
             .insert(dsl)
     }

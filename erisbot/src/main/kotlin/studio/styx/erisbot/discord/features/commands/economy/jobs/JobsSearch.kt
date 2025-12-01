@@ -59,7 +59,7 @@ class JobsSearch : CommandInterface {
             .setDescriptionLocalization(DiscordLocale.ENGLISH_US, "💼 ✦ Search for a job or get dismiss")
     }
 
-    override fun execute(event: SlashCommandInteractionEvent) {
+    override suspend fun execute(event: SlashCommandInteractionEvent) {
         when (event.subcommandName) {
             "search" -> search(event)
             "dismiss" -> dismiss(event)

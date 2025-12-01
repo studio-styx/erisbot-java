@@ -24,6 +24,7 @@ import shared.utils.CustomIdHelper
 import shared.utils.Utils.brBuilder
 import shared.utils.Utils.formatNumber
 import shared.utils.Utils.replaceText
+import studio.styx.erisbot.core.dtos.interview.InterviewObject
 import studio.styx.erisbot.core.interfaces.ResponderInterface
 import studio.styx.erisbot.generated.enums.Contractstatus
 import studio.styx.erisbot.generated.tables.records.CompanyRecord
@@ -52,12 +53,10 @@ class InterviewAnswer : ResponderInterface {
     lateinit var dsl: DSLContext
     private val res = ContainerRes()
 
-    override fun getCustomId(): kotlin.String {
-        return "interview/answer/:index/:companyId/:userId"
-    }
+    override val customId = "interview/answer/:index/:companyId/:userId"
 
-    override fun execute(event: ModalInteractionEvent) {
-        val customIdHelper = CustomIdHelper(getCustomId(), event.getCustomId())
+    override suspend fun execute(event: ModalInteractionEvent) {
+        val customIdHelper = CustomIdHelper(customId, event.getCustomId())
 
         val index: Int = customIdHelper.getAsInt("index")!!
         val companyId: Int = customIdHelper.getAsInt("companyId")!!
@@ -310,8 +309,8 @@ class InterviewAnswer : ResponderInterface {
             .replace("\t", "\\t")
     }
 
-    override fun execute(event: ButtonInteractionEvent) {
-        val customIdHelper = CustomIdHelper(getCustomId(), event.getCustomId())
+    override suspend fun execute(event: ButtonInteractionEvent) {
+        val customIdHelper = CustomIdHelper(customId, event.getCustomId())
 
         val index: Int = customIdHelper.getAsInt("index")!!
         val companyId: Int = customIdHelper.getAsInt("companyId")!!

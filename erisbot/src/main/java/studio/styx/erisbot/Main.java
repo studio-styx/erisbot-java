@@ -1,347 +1,76 @@
 package studio.styx.erisbot;
 
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
-import net.dv8tion.jda.api.requests.GatewayIntent;
-import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
-import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 import schedules.transactionExpires.IntervalCheckKt;
 import server.ApplicationKt;
-import shared.Cache;
-import shared.Colors;
-import studio.styx.erisbot.core.*;
-import studio.styx.erisbot.core.abstractClasses.AbstractCommand;
+import studio.styx.erisbot.core.CommandManager;
+import studio.styx.erisbot.core.init.InitCommandsAndCache;
 import studio.styx.erisbot.core.interfaces.CommandInterface;
-import studio.styx.erisbot.core.interfaces.ResponderInterface;
-import studio.styx.erisbot.discord.core.init.InitCommandsAndCache;
-import studio.styx.erisbot.generated.tables.records.CommandRecord;
-import studio.styx.erisbot.generated.tables.references.TablesKt;
-import studio.styx.schemaEXtended.core.exceptions.SchemaIllegalArgumentException;
-import utils.ComponentBuilder;
 
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class Main implements CommandLineRunner {
 
     @Autowired
-    private ApplicationContext context;
-
-    @Autowired
     private DSLContext dsl;
 
     @Autowired
-    private DiscordConfig discordConfig;
+    private JDA jda; // Injetado já construído e com listeners registrados pelo JdaConfiguration.kt
 
-    private JDA jda;
+    @Autowired
+    private CommandManager commandManager;
+
+    @Autowired
+    private List<CommandInterface> commands; // Spring injeta os comandos automaticamente
 
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args); // ← Spring inicia
+        SpringApplication.run(Main.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-        // === CRIA O JDA ===
-        jda = JDABuilder.createLight(discordConfig.getToken(), EnumSet.of(
-                        GatewayIntent.GUILD_MESSAGES,
-                        GatewayIntent.MESSAGE_CONTENT,
-                        GatewayIntent.GUILD_MEMBERS
-                ))
-                .addEventListeners(new CommandListener())
-                .build();
-
-        jda.awaitReady();
-
         // === INICIA O SERVIDOR API ===
         ApplicationKt.main(jda, dsl);
 
-        // === CARREGA COMANDOS ===
-        List<CommandInterface> commands = loadCommands();
+        // === INJETA O DSL NOS COMANDOS ===
+        commandManager.injectDslIntoCommands();
 
-        // === INJETA O DSL AGORA QUE O SPRING JÁ ESTÁ PRONTO ===
-        context.getBean(CommandManager.class).injectDslIntoCommands();
-
-        // === REGISTRA COMANDOS ===
-        registerCommands(jda, commands);
-
-        // === CARREGA INTERAÇÕES ===
-        List<ResponderInterface> responders = loadResponders();
+        // === REGISTRA COMANDOS NO DISCORD ===
+        registerCommandsToDiscord(jda, commands);
 
         // === CARREGA AGENDAMENTOS ===
-        System.out.println("Carregando agendamentos");
-        IntervalCheckKt.startIntervalCheck(dsl, jda); // Carrega agendamentos para expirar transações
-        System.out.println("Agendamentos carregados");
+        IntervalCheckKt.startIntervalCheck(dsl, jda);
     }
 
-    // === INJETA O DSL NOS COMANDOS QUE HERDAM DE AbstractCommand ===
-    private void injetarDslNosComandos(List<CommandInterface> commands) {
-        for (CommandInterface cmd : commands) {
-            if (cmd instanceof AbstractCommand abstractCmd) {
-                abstractCmd.setDsl(dsl);
-                System.out.println("DSL injetado em: " + cmd.getClass().getSimpleName());
-            }
-        }
-    }
-
-    private List<CommandInterface> loadCommands() {
-        List<CommandInterface> commands = new ArrayList<>();
-        Reflections reflections = new Reflections("studio.styx.erisbot.discord.features.commands", new SubTypesScanner(false));
-        Set<Class<? extends CommandInterface>> commandClasses = reflections.getSubTypesOf(CommandInterface.class);
-
-        for (Class<? extends CommandInterface> commandClass : commandClasses) {
-            try {
-                CommandInterface cmd = context.getBean(commandClass); // ← usa Spring pra instanciar!
-                commands.add(cmd);
-                System.out.println("Comando carregado: " + commandClass.getSimpleName());
-            } catch (Exception e) {
-                System.err.println("Erro ao carregar comando via Spring: " + commandClass.getSimpleName());
-                e.printStackTrace();
-            }
-        }
-
+    private void registerCommandsToDiscord(JDA jda, List<CommandInterface> commands) {
         if (commands.isEmpty()) {
-            System.out.println("Nenhum comando encontrado. Verifique @Component nas classes.");
+            System.out.println("Nenhum comando encontrado para registrar.");
+            return;
         }
 
-        return commands;
-    }
+        List<SlashCommandData> commandDataList = commands.stream()
+                .map(CommandInterface::getSlashCommandData)
+                .collect(Collectors.toList());
 
-    private void registerCommands(JDA jda, List<CommandInterface> commands) {
-        List<SlashCommandData> commandDataList = new ArrayList<>();
-        System.out.println("Comandos registrados:");
-        for (CommandInterface command : commands) {
-            SlashCommandData commandData = command.getSlashCommandData();
-            commandDataList.add(commandData);
-            System.out.println("- " + commandData.getName());
-        }
+        System.out.println("Registrando " + commandDataList.size() + " comandos no Discord...");
 
         jda.updateCommands().addCommands(commandDataList).queue(
                 success -> {
                     System.out.println("Comandos registrados com sucesso no Discord!");
+                    // Atualiza DB e Cache
                     jda.retrieveCommands().queue(discordCommands ->
                             new InitCommandsAndCache().registerCommandsInDb(dsl, discordCommands)
                     );
                 },
                 error -> System.err.println("Erro ao registrar comandos: " + error.getMessage())
         );
-
-    }
-
-    private List<ResponderInterface> loadResponders() {
-        List<ResponderInterface> responders = new ArrayList<>();
-        Reflections reflections = new Reflections("studio.styx.erisbot.discord.features.interactions", new SubTypesScanner(false));
-        Set<Class<? extends ResponderInterface>> responderClasses = reflections.getSubTypesOf(ResponderInterface.class);
-
-        for (Class<? extends ResponderInterface> responderClass : responderClasses) {
-            try {
-                ResponderInterface responder = context.getBean(responderClass);
-                responders.add(responder);
-                System.out.println("Interação carregada: " + responderClass.getSimpleName());
-            } catch (Exception e) {
-                System.err.println("Erro ao instanciar interação: " + responderClass.getSimpleName());
-                e.printStackTrace();
-            }
-        }
-
-        if (responders.isEmpty()) {
-            System.out.println("Nenhuma interação encontrada em features.interactions ou subpastas.");
-        }
-
-        return responders;
-    }
-
-    class CommandListener extends ListenerAdapter {
-        private final List<CommandInterface> commands = loadCommands();
-        private final List<ResponderInterface> responders = loadResponders();
-
-        @Override
-        public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-            for (CommandInterface command : commands) {
-                if (event.getName().equals(command.getSlashCommandData().getName())) {
-                    try {
-                        // Pegar o cache de comandos
-                        List<CommandRecord> cachedCommands = Cache.get("commands");
-
-                        String commandName = event.getName(); // nome do comando principal
-                        String subcommandGroup = event.getSubcommandGroup(); // grupo do subcomando (pode ser null)
-                        String subcommandName = event.getSubcommandName(); // nome do subcomando (pode ser null)
-
-                        if (cachedCommands == null) {
-                            command.execute(event);
-                            return;
-                        }
-                        // Buscar pelo comando considerando a hierarquia
-                        CommandRecord cachedCommand = cachedCommands.stream()
-                                .filter(cmd -> commandName.equals(cmd.getName()))
-                                .filter(cmd -> {
-                                    // Se existe grupo de subcomando no evento, verifica se bate com o comando
-                                    if (subcommandGroup != null) {
-                                        return subcommandGroup.equals(cmd.getSubcommandgroup());
-                                    }
-                                    // Se não tem grupo no evento, o comando também não deve ter
-                                    return cmd.getSubcommandgroup() == null;
-                                })
-                                .filter(cmd -> {
-                                    // Se existe subcomando no evento, verifica se bate com o comando
-                                    if (subcommandName != null) {
-                                        return subcommandName.equals(cmd.getSubcommand());
-                                    }
-                                    // Se não tem subcomando no evento, o comando também não deve ter
-                                    return cmd.getSubcommand() == null;
-                                })
-                                .findFirst()
-                                .orElse(null);
-
-                        if (cachedCommand != null && cachedCommand.getIsenabled() != null && !cachedCommand.getIsenabled()) {
-                            ComponentBuilder.ContainerBuilder.create()
-                                    .addText("Ops! esse comando foi desativado pelos meus desenvolvedores!")
-                                    .withColor(Colors.DANGER)
-                                    .reply(event);
-                            return;
-                        }
-
-                        command.execute(event);
-                    } catch (SchemaIllegalArgumentException e) {
-                        String errorMessages;
-
-                        // Verifica se tem erros de campo (ObjectSchema)
-                        if (e.hasFieldErrors()) {
-                            errorMessages = e.getFieldErrors().entrySet().stream()
-                                    .map(entry -> "- **`" + entry.getKey() + ": " + entry.getValue() + "`**")
-                                    .collect(Collectors.joining("\n"));
-                        }
-                        // Verifica se tem erros simples (StringSchema, NumberSchema, etc)
-                        else if (e.hasSimpleErrors()) {
-                            errorMessages = e.getErrors().stream()
-                                    .map(msg -> "- **`" + msg + "`**")
-                                    .collect(Collectors.joining("\n"));
-                        }
-                        // Fallback
-                        else {
-                            errorMessages = "Erro de validação desconhecido";
-                        }
-
-                        ComponentBuilder.ContainerBuilder.create()
-                                .addText("## Informações inválidas!\n" + errorMessages)
-                                .withColor(Colors.DANGER)
-                                .reply(event);
-                    } catch (Exception e) {
-                        System.err.println("Erro ao executar comando " + event.getName() + ": " + e.getMessage());
-
-                        e.printStackTrace();
-
-                        ComponentBuilder.ContainerBuilder.create()
-                                .addText("Um erro ocorreu ao executar esse comando: **`" + e.getMessage() + "`**")
-                                .withColor(Colors.DANGER)
-                                .reply(event);
-                    }
-                    return;
-                }
-            }
-            event.reply("Comando não encontrado.").setEphemeral(true).queue();
-        }
-
-        @Override
-        public void onButtonInteraction(ButtonInteractionEvent event) {
-            handleInteraction(event, event.getComponentId(), ButtonInteractionEvent.class);
-        }
-
-        @Override
-        public void onStringSelectInteraction(StringSelectInteractionEvent event) {
-            handleInteraction(event, event.getComponentId(), StringSelectInteractionEvent.class);
-        }
-
-        @Override
-        public void onModalInteraction(ModalInteractionEvent event) {
-            handleInteraction(event, event.getModalId(), ModalInteractionEvent.class);
-        }
-
-        @Override
-        public void onEntitySelectInteraction(EntitySelectInteractionEvent event) {
-            handleInteraction(event, event.getComponentId(), EntitySelectInteractionEvent.class);
-        }
-
-        private void handleInteraction(Object event, String componentId, Class<?> eventType) {
-            for (ResponderInterface responder : responders) {
-                String customIdPattern = responder.getCustomId();
-                String regex = customIdPattern.replaceAll(":(\\w+)", "[^/]+");
-                Pattern pattern = Pattern.compile("^" + regex + "$");
-                Matcher matcher = pattern.matcher(componentId);
-
-                if (matcher.matches()) {
-                    try {
-                        Method method = responder.getClass().getMethod("execute", eventType);
-                        if (!method.isDefault()) {
-                            if (event instanceof ButtonInteractionEvent buttonEvent) {
-                                responder.execute(buttonEvent);
-                            } else if (event instanceof StringSelectInteractionEvent selectEvent) {
-                                responder.execute(selectEvent);
-                            } else if (event instanceof ModalInteractionEvent modalEvent) {
-                                responder.execute(modalEvent);
-                            } else if (event instanceof EntitySelectInteractionEvent selectEvent) {
-                                responder.execute(selectEvent);
-                            }
-                        } else {
-                            replyError(event, "Interação não implementada para este tipo de evento.");
-                        }
-                    } catch (NoSuchMethodException e) {
-                        System.err.println("Método execute não encontrado para " + eventType.getSimpleName());
-                        replyError(event, "Erro interno: método não encontrado.");
-                    } catch (Exception e) {
-                        System.err.println("Erro ao executar interação " + componentId + ": " + e.getMessage());
-                        replyError(event, "Erro ao processar interação.");
-                    }
-                    return;
-                }
-            }
-            replyError(event, "Interação não encontrada.");
-        }
-
-        private void replyError(Object event, String message) {
-            if (event instanceof ButtonInteractionEvent buttonEvent) {
-                buttonEvent.reply(message).setEphemeral(true).queue();
-            } else if (event instanceof StringSelectInteractionEvent selectEvent) {
-                selectEvent.reply(message).setEphemeral(true).queue();
-            } else if (event instanceof ModalInteractionEvent modalEvent) {
-                modalEvent.reply(message).setEphemeral(true).queue();
-            }
-        }
-
-        private Map<String, String> extractDynamicParams(String customIdPattern, String actualId) {
-            Map<String, String> params = new HashMap<>();
-            String[] patternParts = customIdPattern.split("/");
-            String[] actualParts = actualId.split("/");
-
-            if (patternParts.length != actualParts.length) {
-                return params;
-            }
-
-            for (int i = 0; i < patternParts.length; i++) {
-                if (patternParts[i].startsWith(":")) {
-                    String paramName = patternParts[i].substring(1);
-                    params.put(paramName, actualParts[i]);
-                }
-            }
-
-            return params;
-        }
     }
 }

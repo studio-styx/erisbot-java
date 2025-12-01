@@ -1,26 +1,27 @@
-package games.blackjack.core.singlePlayer
+package games.blackjack.core.multiPlayer
 
 import games.blackjack.core.dtos.BlackjackCardObject
+import games.blackjack.core.singlePlayer.BlackjackEndGameResultType
+import translates.commands.economy.cassino.blackjack.BlackjackMultiplayerTranslate
+import translates.commands.economy.cassino.blackjack.MultiplayerBlackjackTranslateInterface
 import kotlin.random.Random
 
-class BlackjackGame(
-    erisMood: BlackjackErisMood,
-    difficulty: Int,
-    amountAposted: Double
+class BlackjackMultiplayerGame(
+    val userId: String,
+    val targetId: String,
+    val amountAposted: Double
 ) {
-    val erisMood: BlackjackErisMood = erisMood
-    val difficulty: Int = difficulty
-    val amountAposted: Double = amountAposted
-    var humor: BlackjackErisMood = erisMood
-        private set
-    var erisCards: MutableList<BlackjackCardObject> = mutableListOf()
-        private set
     var userCards: MutableList<BlackjackCardObject> = mutableListOf()
+        private set
+    var targetCards: MutableList<BlackjackCardObject> = mutableListOf()
         private set
     var remainingCards: MutableList<BlackjackCardObject> = mutableListOf()
         private set
     var turnCount: Int = 0
     var passCount: Int = 0
+    var turn: BlackjackMultiplayerPlayers = BlackjackMultiplayerPlayers.PLAYER
+
+    var t: MultiplayerBlackjackTranslateInterface = BlackjackMultiplayerTranslate.ptbr()
 
 
     private fun setDefaultDeck() {
@@ -90,41 +91,42 @@ class BlackjackGame(
         shuffleDeck()
 
         do {
-            erisCards.add(drawCard())
-            if (this.difficulty === 0) erisCards.add(drawCard())
-        } while (calculateHandValue(erisCards) > 21)
+            userCards.add(drawCard())
+        } while (calculateHandValue(userCards) > 21)
 
         do {
-            userCards.add(drawCard())
-            if (this.difficulty === 0) userCards.add(drawCard())
-        } while (calculateHandValue(userCards) > 21)
+            targetCards.add(drawCard())
+        } while (calculateHandValue(targetCards) > 21)
     }
 
-    fun userTurn(): BlackjackCardObject? {
+    fun turn(user: BlackjackMultiplayerPlayers): BlackjackCardObject? {
         val card = drawCard()
-        userCards.add(card)
+        val cards: MutableList<BlackjackCardObject>;
+        if (user === BlackjackMultiplayerPlayers.PLAYER) {
+            userCards.add(card)
+            cards = userCards
+        } else {
+            targetCards.add(card)
+            cards = targetCards
+        }
 
-        if (calculateHandValue(userCards) > 21) return null;
+        if (calculateHandValue(cards) > 21) return null;
+        if (turn == BlackjackMultiplayerPlayers.PLAYER) turn = BlackjackMultiplayerPlayers.TARGET else turn = BlackjackMultiplayerPlayers.PLAYER
         return card;
     }
 
-    fun erisTurn(predefinedCard: BlackjackCardObject? = null): BlackjackCardObject? {
-        val card = predefinedCard ?: drawCard();
-
-        erisCards.add(card);
-
-        if (calculateHandValue(erisCards) > 21) return null;
-        return card;
+    fun turn(): BlackjackCardObject? {
+        return turn(turn)
     }
 
-    fun stop(): BlackjackEndGameResultType {
+    fun stop(): BlackjackMultiplayerEndGameResultType {
         val userHand = calculateHandValue(userCards)
-        val erisHand = calculateHandValue(erisCards)
+        val targetHand = calculateHandValue(targetCards)
 
         return when {
-            userHand > erisHand -> BlackjackEndGameResultType.PLAYER
-            userHand < erisHand -> BlackjackEndGameResultType.BOT
-            else -> BlackjackEndGameResultType.DRAW
+            userHand > targetHand -> BlackjackMultiplayerEndGameResultType.PLAYER
+            userHand < targetHand -> BlackjackMultiplayerEndGameResultType.TARGET
+            else -> BlackjackMultiplayerEndGameResultType.DRAW
         }
     }
 }

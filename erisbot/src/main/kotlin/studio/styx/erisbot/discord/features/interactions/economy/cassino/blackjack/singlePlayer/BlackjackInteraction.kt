@@ -31,13 +31,11 @@ class BlackjackInteraction : ResponderInterface {
     @Autowired
     lateinit var dsl: DSLContext
 
-    override fun getCustomId(): String {
-        return "blackjack/game/:action/:userId"
-    }
+    override val customId = "blackjack/game/:action/:userId"
 
     private val res = ContainerRes()
 
-    override fun execute(event: ButtonInteractionEvent) {
+    override suspend fun execute(event: ButtonInteractionEvent) {
         val customIdHelper = CustomIdHelper(customId, event.customId);
         val action = customIdHelper.get("action")!!
         val userId = customIdHelper.get("userId")!!
@@ -164,7 +162,7 @@ class BlackjackInteraction : ResponderInterface {
                         return@transaction;
                     }
                 }
-                Cache.set("blackjack:game:singlePlayer:${event.user.id}", game)
+                Cache.set("blackjack:game:singlePlayer:${event.user.id}", game, 10, TimeUnit.MINUTES)
             }
         }})
     }

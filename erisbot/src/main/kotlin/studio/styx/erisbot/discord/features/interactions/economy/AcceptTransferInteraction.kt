@@ -13,6 +13,7 @@ import org.jooq.TransactionalRunnable
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import shared.Colors
+import shared.utils.CustomIdHelper
 import shared.utils.GenderUnknown
 import shared.utils.Utils.getNameGender
 import studio.styx.erisbot.core.interfaces.ResponderInterface
@@ -41,43 +42,19 @@ import java.util.function.Consumer
 
 @Component
 class AcceptTransferInteraction : ResponderInterface {
-    override fun getCustomId(): String {
-        return "transfer/accept/:transactionId/:userId/:userAccepted/:targetId/:targetAccepted"
-    }
+    override val customId = "transfer/accept/:transactionId/:userId/:userAccepted/:targetId/:targetAccepted"
 
     @Autowired
     lateinit var dsl: DSLContext
 
-    override fun execute(event: ButtonInteractionEvent) {
-        val customId = event.getCustomId()
-        val parts: Array<String?> = customId.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    override suspend fun execute(event: ButtonInteractionEvent) {
+        val params = CustomIdHelper(customId, event.customId)
 
-        val schema = ObjectSchema()
-            .addProperty(
-                "transactionId", NumberSchema()
-                    .integer()
-                    .coerce()
-            )
-            .addProperty("authorId", StringSchema())
-            .addProperty("authorAccepted", BooleanSchema().coerce())
-            .addProperty("targetId", StringSchema())
-            .addProperty("targetAccepted", BooleanSchema().coerce())
-
-        val result = schema.parseOrThrow(
-            Map.of<String?, String?>(
-                "transactionId", parts[1],
-                "authorId", parts[2],
-                "authorAccepted", parts[3],
-                "targetId", parts[4],
-                "targetAccepted", parts[5]
-            )
-        )
-
-        val transactionId = result.get<Int>("transactionId")
-        val authorId = result.get<String>("authorId")
-        val authorAccepted = result.get<Boolean>("authorAccepted")
-        val targetId = result.get<String>("targetId")
-        val targetAccepted = result.get<Boolean>("targetAccepted")
+        val transactionId = params.getAsInt("transactionId")!!
+        val authorId = params.get("userId")!!
+        val authorAccepted = params.get("userAccepted") == "1"
+        val targetId = params.get("targetId")!!
+        val targetAccepted = params.get("targetAccepted") == "1"
 
         val t = getTransactionInteraction(event.getUserLocale().getLocale())
 

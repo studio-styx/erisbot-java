@@ -47,7 +47,7 @@ class Coinflip : CommandInterface {
             .addOptions(coinflipSide, amount)
     }
 
-    override fun execute(event: SlashCommandInteractionEvent) {
+    override suspend fun execute(event: SlashCommandInteractionEvent) {
         event.deferReply().queue(Consumer { hook: InteractionHook? ->
             dsl.transaction { config: Configuration? ->
                 val tx = config!!.dsl()

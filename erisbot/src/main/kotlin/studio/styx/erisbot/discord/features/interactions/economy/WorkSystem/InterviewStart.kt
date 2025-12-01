@@ -18,6 +18,7 @@ import shared.Colors
 import shared.utils.CustomIdHelper
 import shared.utils.Utils.brBuilder
 import shared.utils.Utils.replaceText
+import studio.styx.erisbot.core.dtos.interview.InterviewObject
 import studio.styx.erisbot.core.interfaces.ResponderInterface
 import studio.styx.erisbot.generated.tables.records.CompanyRecord
 import studio.styx.erisbot.generated.tables.references.COMPANY
@@ -34,12 +35,10 @@ class InterviewStart : ResponderInterface {
     @Autowired
     lateinit var dsl: DSLContext
 
-    override fun getCustomId(): String {
-        return "jobs/interview/:companyId/:userId"
-    }
+    override val customId = "jobs/interview/:companyId/:userId"
 
-    override fun execute(event: ButtonInteractionEvent) {
-        val customIdHelper = CustomIdHelper(getCustomId(), event.getCustomId())
+    override suspend fun execute(event: ButtonInteractionEvent) {
+        val customIdHelper = CustomIdHelper(customId, event.customId)
         val res = ContainerRes()
 
         val companyId: Int = customIdHelper.getAsInt("companyId")!!

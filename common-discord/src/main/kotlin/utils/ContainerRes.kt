@@ -2,6 +2,7 @@ package utils
 
 import net.dv8tion.jda.api.components.container.Container
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent
 import net.dv8tion.jda.api.interactions.InteractionHook
@@ -19,7 +20,7 @@ class ContainerRes {
 
     fun setText(text: String) = apply { this.text = text }
 
-    fun send(event: SlashCommandInteraction) {
+    fun send(event: SlashCommandInteractionEvent) {
         ComponentBuilder.ContainerBuilder.create()
             .setEphemeral(ephemeral)
             .withColor(color)

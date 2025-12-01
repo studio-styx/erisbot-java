@@ -6,10 +6,12 @@ import translates.commands.economy.cassino.HorseRacingTranslate
 import translates.commands.economy.cassino.HorseRacingTranslateInterface
 import translates.commands.economy.cassino.SlotMachineTranslate
 import translates.commands.economy.cassino.SlotMachineTranslateInterface
+import translates.commands.economy.cassino.blackjack.BlackjackMultiplayerTranslate
 import translates.commands.economy.cassino.blackjack.BlackjackPreStart
 import translates.commands.economy.cassino.blackjack.BlackjackPreStartInterface
 import translates.commands.economy.cassino.blackjack.BlackjackTranslate
 import translates.commands.economy.cassino.blackjack.BlackjackTranslateInterface
+import translates.commands.economy.cassino.blackjack.MultiplayerBlackjackTranslateInterface
 import translates.commands.economy.general.BalanceTranslate
 import translates.commands.economy.general.BalanceTranslateInterface
 import translates.commands.economy.general.DailyTranslate
@@ -189,6 +191,15 @@ object TranslatesObjects {
             "ptbr" -> BlackjackTranslate.ptbr()
             "eses" -> BlackjackTranslate.eses()
             else -> BlackjackTranslate.enus()
+        }
+    }
+
+    @JvmStatic
+    fun getBlackjackMultiplayer(locale: String = "enus"): MultiplayerBlackjackTranslateInterface {
+        return when (LanguageUtils.transform(locale)) {
+            "ptbr" -> BlackjackMultiplayerTranslate.ptbr()
+            "eses" -> BlackjackMultiplayerTranslate.eses()
+            else -> BlackjackMultiplayerTranslate.enus()
         }
     }
 

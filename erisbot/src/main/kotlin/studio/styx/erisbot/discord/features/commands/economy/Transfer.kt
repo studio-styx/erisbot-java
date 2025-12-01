@@ -42,7 +42,7 @@ class Transfer : CommandInterface {
     @Autowired
     lateinit var dsl: DSLContext
 
-    override fun execute(event: SlashCommandInteractionEvent) {
+    override suspend fun execute(event: SlashCommandInteractionEvent) {
         val user = event.user
         val userId = user.id
         val amountDouble = event.getOption("amount")!!.asDouble
@@ -52,13 +52,13 @@ class Transfer : CommandInterface {
 
         val amount = BigDecimal.valueOf(amountDouble)
 
-        dsl.transaction { config: Configuration? ->
-            val tx = config!!.dsl()
+        dsl.transaction { config: Configuration ->
+            val tx = config.dsl()
             // 1. Busca ambos os usuários em 1 query (otimizado)
             val userData = getOrCreateUser(tx, userId)
             val targetData = if (target != null) getOrCreateUser(tx, target.id) else null
 
-            if (userData.money!!.compareTo(amount) < 0) {
+            if (userData.money!! < amount) {
                 ComponentBuilder.ContainerBuilder.create()
                     .addText(t.insufficientFunds())
                     .setEphemeral(true)
@@ -202,8 +202,9 @@ class Transfer : CommandInterface {
                     amount.toDouble()
                 )
             )
+            .setUserId(user.id)
             .setLevel(4)
-            .setTags(List.of<String>("transfer", "economy", "target:" + target.getId()))
+            .setTags(listOf<String>("transfer", "economy", "target:" + target.getId()))
             .insert(dsl)
     }
 

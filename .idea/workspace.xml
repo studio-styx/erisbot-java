@@ -5,62 +5,56 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90219cdd-834f-4824-84ac-e9a08a1b9da2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api-server/src/main/kotlin/server/core/dtos/web/command/CommandsResponse.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-server/src/main/kotlin/server/core/security/frontOnly/FrontMiddleware.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-server/src/main/kotlin/server/routes/web/publicWeb/commands/getCommandsRoute.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/settings/AppConfig.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/settings/Settings.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/core/init/InitCommandsAndCache.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prismaProject/prisma.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/commands/economy/cassino/blackjack/BlackjackMultiplayerGame.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/abstractClasses/AbstractCommand.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/dtos/blackjack/BlackjackMultiplayerGameCache.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/dtos/interview/InterviewObject.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/interfaces/CommandInterface.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/config/JdaConfiguration.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/BlackjackStartInteraction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/multiplayer/BlackjackMultiplayerInteraction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/multiplayer/BlackjackMultiplayerStandRequestInteraction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/multiplayer/StartBlackjackMultiplayerGame.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/listeners/InteractionListener.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/menus/blackjack/BlackjackMultiplayerMenu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/dtos/BlackjackCardObject.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/dtos/ComentaryTraductions.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/multiPlayer/BlackjackMultiplayerEndGameResultType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/multiPlayer/BlackjackMultiplayerGame.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/multiPlayer/BlackjackMultiplayerPlayers.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-server/src/main/kotlin/server/Application.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api-server/src/main/kotlin/server/Application.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-server/src/main/kotlin/server/routes/web/WebPublicRoutes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api-server/src/main/kotlin/server/routes/web/WebPublicRoutes.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/shared/Cache.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/shared/Cache.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/database/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/Public.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/Public.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/enums/Petelement.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/enums/Petpowertype.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/indexes/Indexes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/indexes/Indexes.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/keys/Keys.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/keys/Keys.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/sequences/Sequences.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/sequences/Sequences.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/Combathistory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/Combatpowerhistory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/Petpower.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/Petpowereffectiveness.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/Stock.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/Stockhistory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/Stockholding.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/User.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/Userpet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/Userpet.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/Userpetpower.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/daos/CombathistoryDao.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/daos/CombatpowerhistoryDao.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/daos/PetpowerDao.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/daos/PetpowereffectivenessDao.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/daos/StockDao.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/daos/StockhistoryDao.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/daos/StockholdingDao.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/daos/UserpetpowerDao.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/pojos/Combathistory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/pojos/Combatpowerhistory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/pojos/Petpower.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/pojos/Petpowereffectiveness.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/pojos/Stock.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/pojos/Stockhistory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/pojos/Stockholding.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/pojos/Userpetpower.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/records/CombathistoryRecord.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/records/CombatpowerhistoryRecord.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/records/PetpowerRecord.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/records/PetpowereffectivenessRecord.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/records/StockRecord.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/records/StockhistoryRecord.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/records/StockholdingRecord.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/records/UserpetpowerRecord.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/references/Tables.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/references/Tables.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ComponentBuilder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ComponentBuilder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ContainerRes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/utils/ContainerRes.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/translates/TranslatesObjects.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/translates/TranslatesObjects.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/core/abstractClasses/AbstractCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/core/interfaces/CommandInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/core/interfaces/ResponderInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/interfaces/ResponderInterface.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/core/init/InitCommandsAndCache.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/init/InitCommandsAndCache.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/Counter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/Counter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/Balance.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/Balance.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/Daily.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/Daily.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/Transfer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/Transfer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/cassino/BlackjackCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/cassino/BlackjackCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/cassino/Coinflip.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/cassino/Coinflip.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/cassino/HorseRacing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/cassino/HorseRacing.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/cassino/Slots.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/cassino/Slots.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/jobs/JobsSearch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/jobs/JobsSearch.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/jobs/Work.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/economy/jobs/Work.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/CounterInteraction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/CounterInteraction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/AcceptTransferInteraction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/AcceptTransferInteraction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/ManyTransfers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/ManyTransfers.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/WorkSystem/InterviewAnswer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/WorkSystem/InterviewAnswer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/WorkSystem/InterviewObject.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/WorkSystem/InterviewStart.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/WorkSystem/InterviewStart.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/WorkSystem/WorkChallengeInteraction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/WorkSystem/WorkChallengeInteraction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/singlePlayer/BlackjackInteraction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/singlePlayer/BlackjackInteraction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/economy/cassino/blackjack/singlePlayer/BlackjackStartInteraction.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/menus/blackjack/BlackjackGameMenu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/menus/blackjack/BlackjackGameMenu.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackCardObject.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackGame.kt" beforeDir="false" afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackGame.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackIA.kt" beforeDir="false" afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/BlackjackIA.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/games/src/main/kotlin/games/blackjack/core/singlePlayer/ComentaryTraductions.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,11 +87,11 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Object" />
-        <option value="Kotlin Enum" />
         <option value="Kotlin Data Class" />
         <option value="Class" />
-        <option value="Kotlin Class" />
+        <option value="Kotlin Enum" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -153,12 +147,15 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/erisbot/src/main/resources" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="studio.styx.erisbot.core.interfaces" />
+    </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="studio.styx.erisbot.discord.features.interactions.economy.cassino.blackjack" />
+      <recent name="games.blackjack.core.dtos" />
+      <recent name="studio.styx.erisbot.core.dtos.interview" />
       <recent name="server.core.security.v2.auth" />
       <recent name="studio.styx.erisbot.discord.menus.workSystem" />
-      <recent name="studio.styx.erisbot.discord.menus.blackjack" />
-      <recent name="studio.styx.erisbot.discord.features.interactions.economy.cassino.blackjack.singlePlayer" />
-      <recent name="shared" />
     </key>
   </component>
   <component name="RunManager">

@@ -45,11 +45,9 @@ class WorkChallengeInteraction : ResponderInterface {
 
     private val res = ContainerRes()
 
-    override fun getCustomId(): String {
-        return "company/work/:userId"
-    }
+    override val customId = "company/work/:userId"
 
-    override fun execute(event: ButtonInteractionEvent) {
+    override suspend fun execute(event: ButtonInteractionEvent) {
         val customIdHelper = CustomIdHelper(customId, event.customId)
 
         val userId = customIdHelper.get("userId")
@@ -74,7 +72,7 @@ class WorkChallengeInteraction : ResponderInterface {
         event.replyModal(modal).queue()
     }
 
-    override fun execute(event: ModalInteractionEvent) {
+    override suspend fun execute(event: ModalInteractionEvent) {
         val userId = event.user.id
         val situation = get<String?>("$userId-situation")
         val response = event.getValue("response")!!.asString

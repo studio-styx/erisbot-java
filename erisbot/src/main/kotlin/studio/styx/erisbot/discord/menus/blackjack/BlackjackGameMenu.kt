@@ -1,6 +1,6 @@
 package studio.styx.erisbot.discord.menus.blackjack
 
-import games.blackjack.core.singlePlayer.BlackjackCardObject
+import games.blackjack.core.dtos.BlackjackCardObject
 import games.blackjack.core.singlePlayer.BlackjackEndGameResultType
 import games.blackjack.core.singlePlayer.BlackjackGame
 import net.dv8tion.jda.api.components.MessageTopLevelComponent
@@ -155,6 +155,6 @@ class BlackjackGameMenu {
             )
             .withColor(Colors.FUCHSIA)
 
-        return List.of<MessageTopLevelComponent?>(container.build())
+        return mutableListOf<MessageTopLevelComponent?>(container.build())
     }
 }

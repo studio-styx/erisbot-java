@@ -61,7 +61,7 @@ class Slots : CommandInterface {
     }
 
 
-    override fun execute(event: SlashCommandInteractionEvent) {
+    override suspend fun execute(event: SlashCommandInteractionEvent) {
         event.deferReply().queue(Consumer { hook: InteractionHook ->
             dsl.transaction(TransactionalRunnable { config: Configuration ->
                 val tx = config.dsl()
