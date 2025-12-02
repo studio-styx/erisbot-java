@@ -69,6 +69,7 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
 }
 
+
 kotlin {
     jvmToolchain(21)
 }

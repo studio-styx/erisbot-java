@@ -98,7 +98,6 @@ class BlackjackIA(private val game: BlackjackGame) {
             4 -> {
                 // Eris Pesadelo: Altamente estratégica, considera probabilidade de estourar
                 chance = 0.7
-                println("chance de pegar uma carta: $chance")
                 if (erisHand > 17) chance -= 0.6
                 if (erisHand > 19) chance -= 0.4
                 if (playerVisibleCardValue >= 10) chance += 0.4

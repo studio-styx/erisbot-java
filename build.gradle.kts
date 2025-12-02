@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "2.2.20" apply false
     id("org.springframework.boot") version "3.3.4" apply false
@@ -14,6 +16,7 @@ allprojects {
         mavenCentral()
     }
 }
+
 
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")

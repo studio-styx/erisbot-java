@@ -23,6 +23,14 @@ dependencies {
     jooqGenerator("org.postgresql:postgresql:42.7.4")
 }
 
+tasks.bootJar {
+    enabled = false // Desativa a criação de executável para este módulo
+}
+
+tasks.jar {
+    enabled = true // Garante que ele gere um .jar comum para ser usado pelo módulo principal
+}
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))

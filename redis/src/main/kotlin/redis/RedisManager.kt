@@ -5,11 +5,12 @@ import redis.clients.jedis.JedisPoolConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import shared.utils.Env
 import java.net.URI
 import java.util.concurrent.TimeUnit
 
 object RedisManager {
-    private val redisUrl = System.getenv("REDIS_URL") ?:
+    private val redisUrl = Env.get("REDIS_URL").toString() ?:
         throw IllegalArgumentException("Redis url não encontrada no .env")
 
     private val poolConfig = JedisPoolConfig().apply {

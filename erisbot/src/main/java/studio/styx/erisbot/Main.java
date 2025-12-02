@@ -49,7 +49,7 @@ public class Main implements CommandLineRunner {
         // === CARREGA AGENDAMENTOS ===
         IntervalCheckKt.startIntervalCheck(dsl, jda);
 
-        System.out.println("Locado com sucesso como: " + jda.getSelfUser().getName());
+        System.out.println("Logado com sucesso como: " + jda.getSelfUser().getName());
     }
 
     private void registerCommandsToDiscord(JDA jda, List<CommandInterface> commands) {

@@ -5,18 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90219cdd-834f-4824-84ac-e9a08a1b9da2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/emojis.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/games/tryvia/TryviaCommands.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/menus/TryviaEndGameMenu.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/tryvia/core/TryviaGame.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/tryvia/dtos/TryviaMessage.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/tryvia/dtos/TryviaParticipant.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-server/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/api-server/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/database/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/java/studio/styx/erisbot/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/abstractClasses/AbstractCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/abstractClasses/AbstractCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/interfaces/CommandInterface.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/interfaces/CommandInterface.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/listeners/InteractionListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/listeners/InteractionListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/games/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/games/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gemini-service/src/main/kotlin/services/gemini/GeminiRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/gemini-service/src/main/kotlin/services/gemini/GeminiRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redis/src/main/kotlin/redis/RedisManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/redis/src/main/kotlin/redis/RedisManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redis/src/main/kotlin/redis/RedisPubSubManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/redis/src/main/kotlin/redis/RedisPubSubManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,12 +31,47 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/erisbot">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="ErisBot" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ErisBot" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ErisBot" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="shadow" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ErisBot" type="f1a62948:ProjectNode" />
+                <item name="erisbot" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ErisBot" type="f1a62948:ProjectNode" />
+                <item name="erisbot" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ErisBot" type="f1a62948:ProjectNode" />
+                <item name="erisbot" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="shadow" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -83,8 +118,10 @@
     &quot;Gradle.Build ErisbotJava.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Build ModuleTest.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ErisbotJava [shadowJar].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.ErisbotJava:database [:database:TestConnectionKt.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.ErisbotJava:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ErisbotJava:erisbot [shadowJar].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.ModuleTest:erisbot [:erisbot:studio.styx.erisbot.Main.main()].executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -107,6 +144,7 @@
       <recent name="$PROJECT_DIR$/erisbot" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/erisbot/src/main/resources" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -120,7 +158,7 @@
       <recent name="studio.styx.erisbot.discord.menus.workSystem" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.ErisbotJava:erisbot [shadowJar]">
     <configuration name="StartByMain" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="studio.styx.erisbot.Main" />
       <module name="ErisBot.erisbot.main" />
@@ -128,6 +166,56 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ErisbotJava [shadowJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="shadowJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="ErisbotJava:erisbot [shadowJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/erisbot" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="shadowJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.ErisbotJava:erisbot [shadowJar]" />
+        <item itemvalue="Gradle.ErisbotJava [shadowJar]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -156,6 +244,10 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.IllegalStateException" package="java.lang" />
           <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.beans.factory.UnsatisfiedDependencyException" package="org.springframework.beans.factory" />
+          <option name="timeStamp" value="12" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>

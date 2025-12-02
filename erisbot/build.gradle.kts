@@ -1,6 +1,7 @@
 plugins {
     id("org.springframework.boot") version "3.3.4"
     id("io.spring.dependency-management") version "1.1.6"
+    // id("com.github.johnrengelman.shadow") version "8.1.1"
     kotlin("jvm")
 }
 
@@ -51,6 +52,16 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.11.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.bootJar {
+    archiveBaseName.set("meu-projeto-app")
+
+    mainClass.set("studio.styx.erisbot.Main")
+}
+
+tasks.jar {
+    enabled = false
 }
 
 configurations.all {

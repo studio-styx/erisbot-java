@@ -30,6 +30,14 @@ tasks.test {
     useJUnitPlatform()
 }
 
+tasks.bootJar {
+    enabled = false // Desativa a criação de executável para este módulo
+}
+
+tasks.jar {
+    enabled = true // Garante que ele gere um .jar comum para ser usado pelo módulo principal
+}
+
 kotlin {
     jvmToolchain(21)
 }

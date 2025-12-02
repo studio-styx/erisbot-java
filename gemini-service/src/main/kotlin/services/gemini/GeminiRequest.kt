@@ -3,10 +3,11 @@ package services.gemini
 import com.google.genai.Client
 import com.google.genai.types.GenerateContentConfig
 import com.google.genai.types.GenerateContentResponse
+import shared.utils.Env
 
 class GeminiRequest {
     private val client: Client = Client.builder()
-        .apiKey(System.getenv("GEMINI_API_KEY"))
+        .apiKey(Env.get("GEMINI_API_KEY").toString())
         .build()
 
     fun request(prompt: String): GenerateContentResponse? {

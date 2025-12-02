@@ -21,6 +21,7 @@ import shared.Cache.get
 import shared.Cache.remove
 import shared.Colors
 import shared.utils.CustomIdHelper
+import shared.utils.Icon
 import shared.utils.Utils.brBuilder
 import shared.utils.Utils.formatNumber
 import studio.styx.erisbot.core.interfaces.ResponderInterface
@@ -90,7 +91,7 @@ class WorkChallengeInteraction : ResponderInterface {
             dsl.transaction { config: Configuration ->
                 val tx = config.dsl()
                 res.setColor(Colors.WARNING)
-                    .setText("⏳ Aguarde enquanto a IA avalia sua resposta...")
+                    .setText("${Icon.static.get("waiting_white")} | Aguarde enquanto a IA avalia sua resposta...")
                     .edit(hook)
                 try {
                     val userTable = USER
@@ -123,7 +124,7 @@ class WorkChallengeInteraction : ResponderInterface {
 
                     if (userResult.isEmpty()) {
                         res.setColor(Colors.DANGER)
-                            .setText("❌ Você não trabalha em nenhuma empresa! use o comando **/emprego procurar** para procurar por uma empresa!")
+                            .setText("${Icon.static.get("denied")} | Você não trabalha em nenhuma empresa! use o comando **/emprego procurar** para procurar por uma empresa!")
                             .send(hook)
                         return@transaction
                     }
@@ -135,7 +136,7 @@ class WorkChallengeInteraction : ResponderInterface {
 
                     if (contract.id == null) {
                         res.setColor(Colors.DANGER)
-                            .setText("❌ Você não trabalha em nenhuma empresa! use o comando **/emprego procurar** para procurar por uma empresa!")
+                            .setText("${Icon.static.get("denied")} | Você não trabalha em nenhuma empresa! use o comando **/emprego procurar** para procurar por uma empresa!")
                             .send(hook)
                         return@transaction
                     }
@@ -210,7 +211,7 @@ class WorkChallengeInteraction : ResponderInterface {
 
                     if (result?.text() == null) {
                         res.setColor(Colors.DANGER)
-                            .setText("❌ Ocorreu um erro ao processar sua requisição!")
+                            .setText("${Icon.static.get("denied")} | Ocorreu um erro ao processar sua requisição!")
                             .send(hook)
                         return@transaction
                     }
@@ -280,15 +281,15 @@ class WorkChallengeInteraction : ResponderInterface {
 
                     if (bonus < 0) {
                         res.setColor(Colors.DANGER)
-                            .setText("😢 Sua resposta foi insatisfatória, por isso recebeu menos! Valor recebido: **Ꞩ $formattedPayValue**\n\n**Avaliação:** $reason")
+                            .setText("${Icon.static.get("Eris_cry")} | Sua resposta foi insatisfatória, por isso recebeu menos! Valor recebido: **Ꞩ $formattedPayValue**\n\n**Avaliação:** $reason")
                             .send(hook)
                     } else if (bonus > 0) {
                         res.setColor(Colors.SUCCESS)
-                            .setText("🎉 Sua resposta foi satisfatória, por isso recebeu mais! Valor recebido: **Ꞩ $formattedPayValue**\n\n**Avaliação:** $reason")
+                            .setText("${Icon.static.get("Eris_happy")} | Sua resposta foi satisfatória, por isso recebeu mais! Valor recebido: **Ꞩ $formattedPayValue**\n\n**Avaliação:** $reason")
                             .send(hook)
                     } else {
                         res.setColor(Colors.PRIMARY)
-                            .setText("✅ Sua resposta foi neutra, por isso recebeu o mesmo salário! Valor recebido: **Ꞩ $formattedPayValue**\n\n**Avaliação:** $reason")
+                            .setText("${Icon.static.get("success")} | Sua resposta foi neutra, por isso recebeu o mesmo salário! Valor recebido: **Ꞩ $formattedPayValue**\n\n**Avaliação:** $reason")
                             .send(hook)
                     }
 
@@ -318,7 +319,7 @@ class WorkChallengeInteraction : ResponderInterface {
                 } catch (e: Exception) {
                     e.printStackTrace()
                     res.setColor(Colors.DANGER)
-                        .setText("❌ Ocorreu um erro ao processar sua resposta. Tente novamente.")
+                        .setText("${Icon.static.get("error")} | Ocorreu um erro ao processar sua resposta. Tente novamente.")
                         .send(hook)
                 }
             }

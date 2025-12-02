@@ -26,6 +26,7 @@ import studio.styx.erisbot.generated.enums.Rarity
 import studio.styx.erisbot.generated.tables.records.*
 import studio.styx.erisbot.generated.tables.references.*
 import services.gemini.GeminiRequest
+import shared.utils.Icon
 import utils.ComponentBuilder.ContainerBuilder.Companion.create
 import utils.ContainerRes
 import java.math.BigDecimal
@@ -212,7 +213,7 @@ class Work : CommandInterface {
                     cooldowns[event.user.id] = LocalDateTime.now().plusMinutes(4)
 
                     res.setColor(Colors.WARNING)
-                        .setText("⏳ Um novo desafio apareceu! por favor aguarde um instante.")
+                        .setText("${Icon.static.get("waiting_white")} | Um novo desafio apareceu! por favor aguarde um instante.")
                         .edit(hook)
 
                     // Gerar prompt para o Gemini
@@ -237,7 +238,7 @@ class Work : CommandInterface {
 
                         res.setColor(Colors.DANGER)
                             .setText(
-                                "😢 Ocorreu um erro ao gerar o desafio, por isso você recebeu o salário normal de: ${
+                                "${Icon.static.get("Eris_cry")} | Ocorreu um erro ao gerar o desafio, por isso você recebeu o salário normal de: ${
                                     formatNumber(
                                         wage!!.toDouble()
                                     )

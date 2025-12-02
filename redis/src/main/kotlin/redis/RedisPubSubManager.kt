@@ -7,11 +7,12 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import shared.utils.Env
 import java.net.URI
 import java.util.concurrent.Executors
 
 object RedisPubSubManager {
-    private val redisUrl = System.getenv("REDIS_URL") ?:
+    private val redisUrl = Env.get("REDIS_URL").toString() ?:
         throw IllegalArgumentException("Redis url não encontrada no .env")
 
     // Pool separado para Pub/Sub (subscribe é bloqueante)
