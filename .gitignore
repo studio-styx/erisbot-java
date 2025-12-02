@@ -57,3 +57,6 @@ prismaProject/.env
 prismaProject/certs/
 prismaProject/prisma/certs/
 prismaProject/node_modules/
+
+*.zip
+*.jar
