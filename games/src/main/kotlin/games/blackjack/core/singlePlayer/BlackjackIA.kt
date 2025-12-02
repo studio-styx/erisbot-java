@@ -97,7 +97,6 @@ class BlackjackIA(private val game: BlackjackGame) {
             }
             4 -> {
                 // Eris Pesadelo: Altamente estratégica, considera probabilidade de estourar
-                println("==== CHANCE DA ÉRIS PEGAR UMA CARTA ====")
                 chance = 0.7
                 println("chance de pegar uma carta: $chance")
                 if (erisHand > 17) chance -= 0.6
@@ -105,7 +104,6 @@ class BlackjackIA(private val game: BlackjackGame) {
                 if (playerVisibleCardValue >= 10) chance += 0.4
                 if (playerVisibleCardValue <= 6) chance -= 0.4
                 if (isSoftHand && erisHand <= 17) chance += 0.3
-                println("chance de pegar uma carta após calculos simples: $chance")
 
                 // Calcula probabilidade de estourar
                 val bustRisk = game.remainingCards.count { card ->
@@ -117,10 +115,8 @@ class BlackjackIA(private val game: BlackjackGame) {
                 val chanceOfError = Utils.getRandomDouble(-0.1, 0.1)
                 chance += chanceOfError
                 if (erisHand == 21) chance = 0.0
-                println("chance de pegar uma carta após calculos complexos: $chance")
 
                 chance = chance.coerceIn(0.0, 1.0)
-                println("chance de pegar uma carta final: $chance")
 
                 if (chance > 90 || Math.random() > chance) {
                     return ActionResult(Action.STAND, null)

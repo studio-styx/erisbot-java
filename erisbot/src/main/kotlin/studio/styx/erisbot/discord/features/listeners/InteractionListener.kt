@@ -5,11 +5,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
+import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
+import net.dv8tion.jda.api.interactions.DiscordLocale
+import net.dv8tion.jda.api.interactions.commands.Command
 import net.dv8tion.jda.api.utils.messages.MessageEditData
 import org.springframework.stereotype.Component
 import shared.Cache
@@ -29,6 +32,73 @@ class InteractionListener(
 ) : ListenerAdapter() {
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+
+    override fun onCommandAutoCompleteInteraction(event: CommandAutoCompleteInteractionEvent) {
+        scope.launch {
+            val command = commands.find { it.getSlashCommandData().name == event.name }
+
+            // 1. Se o comando não existe, retornamos lista vazia para parar o "loading" do Discord
+            if (command == null) {
+                event.replyChoices(emptyList()).queue()
+                return@launch
+            }
+
+            try {
+                // Executa a lógica do comando
+                command.onAutoComplete(event)
+
+            } catch (e: IllegalArgumentException) {
+                System.err.println("Erro no AutoComplete do comando ${event.name}: ${e.message}")
+                e.printStackTrace()
+                handleAutoCompleteError(event, e, ErrorType.LIMIT_EXCEEDED)
+            } catch (e: Exception) {
+                System.err.println("Erro no AutoComplete do comando ${event.name}: ${e.message}")
+                e.printStackTrace()
+                handleAutoCompleteError(event, e, ErrorType.GENERIC)
+            }
+        }
+    }
+
+    // --- Helpers de Tratamento de Erro e Tradução ---
+
+    private enum class ErrorType { LIMIT_EXCEEDED, GENERIC }
+
+    private fun handleAutoCompleteError(event: CommandAutoCompleteInteractionEvent, e: Exception, type: ErrorType) {
+        // Se a interação já foi respondida (ack), não podemos enviar outra resposta
+        if (event.isAcknowledged) return
+
+        val locale = event.userLocale
+
+        // Seleciona a mensagem baseada no tipo de erro e idioma
+        val errorMessage = when (type) {
+            ErrorType.LIMIT_EXCEEDED -> getLocalizedMessage(
+                locale,
+                pt = "Erro: Mais de 25 opções retornadas!",
+                en = "Error: More than 25 options returned!",
+                es = "Error: ¡Más de 25 opciones devueltas!"
+            )
+            ErrorType.GENERIC -> getLocalizedMessage(
+                locale,
+                pt = "Erro ao carregar opções.",
+                en = "Error loading options.",
+                es = "Error al cargar opciones."
+            )
+        }
+
+        // Cria uma Choice de erro. O value é "error_code" para você tratar se o usuário clicar sem querer.
+        // O nome truncamos em 100 chars para evitar outro erro de validação.
+        val errorChoice = Command.Choice("⚠️ $errorMessage".take(100), "error_interaction_failed")
+
+        event.replyChoices(errorChoice).queue()
+    }
+
+    private fun getLocalizedMessage(locale: DiscordLocale, pt: String, en: String, es: String): String {
+        return when (locale) {
+            DiscordLocale.PORTUGUESE_BRAZILIAN -> pt
+            DiscordLocale.SPANISH -> es
+            else -> en // Default para Inglês
+        }
+    }
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
         // Lança uma corrotina para permitir o uso de 'suspend'

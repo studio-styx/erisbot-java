@@ -13,7 +13,6 @@ data class EmojiData(
 object EmojiLoader {
     private val mapper = jacksonObjectMapper()
 
-    // Carrega .env (silenciosamente se não existir)
     private val env = try {
         Dotenv.load()
     } catch (e: Exception) {
@@ -29,7 +28,12 @@ object EmojiLoader {
 
     val emojis: EmojiData by lazy {
         if (emojiFile.exists()) {
-            mapper.readValue(emojiFile)
+            try {
+                mapper.readValue(emojiFile)
+            } catch (e: Exception) {
+                println("⚠️ Erro ao ler JSON de emojis: ${e.message}")
+                EmojiData()
+            }
         } else {
             println("⚠️ Arquivo ${emojiFile.name} não encontrado! Retornando vazio.")
             EmojiData()
