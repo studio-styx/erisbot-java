@@ -313,7 +313,7 @@ class TryviaCommands : CommandInterface {
         ).useComponentsV2(true).await()
 
         try {
-            game.handleTryviaEnd(channel)
+            game.handleTryviaEnd(channel, "${Icon.static.get("Eris_cry")} | O jogo foi finalizado por ${MentionUtil.userMention(member.id)}! QUe pena, o jogo estava tão divertido")
             sendSuccess(event, "${Icon.static.get("success")} | Jogo encerrado com sucesso!")
         } catch (e: Exception) {
             println("Erro ao processar fechamento do jogo:, $e")

@@ -91,7 +91,7 @@ class WorkChallengeInteraction : ResponderInterface {
             dsl.transaction { config: Configuration ->
                 val tx = config.dsl()
                 res.setColor(Colors.WARNING)
-                    .setText("${Icon.static.get("waiting_white")} | Aguarde enquanto a IA avalia sua resposta...")
+                    .setText("${Icon.animated.get("waiting_white")} | Aguarde enquanto a IA avalia sua resposta...")
                     .edit(hook)
                 try {
                     val userTable = USER

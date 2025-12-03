@@ -16,6 +16,7 @@ import services.gemini.GeminiRequest
 import shared.Cache.set
 import shared.Colors
 import shared.utils.CustomIdHelper
+import shared.utils.Icon
 import shared.utils.Utils.brBuilder
 import shared.utils.Utils.replaceText
 import studio.styx.erisbot.core.dtos.interview.InterviewObject
@@ -101,7 +102,7 @@ class InterviewStart : ResponderInterface {
                 hook.editOriginalComponents(
                     create()
                         .withColor(Colors.WARNING)
-                        .addText("Aguarde enquanto o entrevistador chama a sua vez...")
+                        .addText("${Icon.animated.get("waiting_white")} | Aguarde enquanto o entrevistador chama a sua vez...")
                         .build()
                 ).useComponentsV2().queue()
 

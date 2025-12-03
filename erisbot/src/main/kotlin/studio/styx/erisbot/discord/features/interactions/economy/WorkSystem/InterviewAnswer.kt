@@ -21,6 +21,7 @@ import shared.Cache.get
 import shared.Cache.remove
 import shared.Colors
 import shared.utils.CustomIdHelper
+import shared.utils.Icon
 import shared.utils.Utils.brBuilder
 import shared.utils.Utils.formatNumber
 import shared.utils.Utils.replaceText
@@ -56,7 +57,7 @@ class InterviewAnswer : ResponderInterface {
     override val customId = "interview/answer/:index/:companyId/:userId"
 
     override suspend fun execute(event: ModalInteractionEvent) {
-        val customIdHelper = CustomIdHelper(customId, event.getCustomId())
+        val customIdHelper = CustomIdHelper(customId, event.customId)
 
         val index: Int = customIdHelper.getAsInt("index")!!
         val companyId: Int = customIdHelper.getAsInt("companyId")!!
@@ -86,7 +87,7 @@ class InterviewAnswer : ResponderInterface {
 
         if (index + 1 < questions.size) {
             event.deferEdit().queue(Consumer { hook: InteractionHook ->
-                res.setColor(Colors.WARNING).setText("Aguarde enquanto o entrevistador chama a sua vez...").send(hook)
+                res.setColor(Colors.WARNING).setText("${Icon.animated.get("waiting_white")} | Aguarde enquanto o entrevistador chama a sua vez...").send(hook)
                 // Delay de 2 a 4 segundos
                 val delaySeconds = 2 + (Math.random() * 3).toInt() // 2, 3 ou 4 segundos
 
@@ -123,7 +124,7 @@ class InterviewAnswer : ResponderInterface {
                         return@transaction
                     }
 
-                    res.setColor(Colors.WARNING).setText("Aguarde enquanto o entrevistador te analisa...").send(hook)
+                    res.setColor(Colors.WARNING).setText("${Icon.animated.get("waiting_white")} | Aguarde enquanto o entrevistador te analisa...").send(hook)
 
                     val companyFlags = company.flags
                     val prompt = brBuilder(

@@ -16,6 +16,7 @@ import org.jooq.DSLContext
 import shared.Cache
 import shared.Colors
 import shared.utils.Icon
+import shared.utils.MentionUtil
 import shared.utils.Utils
 import studio.styx.erisbot.generated.enums.Tryviadifficulty
 import studio.styx.erisbot.generated.enums.Tryviatypes
@@ -86,13 +87,12 @@ class TryviaGame(
         return participants.sortedByDescending { it.points }.toMutableList()
     }
 
-    fun nextQuestion(): TryviaquestionsRecord {
+    fun nextQuestion(): TryviaquestionsRecord? {
         currentQuestion++
-        return questions[currentQuestion]
+        return questions.getOrNull(currentQuestion)
     }
 
-    suspend fun sendQuestionMessage(channel: MessageChannelUnion) {
-        timeoutJob?.cancel()
+    private suspend fun deleteMessages() {
         val iterator = messages.iterator()
 
         while (iterator.hasNext()) {
@@ -112,8 +112,12 @@ class TryviaGame(
                 message.turnToDelete--
             }
         }
+    }
 
-        // Agora envia a nova mensagem
+    suspend fun sendQuestionMessage(channel: MessageChannelUnion) {
+        timeoutJob?.cancel()
+        deleteMessages()
+
         try {
             val message = channel.sendMessageComponents(questionMenu(this, false))
                 .useComponentsV2()
@@ -138,27 +142,61 @@ class TryviaGame(
         }
     }
 
+    suspend fun sendSuccefullyAnsweredMessage(channel: MessageChannelUnion, userId: String) {
+        timeoutJob?.cancel()
+
+        deleteMessages()
+
+        val question = questions[currentQuestion]
+        val pointsReward = when (question.difficulty) {
+            Tryviadifficulty.EASY -> 1
+            Tryviadifficulty.MEDIUM -> 2
+            Tryviadifficulty.HARD -> 3
+            else -> 2
+        }
+        val participant = participants.find { it.id == userId } ?: run {
+            participants.add(TryviaParticipant(userId))
+            participants.last()
+        }
+
+        participant.points += pointsReward
+        participant.streak++
+        setActualQuestionResponded(false)
+
+        for (p in participants) {
+            if (p.id == userId) continue
+            p.streak = 0
+        }
+
+        val message = channel.sendMessageComponents(
+            ComponentBuilder.ContainerBuilder.create()
+                .withColor(Colors.SUCCESS)
+                .addText("${Icon.static.get("Eris_happy")} | Parabéns ${MentionUtil.userMention(userId)}! Você acertou a pergunta em 20 segundos! streak: **${participant.streak}**")
+                .build(),
+            ComponentBuilder.ContainerBuilder.create()
+                .withColor(Colors.FUCHSIA)
+                .addText("Explicação: **${question.explanation}**")
+                .build()
+        ).useComponentsV2().await()
+        messages.add(TryviaMessage(message, false, 1))
+
+        val nextQuestion = nextQuestion()
+
+        delay(5000)
+
+        if (nextQuestion == null) {
+            handleTryviaEnd(channel, "${Icon.static.get("Eris_cry")} | As perguntas acabaram!")
+            return
+        }
+
+        sendIntervalMessage(channel)
+        sendQuestionMessage(channel)
+    }
+
     suspend fun sendIntervalMessage(channel: MessageChannelUnion) {
         timeoutJob?.cancel()
-        val iterator = messages.iterator()
 
-        while (iterator.hasNext()) {
-            val message = iterator.next()
-
-            if (message.turnToDelete <= 0) {
-                // Se o tempo acabou, deleta do Discord
-                try {
-                    runCatching { message.message.delete().await() }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-                // E remove da lista da memória
-                iterator.remove()
-            } else {
-                // Se ainda tem turnos, apenas diminui o contador e MANTÉM na lista
-                message.turnToDelete--
-            }
-        }
+        deleteMessages()
 
         // Agora envia a nova mensagem
         try {
@@ -178,7 +216,7 @@ class TryviaGame(
     suspend fun handleQuestionTimeout(channel: MessageChannelUnion) {
         if (actualQuestionResponded) return
         if (currentQuestion >= questions.size) {
-            handleTryviaEnd(channel)
+            handleTryviaEnd(channel , "${Icon.static.get("Eris_cry")} | As perguntas acabaram!")
             return
         }
 
@@ -197,19 +235,21 @@ class TryviaGame(
         messages.add(TryviaMessage(message, false, 1))
 
         // Avança para próxima pergunta
-        currentQuestion++
+        val nextQuestion = nextQuestion()
+
+        for (participant in participants) {
+            participant.streak = 0
+        }
 
         if (!actualQuestionResponded) addConsecutiveNoResponse()
 
         if (consecutiveNoResponse > 4) {
-            channel.sendMessageComponents(
-                ComponentBuilder.ContainerBuilder.create()
-                    .withColor(Colors.DANGER)
-                    .addText("${Icon.static.get("Eris_cry")} | Ninguem respondeu a 3 perguntas consecutivas, por isso o jogo foi finalizado")
-                    .build()
-            ).useComponentsV2().await()
+            handleTryviaEnd(channel, "${Icon.static.get("error")} | Ninguem respondeu a 3 perguntas consecutivas, por isso o jogo foi finalizado")
+            return
+        }
 
-            handleTryviaEnd(channel)
+        if (nextQuestion == null) {
+            handleTryviaEnd(channel, "${Icon.static.get("Eris_cry")} | As perguntas acabaram após ninguem responder a ultima!")
             return
         }
 
@@ -217,24 +257,13 @@ class TryviaGame(
         sendQuestionMessage(channel)
     }
 
-    suspend fun handleTryviaEnd(channel: MessageChannelUnion) {
+    suspend fun handleTryviaEnd(channel: MessageChannelUnion, message: String) {
         timeoutJob?.cancel()
 
-        val iterator = messages.iterator()
-
-        while (iterator.hasNext()) {
-            val message = iterator.next()
-
-            try {
-                runCatching { message.message.delete().await() }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            // E remove da lista da memória
-            iterator.remove()
-        }
+        deleteMessages()
 
         Cache.remove("tryvia:game:${channel.id}")
+        channel.sendMessageComponents(ComponentBuilder.ContainerBuilder.create().withColor(Colors.DANGER).addText(message).build()).useComponentsV2().await()
         processGameClosure(channel)
     }
 
@@ -542,7 +571,10 @@ fun questionMenu(game: TryviaGame, disableButtons: Boolean = false): MutableList
         Tryviatypes.BOOLEAN -> {
             containerBuilder.addText(Utils.brBuilder("# Responda com verdadeiro ou falso:"))
 
-            val correctBoolean = item.correctanswer.toBoolean()
+            val correctBoolean = item.correct ?: when(item.correctanswer) {
+                "true", "sim", "verdadeiro" -> true
+                else -> false
+            }
 
             // Criar botões Verdadeiro/Falso usando padrão JDA
             val trueButton = Button.success(

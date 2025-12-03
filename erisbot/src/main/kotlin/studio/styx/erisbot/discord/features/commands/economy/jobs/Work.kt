@@ -213,7 +213,7 @@ class Work : CommandInterface {
                     cooldowns[event.user.id] = LocalDateTime.now().plusMinutes(4)
 
                     res.setColor(Colors.WARNING)
-                        .setText("${Icon.static.get("waiting_white")} | Um novo desafio apareceu! por favor aguarde um instante.")
+                        .setText("${Icon.animated.get("waiting_white")} | Um novo desafio apareceu! por favor aguarde um instante.")
                         .edit(hook)
 
                     // Gerar prompt para o Gemini
