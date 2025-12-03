@@ -1,6 +1,6 @@
 package studio.styx.erisbot.discord.features.commands.economy.cassino
 
-import database.utils.DatabaseUtils
+import database.extensions.getOrCreateUser
 import games.blackjack.core.singlePlayer.BlackjackGame
 import net.dv8tion.jda.api.components.actionrow.ActionRow
 import net.dv8tion.jda.api.components.buttons.Button
@@ -54,7 +54,7 @@ class BlackjackCommand : CommandInterface {
         val t = getBlackjackPreStart(event.getUserLocale().getLocale())
 
         var amount = event.getOption("amount")!!.getAsDouble()
-        val user = DatabaseUtils.getOrCreateUser(dsl!!, event.getUser().getId())
+        val user = dsl.getOrCreateUser(event.user.id)
         if (user.money!!.toDouble() < amount) {
             amount = user.money!!.toDouble()
         }

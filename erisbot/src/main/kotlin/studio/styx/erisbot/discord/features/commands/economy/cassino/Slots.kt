@@ -1,6 +1,6 @@
 package studio.styx.erisbot.discord.features.commands.economy.cassino
 
-import database.utils.DatabaseUtils.getOrCreateUser
+import database.extensions.getOrCreateUser
 import database.utils.LogManage
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
@@ -70,7 +70,7 @@ class Slots : CommandInterface {
                 // Obtém o amount da opção
                 var amount = event.getOption("amount")!!.getAsDouble()
 
-                val userData = getOrCreateUser(tx, userId)
+                val userData = tx.getOrCreateUser(userId)
                 val t = getSlotsMachine(event.getUserLocale().getLocale())
 
                 // Verifica se tem dinheiro suficiente

@@ -1,6 +1,6 @@
 package studio.styx.erisbot.discord.features.interactions.economy.cassino.blackjack
 
-import database.utils.DatabaseUtils
+import database.extensions.getOrCreateUser
 import dev.minn.jda.ktx.coroutines.await
 import games.blackjack.core.singlePlayer.BlackjackErisMood
 import games.blackjack.core.singlePlayer.BlackjackGame
@@ -54,7 +54,7 @@ class BlackjackStartInteraction : ResponderInterface {
         }
 
         event.deferEdit().queue(Consumer queue@{ hook: InteractionHook ->
-            val user = DatabaseUtils.getOrCreateUser(dsl, event.getUser().getId())
+            val user = dsl.getOrCreateUser(event.getUser().getId())
             if (user.money!!.toDouble() < amount!!) {
                 res.setColor(Colors.DANGER)
                     .setText("You don't have enough money to bet this amount")
@@ -156,7 +156,7 @@ class BlackjackStartInteraction : ResponderInterface {
 
         if (target.id == event.jda.selfUser.id) {
             event.deferEdit().queue(Consumer queue@{ hook: InteractionHook ->
-                val userData = DatabaseUtils.getOrCreateUser(dsl, event.getUser().getId())
+                val userData = dsl.getOrCreateUser(event.user.id)
                 if (userData.money!!.toDouble() < amount!!) {
                     res.setColor(Colors.DANGER)
                         .setText("You don't have enough money to bet this amount")
@@ -205,8 +205,8 @@ class BlackjackStartInteraction : ResponderInterface {
         event.deferEdit().await()
         dsl.transaction { config: Configuration ->
             val tx = config.dsl()
-            val userData = DatabaseUtils.getOrCreateUser(tx, user.id)
-            val targetData = DatabaseUtils.getOrCreateUser(tx, target.id)
+            val userData = tx.getOrCreateUser(user.id)
+            val targetData = tx.getOrCreateUser(target.id)
 
             if (userData.money!!.toDouble() < amount!!) {
                 val container = res.setColor(Colors.DANGER)

@@ -1,6 +1,6 @@
 package studio.styx.erisbot.discord.features.commands.economy
 
-import database.utils.DatabaseUtils.getOrCreateUser
+import database.extensions.getOrCreateUser
 import database.utils.LogManage
 import net.dv8tion.jda.api.components.actionrow.ActionRow
 import net.dv8tion.jda.api.components.buttons.Button
@@ -55,8 +55,8 @@ class Transfer : CommandInterface {
         dsl.transaction { config: Configuration ->
             val tx = config.dsl()
             // 1. Busca ambos os usuários em 1 query (otimizado)
-            val userData = getOrCreateUser(tx, userId)
-            val targetData = if (target != null) getOrCreateUser(tx, target.id) else null
+            val userData = tx.getOrCreateUser(userId)
+            val targetData = if (target != null) tx.getOrCreateUser(target.id) else null
 
             if (userData.money!! < amount) {
                 ComponentBuilder.ContainerBuilder.create()

@@ -1,6 +1,6 @@
 package studio.styx.erisbot.discord.features.commands.economy
 
-import database.utils.DatabaseUtils.getOrCreateUser
+import database.extensions.getOrCreateUser
 import database.utils.LogManage.CreateLog
 import dev.minn.jda.ktx.coroutines.await
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
@@ -85,7 +85,7 @@ class Daily : CommandInterface {
         dsl.transaction { config: Configuration? ->
             val tx = config!!.dsl()
 
-            val user = getOrCreateUser(tx, userId)
+            val user = tx.getOrCreateUser(userId)
 
             // Logica do Pet
             val activePetId = user.activepetid

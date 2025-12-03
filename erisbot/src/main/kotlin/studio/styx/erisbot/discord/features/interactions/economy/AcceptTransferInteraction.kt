@@ -1,6 +1,6 @@
 package studio.styx.erisbot.discord.features.interactions.economy
 
-import database.utils.DatabaseUtils.getOrCreateUser
+import database.extensions.getOrCreateUser
 import database.utils.LogManage
 import net.dv8tion.jda.api.components.actionrow.ActionRow
 import net.dv8tion.jda.api.components.buttons.Button
@@ -139,8 +139,8 @@ class AcceptTransferInteraction : ResponderInterface {
         authorId: String, targetId: String, discordAuthor: User, discordTarget: User,
         t: TransactionTransferInteractionInterface
     ) {
-        val authorData = getOrCreateUser(tx, authorId)
-        getOrCreateUser(tx, targetId)
+        val authorData = tx.getOrCreateUser(authorId)
+        tx.getOrCreateUser(targetId)
 
         val amount = BigDecimal.valueOf(transaction.amount!!)
 
@@ -242,10 +242,10 @@ class AcceptTransferInteraction : ResponderInterface {
         t: TransactionTransferInteractionInterface, tc: Any
     ) {
         dsl.transaction { config: Configuration ->
-            val tx = config!!.dsl()
+            val tx = config.dsl()
             val transaction = getTransaction(tx, transactionId)
-            val authorData = getOrCreateUser(tx, discordAuthor.getId())
-            val targetData = getOrCreateUser(tx, discordTarget.getId())
+            val authorData = tx.getOrCreateUser(discordAuthor.getId())
+            val targetData = tx.getOrCreateUser(discordTarget.getId())
 
             if (transaction == null) {
                 event.editComponents(

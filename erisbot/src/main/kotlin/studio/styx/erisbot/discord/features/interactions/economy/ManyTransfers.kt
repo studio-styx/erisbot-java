@@ -1,6 +1,6 @@
 package studio.styx.erisbot.discord.features.interactions.economy
 
-import database.utils.DatabaseUtils.getOrCreateUser
+import database.extensions.getOrCreateUser
 import net.dv8tion.jda.api.components.actionrow.ActionRow
 import net.dv8tion.jda.api.components.buttons.Button
 import net.dv8tion.jda.api.components.container.Container
@@ -93,7 +93,7 @@ class ManyTransfers : ResponderInterface {
 
                 val targetRecords: MutableList<UserRecord?> = getOrCreateUsers(tx, targetIds)
 
-                val authorRecord = getOrCreateUser(tx, authorId)
+                val authorRecord = tx.getOrCreateUser(authorId)
                 if (authorRecord.money!!.toDouble() < totalAmount) {
                     println("Não tem dinheiro suficiente")
                     hook.sendMessageComponents(

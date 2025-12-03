@@ -3,7 +3,7 @@ package studio.styx.erisbot.discord.features.interactions.economy.WorkSystem
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.genai.types.GenerateContentResponse
-import database.utils.DatabaseUtils.getOrCreateUser
+import database.extensions.getOrCreateUser
 import net.dv8tion.jda.api.components.actionrow.ActionRow
 import net.dv8tion.jda.api.components.buttons.Button
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
@@ -69,7 +69,7 @@ class InterviewStart : ResponderInterface {
                 val company = tx.selectFrom<CompanyRecord>(COMPANY)
                     .where(COMPANY.ID.eq(companyId))
                     .fetchOne()
-                val userData = getOrCreateUser(tx, event.user.id)
+                val userData = tx.getOrCreateUser(event.user.id)
 
                 if (company == null) {
                     res.setColor(Colors.DANGER)

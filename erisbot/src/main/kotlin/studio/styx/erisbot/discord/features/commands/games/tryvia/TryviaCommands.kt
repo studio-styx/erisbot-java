@@ -22,7 +22,6 @@ import shared.Colors
 import shared.utils.Icon
 import shared.utils.MentionUtil
 import studio.styx.erisbot.core.interfaces.CommandInterface
-import studio.styx.erisbot.discord.menus.tryviaEndGameMenu
 import studio.styx.erisbot.generated.enums.Tryviadifficulty
 import studio.styx.erisbot.generated.enums.Tryviatypes
 import studio.styx.erisbot.generated.tables.records.TryviaquestionsRecord

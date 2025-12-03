@@ -16,6 +16,11 @@ object Utils {
     }
 
     @JvmStatic
+    fun getRandomLong(min: Long, max: Long): Long {
+        return (Math.random() * (max - min + 1) + min).toLong()
+    }
+
+    @JvmStatic
     fun formatMoney(value: BigDecimal): String {
         return String.format("%,d", value.toLong()) // 1.234.567
     }

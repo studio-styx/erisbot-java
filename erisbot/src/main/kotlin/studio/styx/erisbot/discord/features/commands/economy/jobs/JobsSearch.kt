@@ -1,6 +1,6 @@
 package studio.styx.erisbot.discord.features.commands.economy.jobs
 
-import database.utils.DatabaseUtils
+import database.extensions.getOrCreateUser
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.DiscordLocale
 import net.dv8tion.jda.api.interactions.InteractionHook
@@ -86,7 +86,7 @@ class JobsSearch : CommandInterface {
 
     private fun dismiss(event: SlashCommandInteractionEvent) {
         event.deferReply().queue(Consumer { hook: InteractionHook ->
-            val user = DatabaseUtils.getOrCreateUser(dsl, event.user.id)
+            val user = dsl.getOrCreateUser(event.user.id)
             val contractId = user.contractid
 
             if (contractId == null) {

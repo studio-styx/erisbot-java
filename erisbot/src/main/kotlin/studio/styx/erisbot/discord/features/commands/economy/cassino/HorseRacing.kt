@@ -1,6 +1,6 @@
 package studio.styx.erisbot.discord.features.commands.economy.cassino
 
-import database.utils.DatabaseUtils.getOrCreateUser
+import database.extensions.getOrCreateUser
 import database.utils.LogManage
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
@@ -123,7 +123,7 @@ class HorseRacing : CommandInterface {
                 this.amount = event.getOption("amount")!!.asDouble
                 this.selectedHorse = event.getOption("horse")!!.asString
 
-                val userData = getOrCreateUser(tx, userId)
+                val userData = tx.getOrCreateUser(userId)
                 val t = getHorseRacing(event.userLocale.locale)
 
                 // Inicializa os cavalos

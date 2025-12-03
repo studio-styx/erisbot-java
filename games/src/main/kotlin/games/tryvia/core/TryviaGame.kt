@@ -260,7 +260,18 @@ class TryviaGame(
     suspend fun handleTryviaEnd(channel: MessageChannelUnion, message: String) {
         timeoutJob?.cancel()
 
-        deleteMessages()
+        val iterator = messages.iterator()
+
+        while (iterator.hasNext()) {
+            val message = iterator.next()
+
+            try {
+                runCatching { message.message.delete().await() }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            iterator.remove()
+        }
 
         Cache.remove("tryvia:game:${channel.id}")
         channel.sendMessageComponents(ComponentBuilder.ContainerBuilder.create().withColor(Colors.DANGER).addText(message).build()).useComponentsV2().await()

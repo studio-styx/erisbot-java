@@ -1,6 +1,6 @@
 package studio.styx.erisbot.discord.features.commands.economy
 
-import database.utils.DatabaseUtils
+import database.extensions.getOrCreateUser
 import database.utils.LogManage
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.DiscordLocale
@@ -46,7 +46,7 @@ class Balance : CommandInterface {
         }
 
         val userId = targetUser.id
-        val userRecord = DatabaseUtils.getOrCreateUser(dsl!!, userId)
+        val userRecord = dsl.getOrCreateUser(userId)
         val money = if (userRecord.money != null) userRecord.money else BigDecimal.ZERO
 
         val replyMessage = t.message(money!!.toDouble(), userId)

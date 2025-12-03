@@ -1,6 +1,6 @@
 package studio.styx.erisbot.discord.features.interactions.economy.cassino.blackjack.multiplayer
 
-import database.utils.DatabaseUtils
+import database.extensions.getOrCreateUser
 import dev.minn.jda.ktx.coroutines.await
 import games.blackjack.core.multiPlayer.BlackjackMultiplayerGame
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
@@ -59,8 +59,8 @@ class StartBlackjackMultiplayerGame : ResponderInterface {
             run {
                 val tx = config.dsl()
 
-                val userData = DatabaseUtils.getOrCreateUser(tx, userId)
-                val targetData = DatabaseUtils.getOrCreateUser(tx, targetId)
+                val userData = dsl.getOrCreateUser(userId)
+                val targetData = dsl.getOrCreateUser(targetId)
 
                 val errors = mutableListOf<String>()
 

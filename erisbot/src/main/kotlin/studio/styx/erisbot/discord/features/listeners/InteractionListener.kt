@@ -17,11 +17,14 @@ import net.dv8tion.jda.api.utils.messages.MessageEditData
 import org.springframework.stereotype.Component
 import shared.Cache
 import shared.Colors
+import shared.utils.Icon
+import studio.styx.erisbot.core.exceptions.InteractionUsedByUnauthorizedUserException
 import studio.styx.erisbot.core.interfaces.CommandInterface
 import studio.styx.erisbot.core.interfaces.ResponderInterface
 import studio.styx.erisbot.generated.tables.records.CommandRecord
 import studio.styx.schemaEXtended.core.exceptions.SchemaIllegalArgumentException
 import utils.ComponentBuilder
+import java.awt.Container
 import java.util.regex.Pattern
 
 @Component
@@ -208,6 +211,16 @@ class InteractionListener(
                         is EntitySelectInteractionEvent -> responder.execute(event)
                         else -> replyError(event, "Tipo de evento não suportado.")
                     }
+                } catch(e: InteractionUsedByUnauthorizedUserException) {
+                    replyError(event, e.message ?: "${Icon.static.get("denied")} | Você não é autorizado a usar essa interação!")
+                } catch(e: SchemaIllegalArgumentException) {
+                    val errorMessages = when {
+                        e.hasFieldErrors() -> e.fieldErrors.entries.joinToString("\n") { "- **`${it.key}: ${it.value}`**" }
+                        e.hasSimpleErrors() -> e.errors.joinToString("\n") { "- **`$it`**" }
+                        else -> "Erro de validação desconhecido"
+                    }
+
+                    replyError(event, "## Informações inválidas!\n$errorMessages")
                 } catch (e: Exception) {
                     System.err.println("Erro na interação $componentId: ${e.message}")
                     e.printStackTrace()
@@ -220,13 +233,33 @@ class InteractionListener(
     }
 
     private fun replyError(event: Any, message: String) {
-        val replyAction = when (event) {
-            is ButtonInteractionEvent -> event.reply(message)
-            is StringSelectInteractionEvent -> event.reply(message)
-            is ModalInteractionEvent -> event.reply(message)
-            is EntitySelectInteractionEvent -> event.reply(message)
-            else -> null
+        val container = ComponentBuilder.ContainerBuilder.create()
+            .withColor(Colors.DANGER)
+            .addText(message)
+            .build()
+
+        try {
+            val replyAction = when (event) {
+                is ButtonInteractionEvent -> event.replyComponents(container).useComponentsV2()
+                is StringSelectInteractionEvent -> event.replyComponents(container).useComponentsV2()
+                is ModalInteractionEvent -> event.replyComponents(container).useComponentsV2()
+                is EntitySelectInteractionEvent -> event.replyComponents(container).useComponentsV2()
+                else -> null
+            }
+            replyAction?.setEphemeral(true)?.queue()
+        } catch (e: Exception) {
+            try {
+                val replyAction = when (event) {
+                    is ButtonInteractionEvent -> event.hook.sendMessageComponents(container).useComponentsV2()
+                    is StringSelectInteractionEvent -> event.hook.sendMessageComponents(container).useComponentsV2()
+                    is ModalInteractionEvent -> event.hook.sendMessageComponents(container).useComponentsV2()
+                    is EntitySelectInteractionEvent -> event.hook.sendMessageComponents(container).useComponentsV2()
+                    else -> null
+                }
+                replyAction?.setEphemeral(true)?.queue()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
-        replyAction?.setEphemeral(true)?.queue()
     }
 }
