@@ -48,7 +48,7 @@ private suspend fun sellFishes(
     dsl.transaction { config ->
         val tx = config.dsl()
 
-        val query = tx.select(USERFISH.asterisk())
+        val query = tx.select(USERFISH.asterisk(), FISH.asterisk())
             .from(USERFISH)
             .innerJoin(FISH).on(FISH.ID.eq(USERFISH.FISHID))
             .where(USERFISH.USERID.eq(event.user.id))

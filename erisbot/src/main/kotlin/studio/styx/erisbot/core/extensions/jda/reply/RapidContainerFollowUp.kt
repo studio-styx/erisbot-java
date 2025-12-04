@@ -5,15 +5,15 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import utils.ComponentBuilder
 
-fun SlashCommandInteractionEvent.rapidContainerReply(
+fun SlashCommandInteractionEvent.containerFollowUp(
     color: String,
     text: String,
     ephemeral: Boolean = false
 ) {
     if (this.isAcknowledged) {
-        this.hook.editOriginalComponents(
+        this.hook.sendMessageComponents(
             ComponentBuilder.ContainerBuilder.create().withColor(color).addText(text).build()
-        ).useComponentsV2().queue()
+        ).useComponentsV2().setEphemeral(ephemeral).queue()
     } else {
         this.replyComponents(
             ComponentBuilder.ContainerBuilder.create().withColor(color).addText(text).build()
@@ -21,15 +21,15 @@ fun SlashCommandInteractionEvent.rapidContainerReply(
     }
 }
 
-fun ButtonInteractionEvent.rapidContainerReply(
+fun ButtonInteractionEvent.containerFollowUp(
     color: String,
     text: String,
     ephemeral: Boolean = false
 ) {
     if (this.isAcknowledged) {
-        this.hook.editOriginalComponents(
+        this.hook.sendMessageComponents(
             ComponentBuilder.ContainerBuilder.create().withColor(color).addText(text).build()
-        ).useComponentsV2().queue()
+        ).useComponentsV2().setEphemeral(ephemeral).queue()
     } else {
         this.replyComponents(
             ComponentBuilder.ContainerBuilder.create().withColor(color).addText(text).build()
@@ -37,15 +37,15 @@ fun ButtonInteractionEvent.rapidContainerReply(
     }
 }
 
-fun ModalInteractionEvent.rapidContainerReply(
+fun ModalInteractionEvent.containerFollowUp(
     color: String,
     text: String,
     ephemeral: Boolean = false
 ) {
     if (this.isAcknowledged) {
-        this.hook.editOriginalComponents(
+        this.hook.sendMessageComponents(
             ComponentBuilder.ContainerBuilder.create().withColor(color).addText(text).build()
-        ).useComponentsV2().queue()
+        ).useComponentsV2().setEphemeral(ephemeral).queue()
     } else {
         this.replyComponents(
             ComponentBuilder.ContainerBuilder.create().withColor(color).addText(text).build()

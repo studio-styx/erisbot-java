@@ -128,6 +128,16 @@ object Utils {
     fun <T> alternate(primary: T, default: T): T {
         return primary ?: default!!
     }
+
+    @JvmStatic
+    fun limitText(text: String, maxLength: Int): String {
+        return text.take(maxLength)
+    }
+
+    @JvmStatic
+    fun limitText(text: String, maxLength: Int, lastText: String): String {
+        return text.take(maxLength).plus(lastText)
+    }
 }
 
 enum class DiscordTimeStyle {

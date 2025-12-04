@@ -2,7 +2,6 @@ package games.fish
 
 import dev.minn.jda.ktx.coroutines.await
 import kotlinx.coroutines.delay
-import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
 import shared.utils.Utils
 
@@ -17,9 +16,10 @@ suspend fun setFishTimeout(event: ButtonInteractionEvent, round: Int, timeToEnd:
     val rodId = textDisplay.uniqueId
     val messageRound = textDisplay.content.split("| ")[1].toInt()
 
+
     if (messageRound != round) return
 
     val randomButton = Utils.getRandomInt(1, 5)
 
-    message.editMessageComponents(fishingMenu(userId, rodId, round, randomButton))
+    message.editMessageComponents(fishingMenu(userId, rodId, round, randomButton)).useComponentsV2().await()
 }

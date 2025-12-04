@@ -53,7 +53,7 @@ class FishingFish : ResponderInterface {
         val textDisplay = messageContainer.components[0].asTextDisplay()
 
         val rodId = textDisplay.uniqueId
-        val round = textDisplay.content.split("|")[1].toInt()
+        val round = textDisplay.content.split("| ")[1].toInt()
 
         val correctButton = messageContainer.components.last().asActionRow().buttons.find {
             it.style == ButtonStyle.SUCCESS
@@ -114,11 +114,9 @@ class FishingFish : ResponderInterface {
                 .withColor(Colors.DANGER)
                 .addText("${Icon.static.get("denied")} | Você apertou em um botão errado ou antes da hora! sua vara de pesca diminuiu 1 ponto de durabilidade")
                 .build()
-            ).useComponentsV2().await()
-            event.hook.editOriginalComponents(fishingMenu(userId, rodId, round + 1)).await()
-            GlobalScope.launch {
-                setFishTimeout(event, 1, Utils.getRandomLong(0, 10000), userId)
-            }
+            ).useComponentsV2().setEphemeral(true).await()
+            event.hook.editOriginalComponents(fishingMenu(userId, rodId, round + 1)).useComponentsV2().await()
+            setFishTimeout(event, round + 1, Utils.getRandomLong(1000, 10000), userId)
         } else {
             val time = createdAt / LocalDateTime.now().nano
 
@@ -131,7 +129,7 @@ class FishingFish : ResponderInterface {
                     .orderBy(rand())
                     .limit(1)
                     .fetchOne()
-                val fishingRod = tx.select(USERFISHINGROD.asterisk())
+                val fishingRod = tx.select(USERFISHINGROD.asterisk(), FISHINGROD.asterisk())
                     .from(USERFISHINGROD)
                     .innerJoin(FISHINGROD).on(USERFISHINGROD.FISHINGRODID.eq(FISHINGROD.ID))
                     .where(USERFISHINGROD.USERID.eq(userId))
@@ -189,9 +187,9 @@ class FishingFish : ResponderInterface {
                     .set(USERFISH.USERID, userId)
                     .set(USERFISH.CREATEDAT, LocalDateTime.now())
                     .execute()
-                val newFishingRod = tx.update(FISHINGROD)
-                    .set(FISHINGROD.DURABILITY, FISHINGROD.DURABILITY.minus(valueToDecrement))
-                    .where(FISHINGROD.ID.eq(rodId))
+                val newFishingRod = tx.update(USERFISHINGROD)
+                    .set(USERFISHINGROD.DURABILITY, USERFISHINGROD.DURABILITY.minus(valueToDecrement))
+                    .where(USERFISHINGROD.ID.eq(rodId))
                     .returning()
                     .fetchOne()!!
 
@@ -219,14 +217,14 @@ class FishingFish : ResponderInterface {
                     return@transaction
                 }
 
-                event.hook.editOriginalComponents(fishingMenu(userId, rodId, round + 1)).queue()
+                event.hook.editOriginalComponents(fishingMenu(userId, rodId, round + 1)).useComponentsV2().queue()
                 event.hook.sendMessageComponents(ComponentBuilder.ContainerBuilder.create()
                     .withColor(Colors.SUCCESS)
                     .addText("${Icon.static.get("Eris_happy")} | Você pescou o peixe: **${selectedFish.name}** (raridade: ${selectedFish.rarity}) que custa: **${selectedFish.price}** stx")
                     .build()
                 ).useComponentsV2().setEphemeral(true).queue()
                 GlobalScope.launch {
-                    setFishTimeout(event, round + 1, Utils.getRandomLong(0, 10000), userId)
+                    setFishTimeout(event, round + 1, Utils.getRandomLong(1000, 10000), userId)
                 }
                 LogManage.CreateLog.create()
                     .setLevel(when (selectedFish.rarity) {

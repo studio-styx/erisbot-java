@@ -12,7 +12,9 @@ enum class LogTypes {
     DEBUG
 }
 
+@Deprecated("LogManage is Deprecated, use createLog extension")
 class LogManage {
+    @Deprecated("LogManage.CreateLog is Deprecated, use createLog extension")
     class CreateLog private constructor() {
         private var message: String? = null;
         private var userId: String? = null;

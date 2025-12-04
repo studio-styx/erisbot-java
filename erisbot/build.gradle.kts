@@ -40,6 +40,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-jooq")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
     implementation("org.postgresql:postgresql:42.7.4")
     implementation("com.google.genai:google-genai:1.0.0")
 

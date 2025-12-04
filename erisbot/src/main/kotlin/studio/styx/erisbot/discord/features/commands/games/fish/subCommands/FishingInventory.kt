@@ -109,8 +109,6 @@ suspend fun fishInventoryCommand(event: SlashCommandInteractionEvent, dsl: DSLCo
                 "`${userRod.fishingRod.id}` - **${userRod.fishingRod.name}** (Raridade: **${userRod.fishingRod.rarity}**) - Durabilidade: **${userRod.userFishingRod.durability}/${userRod.fishingRod.durability}**"
             }
 
-        // Função para criar separador (ajuste conforme seu componente)
-        fun createSeparator(): String = "─".repeat(40)
 
         // Montar resposta
         val fishSection = if (userFishes.isNotEmpty()) {
@@ -129,7 +127,7 @@ suspend fun fishInventoryCommand(event: SlashCommandInteractionEvent, dsl: DSLCo
             .withColor(Colors.PRIMARY)
             .addText("${Icon.static.get("info")} | Inventário de ${event.user.effectiveName}")
             .addText(fishSection)
-            .addText(createSeparator())
+            .addDivider()
             .addText(fishingRodSection)
             .reply(event)
     }

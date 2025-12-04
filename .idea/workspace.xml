@@ -5,12 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90219cdd-834f-4824-84ac-e9a08a1b9da2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/games/fish/FishCommands.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/games/fish/subCommands/FishSell.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/games/fish/subCommands/FishingInventory.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/games/fish/subCommands/FishingRodBuy.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.edit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/src/main/kotlin/database/dtos/log/CreateLogData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/src/main/kotlin/database/extensions/CreateLog.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/dtos/wordle/WordleFileDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/dtos/wordle/WordleGameDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/dtos/wordle/WordleWord.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/extensions/jda/reply/RapidContainerEdit.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/extensions/jda/reply/RapidContainerFollowUp.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/games/wordle/WordleCommand.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/moderation/giveaway/GiveawayCommands.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/games/wordle/WordleInteraction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/functions/helpers/wordle/GetWordsHelper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/functions/imageGenerator/wordle/WordleImageGenerator.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/games/src/main/kotlin/games/tryvia/core/TryviaGame.kt" beforeDir="false" afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/tryvia/core/TryviaGame.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/Utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/Utils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/kotlin/database/utils/LogManage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/kotlin/database/utils/LogManage.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/kotlin/database/utils/LogsManage.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/extensions/jda/reply/RapidContainerReply.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/extensions/jda/reply/RapidContainerReply.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/games/fish/subCommands/FishSell.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/games/fish/subCommands/FishSell.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/games/fish/subCommands/FishingInventory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/games/fish/subCommands/FishingInventory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/games/fish/FishingFish.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/games/fish/FishingFish.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/games/src/main/kotlin/games/fish/setFishTimeout.kt" beforeDir="false" afterPath="$PROJECT_DIR$/games/src/main/kotlin/games/fish/setFishTimeout.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,12 +97,13 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Object" />
         <option value="Class" />
         <option value="Kotlin Enum" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin File" />
         <option value="Kotlin Data Class" />
         <option value="Kotlin Class" />
-        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -121,6 +142,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/guilherme/Documentos/projetos/ErisbotJava/database/src/main/resources&quot;,
@@ -145,11 +167,11 @@
       <recent name="studio.styx.erisbot.core.interfaces" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="studio.styx.erisbot.core.extensions.jda.reply" />
       <recent name="studio.styx.erisbot.discord.features.interactions.economy.cassino.blackjack" />
       <recent name="games.blackjack.core.dtos" />
       <recent name="studio.styx.erisbot.core.dtos.interview" />
       <recent name="server.core.security.v2.auth" />
-      <recent name="studio.styx.erisbot.discord.menus.workSystem" />
     </key>
   </component>
   <component name="RunManager" selected="Application.StartByMain">
@@ -250,5 +272,13 @@
     <SUITE FILE_PATH="coverage/ErisBot$Main.ic" NAME="Main Coverage Results" MODIFIED="1763429418770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>studio.styx.erisbot.*</FILTER>
     </SUITE>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>
