@@ -1,6 +1,5 @@
 import org.jooq.meta.jaxb.*
 import org.jooq.meta.jaxb.Logging
-import java.io.File
 
 plugins {
     kotlin("jvm")
@@ -21,6 +20,8 @@ dependencies {
     implementation("org.jooq:jooq-kotlin:3.19.9")
     implementation("org.postgresql:postgresql:42.7.4")
     jooqGenerator("org.postgresql:postgresql:42.7.4")
+
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
 }
 
 tasks.bootJar {

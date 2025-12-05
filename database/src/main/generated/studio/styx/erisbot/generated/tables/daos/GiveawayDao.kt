@@ -142,4 +142,37 @@ open class GiveawayDao(configuration: Configuration?) : DAOImpl<GiveawayRecord, 
      * Fetch records that have <code>ended IN (values)</code>
      */
     fun fetchByEnded(vararg values: Boolean): List<studio.styx.erisbot.generated.tables.pojos.Giveaway> = fetch(Giveaway.GIVEAWAY.ENDED, *values.toTypedArray())
+
+    /**
+     * Fetch records that have <code>containerId BETWEEN lowerInclusive AND
+     * upperInclusive</code>
+     */
+    fun fetchRangeOfContainerid(lowerInclusive: Int?, upperInclusive: Int?): List<studio.styx.erisbot.generated.tables.pojos.Giveaway> = fetchRange(Giveaway.GIVEAWAY.CONTAINERID, lowerInclusive, upperInclusive)
+
+    /**
+     * Fetch records that have <code>containerId IN (values)</code>
+     */
+    fun fetchByContainerid(vararg values: Int): List<studio.styx.erisbot.generated.tables.pojos.Giveaway> = fetch(Giveaway.GIVEAWAY.CONTAINERID, *values.toTypedArray())
+
+    /**
+     * Fetch records that have <code>embedId BETWEEN lowerInclusive AND
+     * upperInclusive</code>
+     */
+    fun fetchRangeOfEmbedid(lowerInclusive: Int?, upperInclusive: Int?): List<studio.styx.erisbot.generated.tables.pojos.Giveaway> = fetchRange(Giveaway.GIVEAWAY.EMBEDID, lowerInclusive, upperInclusive)
+
+    /**
+     * Fetch records that have <code>embedId IN (values)</code>
+     */
+    fun fetchByEmbedid(vararg values: Int): List<studio.styx.erisbot.generated.tables.pojos.Giveaway> = fetch(Giveaway.GIVEAWAY.EMBEDID, *values.toTypedArray())
+
+    /**
+     * Fetch records that have <code>personalizedMessageId BETWEEN
+     * lowerInclusive AND upperInclusive</code>
+     */
+    fun fetchRangeOfPersonalizedmessageid(lowerInclusive: String?, upperInclusive: String?): List<studio.styx.erisbot.generated.tables.pojos.Giveaway> = fetchRange(Giveaway.GIVEAWAY.PERSONALIZEDMESSAGEID, lowerInclusive, upperInclusive)
+
+    /**
+     * Fetch records that have <code>personalizedMessageId IN (values)</code>
+     */
+    fun fetchByPersonalizedmessageid(vararg values: String): List<studio.styx.erisbot.generated.tables.pojos.Giveaway> = fetch(Giveaway.GIVEAWAY.PERSONALIZEDMESSAGEID, *values)
 }

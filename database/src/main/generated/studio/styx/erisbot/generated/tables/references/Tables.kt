@@ -4,12 +4,20 @@
 package studio.styx.erisbot.generated.tables.references
 
 
+import studio.styx.erisbot.generated.tables.Actionrow
+import studio.styx.erisbot.generated.tables.Actionrowbutton
+import studio.styx.erisbot.generated.tables.Actionrowcomponent
+import studio.styx.erisbot.generated.tables.Actionrowselect
+import studio.styx.erisbot.generated.tables.Actionrowselectoption
 import studio.styx.erisbot.generated.tables.Adoptioncenter
 import studio.styx.erisbot.generated.tables.Application
 import studio.styx.erisbot.generated.tables.Command
 import studio.styx.erisbot.generated.tables.Company
+import studio.styx.erisbot.generated.tables.Container
+import studio.styx.erisbot.generated.tables.Containercomponent
 import studio.styx.erisbot.generated.tables.Contract
 import studio.styx.erisbot.generated.tables.Cooldown
+import studio.styx.erisbot.generated.tables.Embed
 import studio.styx.erisbot.generated.tables.Fish
 import studio.styx.erisbot.generated.tables.Fishingrod
 import studio.styx.erisbot.generated.tables.Footballarea
@@ -27,6 +35,7 @@ import studio.styx.erisbot.generated.tables.Guildsettings
 import studio.styx.erisbot.generated.tables.Interview
 import studio.styx.erisbot.generated.tables.Log
 import studio.styx.erisbot.generated.tables.Mails
+import studio.styx.erisbot.generated.tables.Message
 import studio.styx.erisbot.generated.tables.Pagecomponent
 import studio.styx.erisbot.generated.tables.Personalitytrait
 import studio.styx.erisbot.generated.tables.Pet
@@ -60,6 +69,31 @@ val _FOOTBALLLEAGUETOFOOTBALLTEAM: _Footballleaguetofootballteam = _Footballleag
 val _PRISMA_MIGRATIONS: _PrismaMigrations = _PrismaMigrations._PRISMA_MIGRATIONS
 
 /**
+ * The table <code>public.ActionRow</code>.
+ */
+val ACTIONROW: Actionrow = Actionrow.ACTIONROW
+
+/**
+ * The table <code>public.ActionRowButton</code>.
+ */
+val ACTIONROWBUTTON: Actionrowbutton = Actionrowbutton.ACTIONROWBUTTON
+
+/**
+ * The table <code>public.ActionRowComponent</code>.
+ */
+val ACTIONROWCOMPONENT: Actionrowcomponent = Actionrowcomponent.ACTIONROWCOMPONENT
+
+/**
+ * The table <code>public.ActionRowSelect</code>.
+ */
+val ACTIONROWSELECT: Actionrowselect = Actionrowselect.ACTIONROWSELECT
+
+/**
+ * The table <code>public.ActionRowSelectOption</code>.
+ */
+val ACTIONROWSELECTOPTION: Actionrowselectoption = Actionrowselectoption.ACTIONROWSELECTOPTION
+
+/**
  * The table <code>public.AdoptionCenter</code>.
  */
 val ADOPTIONCENTER: Adoptioncenter = Adoptioncenter.ADOPTIONCENTER
@@ -80,6 +114,16 @@ val COMMAND: Command = Command.COMMAND
 val COMPANY: Company = Company.COMPANY
 
 /**
+ * The table <code>public.Container</code>.
+ */
+val CONTAINER: Container = Container.CONTAINER
+
+/**
+ * The table <code>public.ContainerComponent</code>.
+ */
+val CONTAINERCOMPONENT: Containercomponent = Containercomponent.CONTAINERCOMPONENT
+
+/**
  * The table <code>public.Contract</code>.
  */
 val CONTRACT: Contract = Contract.CONTRACT
@@ -88,6 +132,11 @@ val CONTRACT: Contract = Contract.CONTRACT
  * The table <code>public.Cooldown</code>.
  */
 val COOLDOWN: Cooldown = Cooldown.COOLDOWN
+
+/**
+ * The table <code>public.Embed</code>.
+ */
+val EMBED: Embed = Embed.EMBED
 
 /**
  * The table <code>public.Fish</code>.
@@ -173,6 +222,11 @@ val LOG: Log = Log.LOG
  * The table <code>public.Mails</code>.
  */
 val MAILS: Mails = Mails.MAILS
+
+/**
+ * The table <code>public.Message</code>.
+ */
+val MESSAGE: Message = Message.MESSAGE
 
 /**
  * The table <code>public.PageComponent</code>.

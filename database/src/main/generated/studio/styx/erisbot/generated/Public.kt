@@ -11,11 +11,19 @@ import org.jooq.Sequence
 import org.jooq.Table
 import org.jooq.impl.SchemaImpl
 
+import studio.styx.erisbot.generated.sequences.ACTIONROWBUTTON_ID_SEQ
+import studio.styx.erisbot.generated.sequences.ACTIONROWCOMPONENT_ID_SEQ
+import studio.styx.erisbot.generated.sequences.ACTIONROWSELECTOPTION_ID_SEQ
+import studio.styx.erisbot.generated.sequences.ACTIONROWSELECT_ID_SEQ
+import studio.styx.erisbot.generated.sequences.ACTIONROW_ID_SEQ
 import studio.styx.erisbot.generated.sequences.ADOPTIONCENTER_ID_SEQ
 import studio.styx.erisbot.generated.sequences.COMMAND_ID_SEQ
 import studio.styx.erisbot.generated.sequences.COMPANY_ID_SEQ
+import studio.styx.erisbot.generated.sequences.CONTAINERCOMPONENT_ID_SEQ
+import studio.styx.erisbot.generated.sequences.CONTAINER_ID_SEQ
 import studio.styx.erisbot.generated.sequences.CONTRACT_ID_SEQ
 import studio.styx.erisbot.generated.sequences.COOLDOWN_ID_SEQ
+import studio.styx.erisbot.generated.sequences.EMBED_ID_SEQ
 import studio.styx.erisbot.generated.sequences.FISHINGROD_ID_SEQ
 import studio.styx.erisbot.generated.sequences.FISH_ID_SEQ
 import studio.styx.erisbot.generated.sequences.FOOTBALLAREA_ID_SEQ
@@ -31,6 +39,7 @@ import studio.styx.erisbot.generated.sequences.GUILDGIVEAWAY_ID_SEQ
 import studio.styx.erisbot.generated.sequences.INTERVIEW_ID_SEQ
 import studio.styx.erisbot.generated.sequences.LOG_ID_SEQ
 import studio.styx.erisbot.generated.sequences.MAILS_ID_SEQ
+import studio.styx.erisbot.generated.sequences.MESSAGE_ID_SEQ
 import studio.styx.erisbot.generated.sequences.PAGECOMPONENT_ID_SEQ
 import studio.styx.erisbot.generated.sequences.PERSONALITYTRAIT_ID_SEQ
 import studio.styx.erisbot.generated.sequences.PETGENETICS_ID_SEQ
@@ -47,12 +56,20 @@ import studio.styx.erisbot.generated.sequences.USERPETPERSONALITY_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERPETSKILL_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERPET_ID_SEQ
 import studio.styx.erisbot.generated.sequences.WORKCHALLENGES_ID_SEQ
+import studio.styx.erisbot.generated.tables.Actionrow
+import studio.styx.erisbot.generated.tables.Actionrowbutton
+import studio.styx.erisbot.generated.tables.Actionrowcomponent
+import studio.styx.erisbot.generated.tables.Actionrowselect
+import studio.styx.erisbot.generated.tables.Actionrowselectoption
 import studio.styx.erisbot.generated.tables.Adoptioncenter
 import studio.styx.erisbot.generated.tables.Application
 import studio.styx.erisbot.generated.tables.Command
 import studio.styx.erisbot.generated.tables.Company
+import studio.styx.erisbot.generated.tables.Container
+import studio.styx.erisbot.generated.tables.Containercomponent
 import studio.styx.erisbot.generated.tables.Contract
 import studio.styx.erisbot.generated.tables.Cooldown
+import studio.styx.erisbot.generated.tables.Embed
 import studio.styx.erisbot.generated.tables.Fish
 import studio.styx.erisbot.generated.tables.Fishingrod
 import studio.styx.erisbot.generated.tables.Footballarea
@@ -70,6 +87,7 @@ import studio.styx.erisbot.generated.tables.Guildsettings
 import studio.styx.erisbot.generated.tables.Interview
 import studio.styx.erisbot.generated.tables.Log
 import studio.styx.erisbot.generated.tables.Mails
+import studio.styx.erisbot.generated.tables.Message
 import studio.styx.erisbot.generated.tables.Pagecomponent
 import studio.styx.erisbot.generated.tables.Personalitytrait
 import studio.styx.erisbot.generated.tables.Pet
@@ -115,6 +133,31 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
     val _PRISMA_MIGRATIONS: _PrismaMigrations get() = _PrismaMigrations._PRISMA_MIGRATIONS
 
     /**
+     * The table <code>public.ActionRow</code>.
+     */
+    val ACTIONROW: Actionrow get() = Actionrow.ACTIONROW
+
+    /**
+     * The table <code>public.ActionRowButton</code>.
+     */
+    val ACTIONROWBUTTON: Actionrowbutton get() = Actionrowbutton.ACTIONROWBUTTON
+
+    /**
+     * The table <code>public.ActionRowComponent</code>.
+     */
+    val ACTIONROWCOMPONENT: Actionrowcomponent get() = Actionrowcomponent.ACTIONROWCOMPONENT
+
+    /**
+     * The table <code>public.ActionRowSelect</code>.
+     */
+    val ACTIONROWSELECT: Actionrowselect get() = Actionrowselect.ACTIONROWSELECT
+
+    /**
+     * The table <code>public.ActionRowSelectOption</code>.
+     */
+    val ACTIONROWSELECTOPTION: Actionrowselectoption get() = Actionrowselectoption.ACTIONROWSELECTOPTION
+
+    /**
      * The table <code>public.AdoptionCenter</code>.
      */
     val ADOPTIONCENTER: Adoptioncenter get() = Adoptioncenter.ADOPTIONCENTER
@@ -135,6 +178,16 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
     val COMPANY: Company get() = Company.COMPANY
 
     /**
+     * The table <code>public.Container</code>.
+     */
+    val CONTAINER: Container get() = Container.CONTAINER
+
+    /**
+     * The table <code>public.ContainerComponent</code>.
+     */
+    val CONTAINERCOMPONENT: Containercomponent get() = Containercomponent.CONTAINERCOMPONENT
+
+    /**
      * The table <code>public.Contract</code>.
      */
     val CONTRACT: Contract get() = Contract.CONTRACT
@@ -143,6 +196,11 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
      * The table <code>public.Cooldown</code>.
      */
     val COOLDOWN: Cooldown get() = Cooldown.COOLDOWN
+
+    /**
+     * The table <code>public.Embed</code>.
+     */
+    val EMBED: Embed get() = Embed.EMBED
 
     /**
      * The table <code>public.Fish</code>.
@@ -228,6 +286,11 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
      * The table <code>public.Mails</code>.
      */
     val MAILS: Mails get() = Mails.MAILS
+
+    /**
+     * The table <code>public.Message</code>.
+     */
+    val MESSAGE: Message get() = Message.MESSAGE
 
     /**
      * The table <code>public.PageComponent</code>.
@@ -317,11 +380,19 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
     override fun getCatalog(): Catalog = DefaultCatalog.DEFAULT_CATALOG
 
     override fun getSequences(): List<Sequence<*>> = listOf(
+        ACTIONROW_ID_SEQ,
+        ACTIONROWBUTTON_ID_SEQ,
+        ACTIONROWCOMPONENT_ID_SEQ,
+        ACTIONROWSELECT_ID_SEQ,
+        ACTIONROWSELECTOPTION_ID_SEQ,
         ADOPTIONCENTER_ID_SEQ,
         COMMAND_ID_SEQ,
         COMPANY_ID_SEQ,
+        CONTAINER_ID_SEQ,
+        CONTAINERCOMPONENT_ID_SEQ,
         CONTRACT_ID_SEQ,
         COOLDOWN_ID_SEQ,
+        EMBED_ID_SEQ,
         FISH_ID_SEQ,
         FISHINGROD_ID_SEQ,
         FOOTBALLAREA_ID_SEQ,
@@ -337,6 +408,7 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         INTERVIEW_ID_SEQ,
         LOG_ID_SEQ,
         MAILS_ID_SEQ,
+        MESSAGE_ID_SEQ,
         PAGECOMPONENT_ID_SEQ,
         PERSONALITYTRAIT_ID_SEQ,
         PET_ID_SEQ,
@@ -358,12 +430,20 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
     override fun getTables(): List<Table<*>> = listOf(
         _Footballleaguetofootballteam._FOOTBALLLEAGUETOFOOTBALLTEAM,
         _PrismaMigrations._PRISMA_MIGRATIONS,
+        Actionrow.ACTIONROW,
+        Actionrowbutton.ACTIONROWBUTTON,
+        Actionrowcomponent.ACTIONROWCOMPONENT,
+        Actionrowselect.ACTIONROWSELECT,
+        Actionrowselectoption.ACTIONROWSELECTOPTION,
         Adoptioncenter.ADOPTIONCENTER,
         Application.APPLICATION,
         Command.COMMAND,
         Company.COMPANY,
+        Container.CONTAINER,
+        Containercomponent.CONTAINERCOMPONENT,
         Contract.CONTRACT,
         Cooldown.COOLDOWN,
+        Embed.EMBED,
         Fish.FISH,
         Fishingrod.FISHINGROD,
         Footballarea.FOOTBALLAREA,
@@ -381,6 +461,7 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         Interview.INTERVIEW,
         Log.LOG,
         Mails.MAILS,
+        Message.MESSAGE,
         Pagecomponent.PAGECOMPONENT,
         Personalitytrait.PERSONALITYTRAIT,
         Pet.PET,

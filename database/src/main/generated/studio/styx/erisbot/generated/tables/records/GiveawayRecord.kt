@@ -58,6 +58,18 @@ open class GiveawayRecord() : UpdatableRecordImpl<GiveawayRecord>(Giveaway.GIVEA
         set(value): Unit = set(9, value)
         get(): Boolean? = get(9) as Boolean?
 
+    open var containerid: Int?
+        set(value): Unit = set(10, value)
+        get(): Int? = get(10) as Int?
+
+    open var embedid: Int?
+        set(value): Unit = set(11, value)
+        get(): Int? = get(11) as Int?
+
+    open var personalizedmessageid: String?
+        set(value): Unit = set(12, value)
+        get(): String? = get(12) as String?
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -67,7 +79,7 @@ open class GiveawayRecord() : UpdatableRecordImpl<GiveawayRecord>(Giveaway.GIVEA
     /**
      * Create a detached, initialised GiveawayRecord
      */
-    constructor(id: Int? = null, localid: Int? = null, title: String? = null, description: String? = null, createdat: LocalDateTime? = null, updatedat: LocalDateTime? = null, expiresat: LocalDateTime? = null, userswins: Int? = null, serverstayrequired: Boolean? = null, ended: Boolean? = null): this() {
+    constructor(id: Int? = null, localid: Int? = null, title: String? = null, description: String? = null, createdat: LocalDateTime? = null, updatedat: LocalDateTime? = null, expiresat: LocalDateTime? = null, userswins: Int? = null, serverstayrequired: Boolean? = null, ended: Boolean? = null, containerid: Int? = null, embedid: Int? = null, personalizedmessageid: String? = null): this() {
         this.id = id
         this.localid = localid
         this.title = title
@@ -78,6 +90,9 @@ open class GiveawayRecord() : UpdatableRecordImpl<GiveawayRecord>(Giveaway.GIVEA
         this.userswins = userswins
         this.serverstayrequired = serverstayrequired
         this.ended = ended
+        this.containerid = containerid
+        this.embedid = embedid
+        this.personalizedmessageid = personalizedmessageid
         resetChangedOnNotNull()
     }
 
@@ -96,6 +111,9 @@ open class GiveawayRecord() : UpdatableRecordImpl<GiveawayRecord>(Giveaway.GIVEA
             this.userswins = value.userswins
             this.serverstayrequired = value.serverstayrequired
             this.ended = value.ended
+            this.containerid = value.containerid
+            this.embedid = value.embedid
+            this.personalizedmessageid = value.personalizedmessageid
             resetChangedOnNotNull()
         }
     }

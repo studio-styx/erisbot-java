@@ -131,6 +131,21 @@ open class Giveaway(
      */
     val ENDED: TableField<GiveawayRecord, Boolean?> = createField(DSL.name("ended"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("false"), SQLDataType.BOOLEAN)), this, "")
 
+    /**
+     * The column <code>public.Giveaway.containerId</code>.
+     */
+    val CONTAINERID: TableField<GiveawayRecord, Int?> = createField(DSL.name("containerId"), SQLDataType.INTEGER, this, "")
+
+    /**
+     * The column <code>public.Giveaway.embedId</code>.
+     */
+    val EMBEDID: TableField<GiveawayRecord, Int?> = createField(DSL.name("embedId"), SQLDataType.INTEGER, this, "")
+
+    /**
+     * The column <code>public.Giveaway.personalizedMessageId</code>.
+     */
+    val PERSONALIZEDMESSAGEID: TableField<GiveawayRecord, String?> = createField(DSL.name("personalizedMessageId"), SQLDataType.CLOB, this, "")
+
     private constructor(alias: Name, aliased: Table<GiveawayRecord>?): this(alias, null, null, null, aliased, null, null)
     private constructor(alias: Name, aliased: Table<GiveawayRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, null, aliased, parameters, null)
     private constructor(alias: Name, aliased: Table<GiveawayRecord>?, where: Condition?): this(alias, null, null, null, aliased, null, where)
