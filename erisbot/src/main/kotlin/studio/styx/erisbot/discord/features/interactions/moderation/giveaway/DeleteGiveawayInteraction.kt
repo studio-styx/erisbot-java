@@ -12,6 +12,8 @@ import shared.Colors
 import shared.utils.CustomIdHelper
 import shared.utils.Icon
 import shared.utils.MentionUtil.channelMention
+import studio.styx.erisbot.core.exceptions.InteractionUsedByUnauthorizedUserException
+import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerEdit
 import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
 import studio.styx.erisbot.core.interfaces.ResponderInterface
 import studio.styx.erisbot.generated.tables.records.GiveawayRecord
@@ -33,6 +35,8 @@ class DeleteGiveawayInteraction : ResponderInterface {
         val action = params.get("action")!!
         val giveawayId = params.getAsInt("giveawayId")!!
         val userId = params.get("userId")!!
+
+        if (userId != event.user.id) throw InteractionUsedByUnauthorizedUserException(userId)
 
         if (action == "confirm") {
             event.deferEdit()
@@ -75,10 +79,33 @@ class DeleteGiveawayInteraction : ResponderInterface {
             val guildIsHost = guildConnected.ishost!!
 
             if (guildIsHost) {
-                handleServerHostDelete(event, giveawayRecord, connectedGuilds, event.user.effectiveName)
-            } else {
+                val errors = handleServerHostDelete(event, giveawayRecord, connectedGuilds, event.user.effectiveName)
 
+                val isSuccess = errors.isEmpty()
+
+                val message = if (isSuccess) {
+                    "${Icon.static.get("success")} | O sorteio foi excluido com sucesso!"
+                } else {
+                    val errorMessage = errors.joinToString("\n") { e -> "${e.guildName ?: e.guildId} - ${e.error}" }
+                    "${Icon.static.get("error")} | O sorteio foi excluido mas com alguns erros: \n $errorMessage"
+                }
+
+                event.rapidContainerReply(
+                    if (isSuccess) Colors.SUCCESS else Colors.DANGER,
+                    message
+                )
+            } else {
+                handleRemoveServerFromGiveaway(event, giveawayRecord, guildConnected)
+                event.rapidContainerReply(
+                    Colors.SUCCESS,
+                    "${Icon.static.get("success")} | O server foi retirado do sorteio com sucesso!"
+                )
             }
+        } else {
+            event.rapidContainerEdit(
+                Colors.SUCCESS,
+                "${Icon.static.get("success")} | Você cancelou a ação!"
+            )
         }
     }
 
@@ -91,9 +118,30 @@ class DeleteGiveawayInteraction : ResponderInterface {
     private suspend fun handleRemoveServerFromGiveaway(
         event: ButtonInteractionEvent,
         giveaway: GiveawayRecord,
-        connectedGuilds: List<GuildgiveawayRecord>,
+        connectedGuild: GuildgiveawayRecord,
     ) {
+        dsl.deleteFrom(GUILDGIVEAWAY)
+            .where(GUILDGIVEAWAY.GUILDID.eq(event.guild!!.id))
+            .and(GUILDGIVEAWAY.GIVEAWAYID.eq(giveaway.id!!))
+            .execute()
 
+        val channel = event.guild!!.getTextChannelById(connectedGuild.channelid!!) ?: return
+        val message = runCatching {
+            channel.retrieveMessageById(connectedGuild.messageid!!).await()
+        }.getOrNull()
+
+        val content = "${Icon.static.get("Eris_cry")} | O moderador ${event.user.asMention} removeu o server do sorteio ${giveaway.title!!}"
+
+        val container = ComponentBuilder.ContainerBuilder.create()
+            .withColor(Colors.DANGER)
+            .addText(content)
+            .build()
+
+        try {
+            message?.replyComponents(container)?.useComponentsV2()?.await() ?: run {
+                channel.sendMessageComponents(container).useComponentsV2().await()
+            }
+        } catch (_: Exception) { }
     }
 
     private suspend fun handleServerHostDelete(

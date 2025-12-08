@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import dev.minn.jda.ktx.coroutines.await
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
+import net.dv8tion.jda.api.entities.channel.ChannelType
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.Command
@@ -22,6 +24,7 @@ import shared.Cache
 import shared.Colors
 import shared.utils.Icon
 import shared.utils.Utils
+import studio.styx.erisbot.core.extensions.jda.guilds.giveawayEntryEndPoints.giveawayEntryPoints
 import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
 import studio.styx.erisbot.core.interfaces.CommandInterface
 import studio.styx.erisbot.discord.features.commands.moderation.giveaway.subCommands.cancelGiveawayCommand
@@ -74,6 +77,7 @@ class GiveawayCommands : CommandInterface {
                     .setAutoComplete(true),
                 OptionData(OptionType.CHANNEL, "channel", "channel where the giveaway will to be entered", true)
                     .setAutoComplete(true)
+                    .setChannelTypes(ChannelType.TEXT, ChannelType.NEWS)
             )
 
 
@@ -165,27 +169,24 @@ class GiveawayCommands : CommandInterface {
                 }
             }
             "entry" -> {
-                val key = "giveaways:invites:$guildId"
+                val invites = event.guild!!.giveawayEntryPoints.getEntryInvites()
 
-                val raw = RedisManager.get(key)
+                val giveaways = dsl.selectFrom(GIVEAWAY)
+                    .where(GIVEAWAY.ID.`in`(invites.map { it.giveawayId }))
+                    .fetch()
 
-                if (raw == null) {
-                    event.replyChoice("No invites found", "none")
-                    return
-                }
-
-                val invites = jacksonObjectMapper().readValue(raw, object : TypeReference<Map<String, String>>() {})
-
-                val choices = invites
+                val choices = giveaways
                     .filter {
-                        it.key.contains(focused.value, true) ||
-                                it.value.contains(focused.value, true)
+                        it.title!!.contains(focused.name, true)
                     }
-                    .map {
-                        Command.Choice(
-                            Utils.limitText("${it.value} (${it.key})", 97, "..."),
-                            it.key
+                    .map { g ->
+                        val invite = invites.find { it.giveawayId == g.id }
+                        val guild = event.jda.getGuildById(invite?.inviterGuildId ?: "2")
+                        val choice = Command.Choice(
+                            Utils.limitText("${guild?.name ?: "Desconhecido"} (${g.title})", 97, "..."),
+                            g.id.toString()
                         )
+                        choice
                     }
                     .take(25)
 

@@ -5,5 +5,7 @@ enum class ContainerComponentType {
     TEXTDISPLAY,
     SECTION_BUTTON,
     SECTION_THUMBNAIL,
-    IMAGE_URL
+    IMAGE_URL,
+    DIVIDER,
+    CONTAINER
 }

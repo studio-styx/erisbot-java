@@ -30,10 +30,34 @@ data class TextDisplayData(
     val content: String
 ) : ComponentData
 
+data class Container(
+    override val type: ContainerComponentType = ContainerComponentType.CONTAINER,
+    val colorHex: String,
+    val components: List<ContainerComponent>
+) : ComponentData
+
 data class ImageUrlData(
     override val type: ContainerComponentType = ContainerComponentType.IMAGE_URL,
     val url: String
 ) : ComponentData
+
+data class SectionButton(
+    override val type: ContainerComponentType = ContainerComponentType.SECTION_BUTTON,
+    val button: ActionButton,
+    val text: TextDisplayData
+) : ComponentData
+
+data class SectionThumbnail(
+    override val type: ContainerComponentType = ContainerComponentType.SECTION_THUMBNAIL,
+    val thumbnail: ImageUrlData,
+    val text: TextDisplayData
+) : ComponentData
+
+data class Divider(
+    override val type: ContainerComponentType = ContainerComponentType.DIVIDER,
+    val isLarge: Boolean,
+    val isInvisible: Boolean
+): ComponentData
 
 // ==========================================
 // DTOs baseados em SQL (Tabelas ActionRow*)
