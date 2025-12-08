@@ -5,25 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90219cdd-834f-4824-84ac-e9a08a1b9da2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/database/src/main/kotlin/database/dtos/personalization/containers/ContainerComponent.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/main/kotlin/database/dtos/personalization/containers/ContainerComponentItems.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/main/kotlin/database/dtos/personalization/containers/ContainerComponentType.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/main/kotlin/database/extensions/personalization/GetContainerInfo.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/moderation/giveaway/subCommands/RerollGiveaway.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/functions/giveaway/GiveawaySelectWinner.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/functions/giveaway/VerifyUserRequirement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/core/extensions/jda/users/GetOrRetrieveUserExtension.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/moderation/giveaway/subCommands/CancelGiveaway.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/moderation/giveaway/DeleteGiveawayInteraction.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/database/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/Public.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/Public.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/indexes/Indexes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/indexes/Indexes.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/keys/Keys.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/keys/Keys.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/sequences/Sequences.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/sequences/Sequences.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/Giveaway.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/Giveaway.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/daos/GiveawayDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/daos/GiveawayDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/pojos/Giveaway.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/pojos/Giveaway.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/records/GiveawayRecord.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/records/GiveawayRecord.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/references/Tables.kt" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/generated/studio/styx/erisbot/generated/tables/references/Tables.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prismaProject/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prismaProject/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/moderation/giveaway/GiveawayCommands.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/moderation/giveaway/GiveawayCommands.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/moderation/giveaway/subCommands/RerollGiveaway.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/moderation/giveaway/subCommands/RerollGiveaway.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

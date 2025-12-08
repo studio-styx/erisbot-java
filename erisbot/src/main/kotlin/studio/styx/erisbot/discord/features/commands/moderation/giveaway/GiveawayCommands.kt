@@ -3,6 +3,8 @@ package studio.styx.erisbot.discord.features.commands.moderation.giveaway
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import dev.minn.jda.ktx.coroutines.await
+import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.Command
@@ -17,8 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import redis.RedisManager
 import shared.Cache
+import shared.Colors
+import shared.utils.Icon
 import shared.utils.Utils
+import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
 import studio.styx.erisbot.core.interfaces.CommandInterface
+import studio.styx.erisbot.discord.features.commands.moderation.giveaway.subCommands.cancelGiveawayCommand
+import studio.styx.erisbot.discord.features.commands.moderation.giveaway.subCommands.rerollGiveawayCommand
 import studio.styx.erisbot.generated.tables.records.UsergiveawayRecord
 import studio.styx.erisbot.generated.tables.references.GIVEAWAY
 import studio.styx.erisbot.generated.tables.references.GUILDGIVEAWAY
@@ -30,6 +37,12 @@ import java.util.concurrent.TimeUnit
 class GiveawayCommands : CommandInterface {
     @Autowired
     lateinit var dsl: DSLContext
+
+    val possiblePermissions = listOf<Permission>(
+        Permission.MANAGE_SERVER,
+        Permission.MANAGE_EVENTS,
+        Permission.ADMINISTRATOR
+    )
 
     override fun getSlashCommandData(): SlashCommandData {
         val createGiveaway = SubcommandData("create", "Create a new giveaway")
@@ -69,6 +82,13 @@ class GiveawayCommands : CommandInterface {
     }
 
     override suspend fun onAutoComplete(event: CommandAutoCompleteInteractionEvent) {
+        val hasPerms = hasPermission(event.member!!)
+
+        if (!hasPerms) {
+            event.replyChoice("Você não tem permissão pra gerenciar sorteios!", "null")
+            return
+        }
+
         val subCommand = event.subcommandName
         val focused = event.focusedOption
         val guildId = event.guild!!.id
@@ -248,6 +268,49 @@ class GiveawayCommands : CommandInterface {
     }
 
     override suspend fun execute(event: SlashCommandInteractionEvent) {
+        val hasPerms = hasPermission(event.member!!)
 
+        if (!hasPerms) {
+            event.rapidContainerReply(Colors.DANGER, "${Icon.static.get("denied")} | Você não tem permissão pra gerenciar sorteios!", true)
+            return
+        }
+
+        val subCommand = event.subcommandName
+        when (subCommand) {
+            "reroll" -> rerollGiveawayCommand(event, dsl)
+            "cancel" -> cancelGiveawayCommand(event, dsl)
+            "create" -> {
+                val guildId = event.guild!!.id
+                val redirectUrl = "https://erisbot.squareweb.app/guilds/$guildId/giveaways/create"
+
+                event.rapidContainerReply(Colors.WARNING,
+                    "${Icon.static.get("Eris_happy")} | Agora a criação de sorteios e feita via website! **[Clique aqui para ser redirecionado para a criação de sorteios!]($redirectUrl)**",
+                    true
+                )
+            }
+            "edit" -> {
+                val guildId = event.guild!!.id
+                val giveawayId = event.getOption("id")!!.asString
+                val redirectUrl = "https://erisbot.squareweb.app/guilds/$guildId/giveaways/edit/$giveawayId"
+
+                event.rapidContainerReply(Colors.WARNING,
+                    "${Icon.static.get("Eris_happy")} | Agora a edição de sorteios e feita via website! **[Clique aqui para ser redirecionado para a edição de sorteios!]($redirectUrl)**",
+                    true
+                )
+            }
+        }
+    }
+
+    private fun hasPermission(member: Member): Boolean {
+        var hasPermission = false
+
+        for (p in member.permissions) {
+            if (possiblePermissions.contains(p)) {
+                hasPermission = true
+                break
+            }
+        }
+
+        return hasPermission
     }
 }
