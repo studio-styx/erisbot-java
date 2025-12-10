@@ -22,10 +22,7 @@ data class Giveaway(
     var expiresat: LocalDateTime? = null,
     var userswins: Int? = null,
     var serverstayrequired: Boolean? = null,
-    var ended: Boolean? = null,
-    var containerid: Int? = null,
-    var embedid: Int? = null,
-    var personalizedmessageid: String? = null
+    var ended: Boolean? = null
 ): Serializable {
 
 
@@ -97,24 +94,6 @@ data class Giveaway(
         }
         else if (this.ended != o.ended)
             return false
-        if (this.containerid == null) {
-            if (o.containerid != null)
-                return false
-        }
-        else if (this.containerid != o.containerid)
-            return false
-        if (this.embedid == null) {
-            if (o.embedid != null)
-                return false
-        }
-        else if (this.embedid != o.embedid)
-            return false
-        if (this.personalizedmessageid == null) {
-            if (o.personalizedmessageid != null)
-                return false
-        }
-        else if (this.personalizedmessageid != o.personalizedmessageid)
-            return false
         return true
     }
 
@@ -131,9 +110,6 @@ data class Giveaway(
         result = prime * result + (if (this.userswins == null) 0 else this.userswins.hashCode())
         result = prime * result + (if (this.serverstayrequired == null) 0 else this.serverstayrequired.hashCode())
         result = prime * result + (if (this.ended == null) 0 else this.ended.hashCode())
-        result = prime * result + (if (this.containerid == null) 0 else this.containerid.hashCode())
-        result = prime * result + (if (this.embedid == null) 0 else this.embedid.hashCode())
-        result = prime * result + (if (this.personalizedmessageid == null) 0 else this.personalizedmessageid.hashCode())
         return result
     }
 
@@ -150,9 +126,6 @@ data class Giveaway(
         sb.append(", ").append(userswins)
         sb.append(", ").append(serverstayrequired)
         sb.append(", ").append(ended)
-        sb.append(", ").append(containerid)
-        sb.append(", ").append(embedid)
-        sb.append(", ").append(personalizedmessageid)
 
         sb.append(")")
         return sb.toString()

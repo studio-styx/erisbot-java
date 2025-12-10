@@ -28,6 +28,7 @@ import studio.styx.erisbot.core.extensions.jda.guilds.giveawayEntryEndPoints.giv
 import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
 import studio.styx.erisbot.core.interfaces.CommandInterface
 import studio.styx.erisbot.discord.features.commands.moderation.giveaway.subCommands.cancelGiveawayCommand
+import studio.styx.erisbot.discord.features.commands.moderation.giveaway.subCommands.endGiveawayCommand
 import studio.styx.erisbot.discord.features.commands.moderation.giveaway.subCommands.rerollGiveawayCommand
 import studio.styx.erisbot.generated.tables.records.UsergiveawayRecord
 import studio.styx.erisbot.generated.tables.references.GIVEAWAY
@@ -280,6 +281,7 @@ class GiveawayCommands : CommandInterface {
         when (subCommand) {
             "reroll" -> rerollGiveawayCommand(event, dsl)
             "cancel" -> cancelGiveawayCommand(event, dsl)
+            "end" -> endGiveawayCommand(event, dsl)
             "create" -> {
                 val guildId = event.guild!!.id
                 val redirectUrl = "https://erisbot.squareweb.app/guilds/$guildId/giveaways/create"

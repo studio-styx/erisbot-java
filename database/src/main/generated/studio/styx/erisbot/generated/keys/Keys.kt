@@ -9,20 +9,12 @@ import org.jooq.UniqueKey
 import org.jooq.impl.DSL
 import org.jooq.impl.Internal
 
-import studio.styx.erisbot.generated.tables.Actionrow
-import studio.styx.erisbot.generated.tables.Actionrowbutton
-import studio.styx.erisbot.generated.tables.Actionrowcomponent
-import studio.styx.erisbot.generated.tables.Actionrowselect
-import studio.styx.erisbot.generated.tables.Actionrowselectoption
 import studio.styx.erisbot.generated.tables.Adoptioncenter
 import studio.styx.erisbot.generated.tables.Application
 import studio.styx.erisbot.generated.tables.Command
 import studio.styx.erisbot.generated.tables.Company
-import studio.styx.erisbot.generated.tables.Container
-import studio.styx.erisbot.generated.tables.Containercomponent
 import studio.styx.erisbot.generated.tables.Contract
 import studio.styx.erisbot.generated.tables.Cooldown
-import studio.styx.erisbot.generated.tables.Embed
 import studio.styx.erisbot.generated.tables.Fish
 import studio.styx.erisbot.generated.tables.Fishingrod
 import studio.styx.erisbot.generated.tables.Footballarea
@@ -40,7 +32,6 @@ import studio.styx.erisbot.generated.tables.Guildsettings
 import studio.styx.erisbot.generated.tables.Interview
 import studio.styx.erisbot.generated.tables.Log
 import studio.styx.erisbot.generated.tables.Mails
-import studio.styx.erisbot.generated.tables.Message
 import studio.styx.erisbot.generated.tables.Pagecomponent
 import studio.styx.erisbot.generated.tables.Personalitytrait
 import studio.styx.erisbot.generated.tables.Pet
@@ -60,20 +51,12 @@ import studio.styx.erisbot.generated.tables.Userpetskill
 import studio.styx.erisbot.generated.tables.Workchallenges
 import studio.styx.erisbot.generated.tables._Footballleaguetofootballteam
 import studio.styx.erisbot.generated.tables._PrismaMigrations
-import studio.styx.erisbot.generated.tables.records.ActionrowRecord
-import studio.styx.erisbot.generated.tables.records.ActionrowbuttonRecord
-import studio.styx.erisbot.generated.tables.records.ActionrowcomponentRecord
-import studio.styx.erisbot.generated.tables.records.ActionrowselectRecord
-import studio.styx.erisbot.generated.tables.records.ActionrowselectoptionRecord
 import studio.styx.erisbot.generated.tables.records.AdoptioncenterRecord
 import studio.styx.erisbot.generated.tables.records.ApplicationRecord
 import studio.styx.erisbot.generated.tables.records.CommandRecord
 import studio.styx.erisbot.generated.tables.records.CompanyRecord
-import studio.styx.erisbot.generated.tables.records.ContainerRecord
-import studio.styx.erisbot.generated.tables.records.ContainercomponentRecord
 import studio.styx.erisbot.generated.tables.records.ContractRecord
 import studio.styx.erisbot.generated.tables.records.CooldownRecord
-import studio.styx.erisbot.generated.tables.records.EmbedRecord
 import studio.styx.erisbot.generated.tables.records.FishRecord
 import studio.styx.erisbot.generated.tables.records.FishingrodRecord
 import studio.styx.erisbot.generated.tables.records.FootballareaRecord
@@ -91,7 +74,6 @@ import studio.styx.erisbot.generated.tables.records.GuildsettingsRecord
 import studio.styx.erisbot.generated.tables.records.InterviewRecord
 import studio.styx.erisbot.generated.tables.records.LogRecord
 import studio.styx.erisbot.generated.tables.records.MailsRecord
-import studio.styx.erisbot.generated.tables.records.MessageRecord
 import studio.styx.erisbot.generated.tables.records.PagecomponentRecord
 import studio.styx.erisbot.generated.tables.records.PersonalitytraitRecord
 import studio.styx.erisbot.generated.tables.records.PetRecord
@@ -120,20 +102,12 @@ import studio.styx.erisbot.generated.tables.records._PrismaMigrationsRecord
 
 val _FOOTBALLLEAGUETOFOOTBALLTEAM_AB_PKEY: UniqueKey<_FootballleaguetofootballteamRecord> = Internal.createUniqueKey(_Footballleaguetofootballteam._FOOTBALLLEAGUETOFOOTBALLTEAM, DSL.name("_FootballLeagueToFootballTeam_AB_pkey"), arrayOf(_Footballleaguetofootballteam._FOOTBALLLEAGUETOFOOTBALLTEAM.A, _Footballleaguetofootballteam._FOOTBALLLEAGUETOFOOTBALLTEAM.B), true)
 val _PRISMA_MIGRATIONS_PKEY: UniqueKey<_PrismaMigrationsRecord> = Internal.createUniqueKey(_PrismaMigrations._PRISMA_MIGRATIONS, DSL.name("_prisma_migrations_pkey"), arrayOf(_PrismaMigrations._PRISMA_MIGRATIONS.ID), true)
-val ACTIONROW_PKEY: UniqueKey<ActionrowRecord> = Internal.createUniqueKey(Actionrow.ACTIONROW, DSL.name("ActionRow_pkey"), arrayOf(Actionrow.ACTIONROW.ID), true)
-val ACTIONROWBUTTON_PKEY: UniqueKey<ActionrowbuttonRecord> = Internal.createUniqueKey(Actionrowbutton.ACTIONROWBUTTON, DSL.name("ActionRowButton_pkey"), arrayOf(Actionrowbutton.ACTIONROWBUTTON.ID), true)
-val ACTIONROWCOMPONENT_PKEY: UniqueKey<ActionrowcomponentRecord> = Internal.createUniqueKey(Actionrowcomponent.ACTIONROWCOMPONENT, DSL.name("ActionRowComponent_pkey"), arrayOf(Actionrowcomponent.ACTIONROWCOMPONENT.ID), true)
-val ACTIONROWSELECT_PKEY: UniqueKey<ActionrowselectRecord> = Internal.createUniqueKey(Actionrowselect.ACTIONROWSELECT, DSL.name("ActionRowSelect_pkey"), arrayOf(Actionrowselect.ACTIONROWSELECT.ID), true)
-val ACTIONROWSELECTOPTION_PKEY: UniqueKey<ActionrowselectoptionRecord> = Internal.createUniqueKey(Actionrowselectoption.ACTIONROWSELECTOPTION, DSL.name("ActionRowSelectOption_pkey"), arrayOf(Actionrowselectoption.ACTIONROWSELECTOPTION.ID), true)
 val ADOPTIONCENTER_PKEY: UniqueKey<AdoptioncenterRecord> = Internal.createUniqueKey(Adoptioncenter.ADOPTIONCENTER, DSL.name("AdoptionCenter_pkey"), arrayOf(Adoptioncenter.ADOPTIONCENTER.ID), true)
 val APPLICATION_PKEY: UniqueKey<ApplicationRecord> = Internal.createUniqueKey(Application.APPLICATION, DSL.name("Application_pkey"), arrayOf(Application.APPLICATION.ID), true)
 val COMMAND_PKEY: UniqueKey<CommandRecord> = Internal.createUniqueKey(Command.COMMAND, DSL.name("Command_pkey"), arrayOf(Command.COMMAND.ID), true)
 val COMPANY_PKEY: UniqueKey<CompanyRecord> = Internal.createUniqueKey(Company.COMPANY, DSL.name("Company_pkey"), arrayOf(Company.COMPANY.ID), true)
-val CONTAINER_PKEY: UniqueKey<ContainerRecord> = Internal.createUniqueKey(Container.CONTAINER, DSL.name("Container_pkey"), arrayOf(Container.CONTAINER.ID), true)
-val CONTAINERCOMPONENT_PKEY: UniqueKey<ContainercomponentRecord> = Internal.createUniqueKey(Containercomponent.CONTAINERCOMPONENT, DSL.name("ContainerComponent_pkey"), arrayOf(Containercomponent.CONTAINERCOMPONENT.ID), true)
 val CONTRACT_PKEY: UniqueKey<ContractRecord> = Internal.createUniqueKey(Contract.CONTRACT, DSL.name("Contract_pkey"), arrayOf(Contract.CONTRACT.ID), true)
 val COOLDOWN_PKEY: UniqueKey<CooldownRecord> = Internal.createUniqueKey(Cooldown.COOLDOWN, DSL.name("Cooldown_pkey"), arrayOf(Cooldown.COOLDOWN.ID), true)
-val EMBED_PKEY: UniqueKey<EmbedRecord> = Internal.createUniqueKey(Embed.EMBED, DSL.name("Embed_pkey"), arrayOf(Embed.EMBED.ID), true)
 val FISH_PKEY: UniqueKey<FishRecord> = Internal.createUniqueKey(Fish.FISH, DSL.name("Fish_pkey"), arrayOf(Fish.FISH.ID), true)
 val FISHINGROD_PKEY: UniqueKey<FishingrodRecord> = Internal.createUniqueKey(Fishingrod.FISHINGROD, DSL.name("FishingRod_pkey"), arrayOf(Fishingrod.FISHINGROD.ID), true)
 val FOOTBALLAREA_PKEY: UniqueKey<FootballareaRecord> = Internal.createUniqueKey(Footballarea.FOOTBALLAREA, DSL.name("FootballArea_pkey"), arrayOf(Footballarea.FOOTBALLAREA.ID), true)
@@ -151,7 +125,6 @@ val GUILDSETTINGS_PKEY: UniqueKey<GuildsettingsRecord> = Internal.createUniqueKe
 val INTERVIEW_PKEY: UniqueKey<InterviewRecord> = Internal.createUniqueKey(Interview.INTERVIEW, DSL.name("Interview_pkey"), arrayOf(Interview.INTERVIEW.ID), true)
 val LOG_PKEY: UniqueKey<LogRecord> = Internal.createUniqueKey(Log.LOG, DSL.name("Log_pkey"), arrayOf(Log.LOG.ID), true)
 val MAILS_PKEY: UniqueKey<MailsRecord> = Internal.createUniqueKey(Mails.MAILS, DSL.name("Mails_pkey"), arrayOf(Mails.MAILS.ID), true)
-val MESSAGE_PKEY: UniqueKey<MessageRecord> = Internal.createUniqueKey(Message.MESSAGE, DSL.name("Message_pkey"), arrayOf(Message.MESSAGE.ID), true)
 val PAGECOMPONENT_PKEY: UniqueKey<PagecomponentRecord> = Internal.createUniqueKey(Pagecomponent.PAGECOMPONENT, DSL.name("PageComponent_pkey"), arrayOf(Pagecomponent.PAGECOMPONENT.ID), true)
 val PERSONALITYTRAIT_PKEY: UniqueKey<PersonalitytraitRecord> = Internal.createUniqueKey(Personalitytrait.PERSONALITYTRAIT, DSL.name("PersonalityTrait_pkey"), arrayOf(Personalitytrait.PERSONALITYTRAIT.ID), true)
 val PET_PKEY: UniqueKey<PetRecord> = Internal.createUniqueKey(Pet.PET, DSL.name("Pet_pkey"), arrayOf(Pet.PET.ID), true)
@@ -176,20 +149,11 @@ val WORKCHALLENGES_PKEY: UniqueKey<WorkchallengesRecord> = Internal.createUnique
 
 val _FOOTBALLLEAGUETOFOOTBALLTEAM___FOOTBALLLEAGUETOFOOTBALLTEAM_A_FKEY: ForeignKey<_FootballleaguetofootballteamRecord, FootballleagueRecord> = Internal.createForeignKey(_Footballleaguetofootballteam._FOOTBALLLEAGUETOFOOTBALLTEAM, DSL.name("_FootballLeagueToFootballTeam_A_fkey"), arrayOf(_Footballleaguetofootballteam._FOOTBALLLEAGUETOFOOTBALLTEAM.A), studio.styx.erisbot.generated.keys.FOOTBALLLEAGUE_PKEY, arrayOf(Footballleague.FOOTBALLLEAGUE.ID), true)
 val _FOOTBALLLEAGUETOFOOTBALLTEAM___FOOTBALLLEAGUETOFOOTBALLTEAM_B_FKEY: ForeignKey<_FootballleaguetofootballteamRecord, FootballteamRecord> = Internal.createForeignKey(_Footballleaguetofootballteam._FOOTBALLLEAGUETOFOOTBALLTEAM, DSL.name("_FootballLeagueToFootballTeam_B_fkey"), arrayOf(_Footballleaguetofootballteam._FOOTBALLLEAGUETOFOOTBALLTEAM.B), studio.styx.erisbot.generated.keys.FOOTBALLTEAM_PKEY, arrayOf(Footballteam.FOOTBALLTEAM.ID), true)
-val ACTIONROW__ACTIONROW_CONTAINERCOMPONENTID_FKEY: ForeignKey<ActionrowRecord, ContainercomponentRecord> = Internal.createForeignKey(Actionrow.ACTIONROW, DSL.name("ActionRow_containerComponentId_fkey"), arrayOf(Actionrow.ACTIONROW.CONTAINERCOMPONENTID), studio.styx.erisbot.generated.keys.CONTAINERCOMPONENT_PKEY, arrayOf(Containercomponent.CONTAINERCOMPONENT.ID), true)
-val ACTIONROW__ACTIONROW_EMBEDID_FKEY: ForeignKey<ActionrowRecord, EmbedRecord> = Internal.createForeignKey(Actionrow.ACTIONROW, DSL.name("ActionRow_embedId_fkey"), arrayOf(Actionrow.ACTIONROW.EMBEDID), studio.styx.erisbot.generated.keys.EMBED_PKEY, arrayOf(Embed.EMBED.ID), true)
-val ACTIONROW__ACTIONROW_MESSAGEID_FKEY: ForeignKey<ActionrowRecord, MessageRecord> = Internal.createForeignKey(Actionrow.ACTIONROW, DSL.name("ActionRow_messageId_fkey"), arrayOf(Actionrow.ACTIONROW.MESSAGEID), studio.styx.erisbot.generated.keys.MESSAGE_PKEY, arrayOf(Message.MESSAGE.ID), true)
-val ACTIONROWBUTTON__ACTIONROWBUTTON_ACTIONROWCOMPONENTID_FKEY: ForeignKey<ActionrowbuttonRecord, ActionrowcomponentRecord> = Internal.createForeignKey(Actionrowbutton.ACTIONROWBUTTON, DSL.name("ActionRowButton_actionRowComponentId_fkey"), arrayOf(Actionrowbutton.ACTIONROWBUTTON.ACTIONROWCOMPONENTID), studio.styx.erisbot.generated.keys.ACTIONROWCOMPONENT_PKEY, arrayOf(Actionrowcomponent.ACTIONROWCOMPONENT.ID), true)
-val ACTIONROWCOMPONENT__ACTIONROWCOMPONENT_ACTIONROWID_FKEY: ForeignKey<ActionrowcomponentRecord, ActionrowRecord> = Internal.createForeignKey(Actionrowcomponent.ACTIONROWCOMPONENT, DSL.name("ActionRowComponent_actionRowId_fkey"), arrayOf(Actionrowcomponent.ACTIONROWCOMPONENT.ACTIONROWID), studio.styx.erisbot.generated.keys.ACTIONROW_PKEY, arrayOf(Actionrow.ACTIONROW.ID), true)
-val ACTIONROWSELECT__ACTIONROWSELECT_ACTIONROWCOMPONENTID_FKEY: ForeignKey<ActionrowselectRecord, ActionrowcomponentRecord> = Internal.createForeignKey(Actionrowselect.ACTIONROWSELECT, DSL.name("ActionRowSelect_actionRowComponentId_fkey"), arrayOf(Actionrowselect.ACTIONROWSELECT.ACTIONROWCOMPONENTID), studio.styx.erisbot.generated.keys.ACTIONROWCOMPONENT_PKEY, arrayOf(Actionrowcomponent.ACTIONROWCOMPONENT.ID), true)
-val ACTIONROWSELECTOPTION__ACTIONROWSELECTOPTION_ACTIONROWSELECTID_FKEY: ForeignKey<ActionrowselectoptionRecord, ActionrowselectRecord> = Internal.createForeignKey(Actionrowselectoption.ACTIONROWSELECTOPTION, DSL.name("ActionRowSelectOption_actionRowSelectId_fkey"), arrayOf(Actionrowselectoption.ACTIONROWSELECTOPTION.ACTIONROWSELECTID), studio.styx.erisbot.generated.keys.ACTIONROWSELECT_PKEY, arrayOf(Actionrowselect.ACTIONROWSELECT.ID), true)
 val ADOPTIONCENTER__ADOPTIONCENTER_USERPETID_FKEY: ForeignKey<AdoptioncenterRecord, UserpetRecord> = Internal.createForeignKey(Adoptioncenter.ADOPTIONCENTER, DSL.name("AdoptionCenter_userPetId_fkey"), arrayOf(Adoptioncenter.ADOPTIONCENTER.USERPETID), studio.styx.erisbot.generated.keys.USERPET_PKEY, arrayOf(Userpet.USERPET.ID), true)
 val APPLICATION__APPLICATION_OWNERID_FKEY: ForeignKey<ApplicationRecord, UserRecord> = Internal.createForeignKey(Application.APPLICATION, DSL.name("Application_ownerId_fkey"), arrayOf(Application.APPLICATION.OWNERID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
-val CONTAINERCOMPONENT__CONTAINERCOMPONENT_CONTAINERID_FKEY: ForeignKey<ContainercomponentRecord, ContainerRecord> = Internal.createForeignKey(Containercomponent.CONTAINERCOMPONENT, DSL.name("ContainerComponent_containerId_fkey"), arrayOf(Containercomponent.CONTAINERCOMPONENT.CONTAINERID), studio.styx.erisbot.generated.keys.CONTAINER_PKEY, arrayOf(Container.CONTAINER.ID), true)
 val CONTRACT__CONTRACT_COMPANYID_FKEY: ForeignKey<ContractRecord, CompanyRecord> = Internal.createForeignKey(Contract.CONTRACT, DSL.name("Contract_companyId_fkey"), arrayOf(Contract.CONTRACT.COMPANYID), studio.styx.erisbot.generated.keys.COMPANY_PKEY, arrayOf(Company.COMPANY.ID), true)
 val CONTRACT__CONTRACT_USERID_FKEY: ForeignKey<ContractRecord, UserRecord> = Internal.createForeignKey(Contract.CONTRACT, DSL.name("Contract_userId_fkey"), arrayOf(Contract.CONTRACT.USERID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
 val COOLDOWN__COOLDOWN_USERID_FKEY: ForeignKey<CooldownRecord, UserRecord> = Internal.createForeignKey(Cooldown.COOLDOWN, DSL.name("Cooldown_userId_fkey"), arrayOf(Cooldown.COOLDOWN.USERID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
-val EMBED__EMBED_MESSAGEID_FKEY: ForeignKey<EmbedRecord, MessageRecord> = Internal.createForeignKey(Embed.EMBED, DSL.name("Embed_messageId_fkey"), arrayOf(Embed.EMBED.MESSAGEID), studio.styx.erisbot.generated.keys.MESSAGE_PKEY, arrayOf(Message.MESSAGE.ID), true)
 val FOOTBALLBET__FOOTBALLBET_MATCHID_FKEY: ForeignKey<FootballbetRecord, FootballmatchRecord> = Internal.createForeignKey(Footballbet.FOOTBALLBET, DSL.name("FootballBet_matchId_fkey"), arrayOf(Footballbet.FOOTBALLBET.MATCHID), studio.styx.erisbot.generated.keys.FOOTBALLMATCH_PKEY, arrayOf(Footballmatch.FOOTBALLMATCH.ID), true)
 val FOOTBALLBET__FOOTBALLBET_USERID_FKEY: ForeignKey<FootballbetRecord, UserRecord> = Internal.createForeignKey(Footballbet.FOOTBALLBET, DSL.name("FootballBet_userId_fkey"), arrayOf(Footballbet.FOOTBALLBET.USERID), studio.styx.erisbot.generated.keys.USER_PKEY, arrayOf(User.USER.ID), true)
 val FOOTBALLBETLOG__FOOTBALLBETLOG_BETID_FKEY: ForeignKey<FootballbetlogRecord, FootballbetRecord> = Internal.createForeignKey(Footballbetlog.FOOTBALLBETLOG, DSL.name("FootballBetLog_betId_fkey"), arrayOf(Footballbetlog.FOOTBALLBETLOG.BETID), studio.styx.erisbot.generated.keys.FOOTBALLBET_PKEY, arrayOf(Footballbet.FOOTBALLBET.ID), true)

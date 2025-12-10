@@ -13,31 +13,6 @@ import studio.styx.erisbot.generated.Public
 
 
 /**
- * The sequence <code>public.ActionRow_id_seq</code>
- */
-val ACTIONROW_ID_SEQ: Sequence<Int> = Internal.createSequence("ActionRow_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.ActionRowButton_id_seq</code>
- */
-val ACTIONROWBUTTON_ID_SEQ: Sequence<Int> = Internal.createSequence("ActionRowButton_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.ActionRowComponent_id_seq</code>
- */
-val ACTIONROWCOMPONENT_ID_SEQ: Sequence<Int> = Internal.createSequence("ActionRowComponent_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.ActionRowSelect_id_seq</code>
- */
-val ACTIONROWSELECT_ID_SEQ: Sequence<Int> = Internal.createSequence("ActionRowSelect_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.ActionRowSelectOption_id_seq</code>
- */
-val ACTIONROWSELECTOPTION_ID_SEQ: Sequence<Int> = Internal.createSequence("ActionRowSelectOption_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
  * The sequence <code>public.AdoptionCenter_id_seq</code>
  */
 val ADOPTIONCENTER_ID_SEQ: Sequence<Int> = Internal.createSequence("AdoptionCenter_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
@@ -53,16 +28,6 @@ val COMMAND_ID_SEQ: Sequence<Int> = Internal.createSequence("Command_id_seq", Pu
 val COMPANY_ID_SEQ: Sequence<Int> = Internal.createSequence("Company_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
 
 /**
- * The sequence <code>public.Container_id_seq</code>
- */
-val CONTAINER_ID_SEQ: Sequence<Int> = Internal.createSequence("Container_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.ContainerComponent_id_seq</code>
- */
-val CONTAINERCOMPONENT_ID_SEQ: Sequence<Int> = Internal.createSequence("ContainerComponent_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
  * The sequence <code>public.Contract_id_seq</code>
  */
 val CONTRACT_ID_SEQ: Sequence<Int> = Internal.createSequence("Contract_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
@@ -71,11 +36,6 @@ val CONTRACT_ID_SEQ: Sequence<Int> = Internal.createSequence("Contract_id_seq", 
  * The sequence <code>public.Cooldown_id_seq</code>
  */
 val COOLDOWN_ID_SEQ: Sequence<Int> = Internal.createSequence("Cooldown_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.Embed_id_seq</code>
- */
-val EMBED_ID_SEQ: Sequence<Int> = Internal.createSequence("Embed_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
 
 /**
  * The sequence <code>public.Fish_id_seq</code>
@@ -151,11 +111,6 @@ val LOG_ID_SEQ: Sequence<Int> = Internal.createSequence("Log_id_seq", Public.PUB
  * The sequence <code>public.Mails_id_seq</code>
  */
 val MAILS_ID_SEQ: Sequence<Int> = Internal.createSequence("Mails_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
-
-/**
- * The sequence <code>public.Message_id_seq</code>
- */
-val MESSAGE_ID_SEQ: Sequence<Int> = Internal.createSequence("Message_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
 
 /**
  * The sequence <code>public.PageComponent_id_seq</code>

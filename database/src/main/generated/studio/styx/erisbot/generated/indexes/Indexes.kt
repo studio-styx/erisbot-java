@@ -8,9 +8,6 @@ import org.jooq.Index
 import org.jooq.impl.DSL
 import org.jooq.impl.Internal
 
-import studio.styx.erisbot.generated.tables.Actionrow
-import studio.styx.erisbot.generated.tables.Actionrowbutton
-import studio.styx.erisbot.generated.tables.Actionrowselect
 import studio.styx.erisbot.generated.tables.Adoptioncenter
 import studio.styx.erisbot.generated.tables.Application
 import studio.styx.erisbot.generated.tables.Command
@@ -41,9 +38,6 @@ import studio.styx.erisbot.generated.tables._Footballleaguetofootballteam
 // -------------------------------------------------------------------------
 
 val _FOOTBALLLEAGUETOFOOTBALLTEAM_B_INDEX: Index = Internal.createIndex(DSL.name("_FootballLeagueToFootballTeam_B_index"), _Footballleaguetofootballteam._FOOTBALLLEAGUETOFOOTBALLTEAM, arrayOf(_Footballleaguetofootballteam._FOOTBALLLEAGUETOFOOTBALLTEAM.B), false)
-val ACTIONROW_CONTAINERCOMPONENTID_KEY: Index = Internal.createIndex(DSL.name("ActionRow_containerComponentId_key"), Actionrow.ACTIONROW, arrayOf(Actionrow.ACTIONROW.CONTAINERCOMPONENTID), true)
-val ACTIONROWBUTTON_ACTIONROWCOMPONENTID_KEY: Index = Internal.createIndex(DSL.name("ActionRowButton_actionRowComponentId_key"), Actionrowbutton.ACTIONROWBUTTON, arrayOf(Actionrowbutton.ACTIONROWBUTTON.ACTIONROWCOMPONENTID), true)
-val ACTIONROWSELECT_ACTIONROWCOMPONENTID_KEY: Index = Internal.createIndex(DSL.name("ActionRowSelect_actionRowComponentId_key"), Actionrowselect.ACTIONROWSELECT, arrayOf(Actionrowselect.ACTIONROWSELECT.ACTIONROWCOMPONENTID), true)
 val ADOPTIONCENTER_USERPETID_KEY: Index = Internal.createIndex(DSL.name("AdoptionCenter_userPetId_key"), Adoptioncenter.ADOPTIONCENTER, arrayOf(Adoptioncenter.ADOPTIONCENTER.USERPETID), true)
 val APPLICATION_TOKEN_KEY: Index = Internal.createIndex(DSL.name("Application_token_key"), Application.APPLICATION, arrayOf(Application.APPLICATION.TOKEN), true)
 val COMMAND_NAME_SUBCOMMANDGROUP_SUBCOMMAND_KEY: Index = Internal.createIndex(DSL.name("Command_name_subCommandGroup_subCommand_key"), Command.COMMAND, arrayOf(Command.COMMAND.NAME, Command.COMMAND.SUBCOMMANDGROUP, Command.COMMAND.SUBCOMMAND), true)

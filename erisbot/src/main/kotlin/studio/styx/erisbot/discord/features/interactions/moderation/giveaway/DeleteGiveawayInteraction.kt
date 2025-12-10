@@ -16,6 +16,7 @@ import studio.styx.erisbot.core.exceptions.InteractionUsedByUnauthorizedUserExce
 import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerEdit
 import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
 import studio.styx.erisbot.core.interfaces.ResponderInterface
+import studio.styx.erisbot.discord.menus.giveaway.giveawayMenu
 import studio.styx.erisbot.generated.tables.records.GiveawayRecord
 import studio.styx.erisbot.generated.tables.records.GuildgiveawayRecord
 import studio.styx.erisbot.generated.tables.references.GIVEAWAY
@@ -138,6 +139,15 @@ class DeleteGiveawayInteraction : ResponderInterface {
             .build()
 
         try {
+            val menu = giveawayMenu(
+                giveaway,
+                emptyList(),
+                emptyList(),
+                0,
+                event.guild!!.id,
+                true
+            )
+            message?.editMessageComponents(menu)?.useComponentsV2()?.await()
             message?.replyComponents(container)?.useComponentsV2()?.await() ?: run {
                 channel.sendMessageComponents(container).useComponentsV2().await()
             }
@@ -175,11 +185,9 @@ class DeleteGiveawayInteraction : ResponderInterface {
                         ))
                         return@async
                     }
-                    val message = try {
+                    val message = runCatching {
                         channel.retrieveMessageById(cg.messageid!!).await()
-                    } catch (_: Exception) {
-                        null
-                    } ?: run {
+                    }.getOrNull() ?: run {
                         errors.add(GiveawayDeleteError(
                             guildId = cg.guildid!!,
                             guildName = guild.name,
