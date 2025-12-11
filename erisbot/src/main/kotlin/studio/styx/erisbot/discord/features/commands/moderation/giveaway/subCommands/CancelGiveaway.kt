@@ -1,5 +1,7 @@
 package studio.styx.erisbot.discord.features.commands.moderation.giveaway.subCommands
 
+import database.extensions.giveaway
+import database.extensions.giveaways
 import dev.minn.jda.ktx.coroutines.await
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -10,8 +12,6 @@ import net.dv8tion.jda.api.entities.emoji.Emoji
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import org.jooq.DSLContext
 import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
-import studio.styx.erisbot.generated.tables.references.GIVEAWAY
-import studio.styx.erisbot.generated.tables.references.GUILDGIVEAWAY
 import studio.styx.schemaEXtended.core.schemas.NumberSchema
 import shared.Colors
 import shared.utils.Icon
@@ -27,29 +27,16 @@ suspend fun cancelGiveawayCommand(event: SlashCommandInteractionEvent, dsl: DSLC
 
     event.deferReply().await()
 
-    val (giveawayRecord, connectedGuilds) = coroutineScope {
-        val giveawayDeferred = async(Dispatchers.IO) {
-            dsl.selectFrom(GIVEAWAY)
-                .where(GIVEAWAY.ID.eq(giveawayId))
-                .fetchOne()
-        }
+    val data = dsl.giveaway(giveawayId).withConnectedGuilds().fetch()
 
-        val connectedGuildsDeferred = async(Dispatchers.IO) {
-            dsl.selectFrom(GUILDGIVEAWAY)
-                .where(GUILDGIVEAWAY.GIVEAWAYID.eq(giveawayId))
-                .fetch()
-        }
-
-        Pair(
-            giveawayDeferred.await(),
-            connectedGuildsDeferred.await()
-        )
-    }
-
-    if (giveawayRecord == null) {
+    if (data == null) {
         event.rapidContainerReply(Colors.DANGER, "${Icon.static.get("denied")} | Sorteio não encontrado!")
         return
     }
+
+    val giveawayRecord = data.giveaway
+    val connectedGuilds = data.connectedGuilds!!
+
 
     if (giveawayRecord.ended == true) {
         event.rapidContainerReply(Colors.DANGER, "${Icon.static.get("denied")} | Este sorteio já foi encerrado/cancelado!")

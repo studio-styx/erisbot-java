@@ -30,4 +30,6 @@ object AppConfig {
         val version = properties.getProperty("app.version", "1.0.0")
         return version
     }
+
+
 }

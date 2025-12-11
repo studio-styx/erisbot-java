@@ -1,10 +1,7 @@
 package studio.styx.erisbot.discord.features.commands.moderation.giveaway
 
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import dev.minn.jda.ktx.coroutines.await
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.channel.ChannelType
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
@@ -19,9 +16,9 @@ import org.jooq.DSLContext
 import org.jooq.Record
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import redis.RedisManager
 import shared.Cache
 import shared.Colors
+import shared.utils.Env
 import shared.utils.Icon
 import shared.utils.Utils
 import studio.styx.erisbot.core.extensions.jda.guilds.giveawayEntryEndPoints.giveawayEntryPoints
@@ -277,6 +274,8 @@ class GiveawayCommands : CommandInterface {
             return
         }
 
+        val frontUrl = Env.get("FRONT_URL", "https://erisbot.squareweb.app")
+
         val subCommand = event.subcommandName
         when (subCommand) {
             "reroll" -> rerollGiveawayCommand(event, dsl)
@@ -284,7 +283,7 @@ class GiveawayCommands : CommandInterface {
             "end" -> endGiveawayCommand(event, dsl)
             "create" -> {
                 val guildId = event.guild!!.id
-                val redirectUrl = "https://erisbot.squareweb.app/guilds/$guildId/giveaways/create"
+                val redirectUrl = "$frontUrl/$guildId/giveaways/create"
 
                 event.rapidContainerReply(Colors.WARNING,
                     "${Icon.static.get("Eris_happy")} | Agora a criação de sorteios e feita via website! **[Clique aqui para ser redirecionado para a criação de sorteios!]($redirectUrl)**",
@@ -294,7 +293,7 @@ class GiveawayCommands : CommandInterface {
             "edit" -> {
                 val guildId = event.guild!!.id
                 val giveawayId = event.getOption("id")!!.asString
-                val redirectUrl = "https://erisbot.squareweb.app/guilds/$guildId/giveaways/edit/$giveawayId"
+                val redirectUrl = "$frontUrl/$guildId/giveaways/edit/$giveawayId"
 
                 event.rapidContainerReply(Colors.WARNING,
                     "${Icon.static.get("Eris_happy")} | Agora a edição de sorteios e feita via website! **[Clique aqui para ser redirecionado para a edição de sorteios!]($redirectUrl)**",

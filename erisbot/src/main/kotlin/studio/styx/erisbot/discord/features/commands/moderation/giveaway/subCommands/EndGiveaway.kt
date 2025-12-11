@@ -1,5 +1,6 @@
 package studio.styx.erisbot.discord.features.commands.moderation.giveaway.subCommands
 
+import database.extensions.giveaways
 import dev.minn.jda.ktx.coroutines.await
 import kotlinx.coroutines.*
 import net.dv8tion.jda.api.components.container.Container
@@ -38,35 +39,14 @@ suspend fun endGiveawayCommand(event: SlashCommandInteractionEvent, dsl: DSLCont
     event.deferReply().await()
 
     // BUSCA DE DADOS
-    val data = coroutineScope {
-        val giveawayDeferred = async(Dispatchers.IO) {
-            dsl.selectFrom(GIVEAWAY).where(GIVEAWAY.ID.eq(giveawayId)).fetchOne()
-        }
-        val participantsDeferred = async(Dispatchers.IO) {
-            dsl.selectFrom(USERGIVEAWAY).where(USERGIVEAWAY.GIVEAWAYID.eq(giveawayId)).fetch()
-        }
-        val connectedGuildsDeferred = async(Dispatchers.IO) {
-            dsl.selectFrom(GUILDGIVEAWAY).where(GUILDGIVEAWAY.GIVEAWAYID.eq(giveawayId)).fetch()
-        }
-        val roleEntriesDeferred = async(Dispatchers.IO) {
-            dsl.selectFrom(ROLEMULTIPLEENTRY).where(ROLEMULTIPLEENTRY.GIVEAWAYID.eq(giveawayId)).fetch()
-        }
+    val data = dsl.giveaways.getGiveawayFull(giveawayId)
 
-        GiveawayDataE(
-            giveaway = giveawayDeferred.await(),
-            participants = participantsDeferred.await(),
-            connectedGuilds = connectedGuildsDeferred.await(),
-            roleEntries = roleEntriesDeferred.await()
-        )
-    }
-
-    val (giveaway, participants, connectedGuilds, roleEntries) = data
-
-    // VALIDAÇÕES
-    if (giveaway == null) {
+    if (data == null) {
         event.rapidContainerReply(Colors.DANGER, "${Icon.static.get("error")} | Não consegui encontrar esse sorteio!")
         return
     }
+
+    val (giveaway, participants, connectedGuilds, roleEntries) = data
 
     if (giveaway.ended == true) {
         event.rapidContainerReply(Colors.DANGER, "${Icon.static.get("error")} | Esse sorteio já terminou!")
