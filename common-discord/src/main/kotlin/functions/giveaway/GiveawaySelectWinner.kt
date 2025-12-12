@@ -1,4 +1,4 @@
-package studio.styx.erisbot.functions.giveaway
+package functions.giveaway
 
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -6,9 +6,9 @@ import kotlinx.coroutines.coroutineScope
 import net.dv8tion.jda.api.JDA
 import org.jooq.DSLContext
 import org.jooq.Record
+import studio.styx.erisbot.generated.tables.records.UsergiveawayRecord
 import studio.styx.erisbot.generated.tables.references.GIVEAWAY
 import studio.styx.erisbot.generated.tables.references.GUILDGIVEAWAY
-import studio.styx.erisbot.generated.tables.records.UsergiveawayRecord
 import studio.styx.erisbot.generated.tables.references.ROLEMULTIPLEENTRY
 import kotlin.math.min
 import kotlin.random.Random
@@ -93,7 +93,7 @@ class GiveawaySelectWinner(
 
             if (totalEntries == 0) return@repeat
 
-            val randomValue = Random.nextDouble() * totalEntries
+            val randomValue = Random.Default.nextDouble() * totalEntries
             var cumulative = 0.0
             var selectedIndex = -1
 

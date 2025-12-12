@@ -2,8 +2,6 @@ package studio.styx.erisbot.discord.features.interactions.games.wordle
 
 import database.dtos.log.CreateLogData
 import database.extensions.createLog
-import database.extensions.getOrCreateUser
-import database.utils.LogManage
 import dev.minn.jda.ktx.coroutines.await
 import kotlinx.coroutines.delay
 import net.dv8tion.jda.api.components.actionrow.ActionRow
@@ -24,9 +22,8 @@ import shared.utils.CustomIdHelper
 import shared.utils.Icon
 import studio.styx.erisbot.core.dtos.wordle.WordleGameDto
 import studio.styx.erisbot.core.exceptions.InteractionUsedByUnauthorizedUserException
-import studio.styx.erisbot.core.extensions.jda.reply.containerFollowUp
-import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerEdit
-import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
+import discord.extensions.jda.reply.rapidContainerEdit
+import discord.extensions.jda.reply.rapidContainerReply
 import studio.styx.erisbot.core.interfaces.ResponderInterface
 import studio.styx.erisbot.functions.imageGenerator.wordle.WordleImageGenerator
 import utils.ComponentBuilder

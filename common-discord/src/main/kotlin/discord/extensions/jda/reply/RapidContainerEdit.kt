@@ -1,4 +1,4 @@
-package studio.styx.erisbot.core.extensions.jda.reply
+package discord.extensions.jda.reply
 
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent

@@ -18,7 +18,7 @@ import shared.utils.CustomIdHelper
 import shared.utils.Icon
 import shared.utils.Utils
 import studio.styx.erisbot.core.exceptions.InteractionUsedByUnauthorizedUserException
-import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
+import discord.extensions.jda.reply.rapidContainerReply
 import studio.styx.erisbot.core.interfaces.ResponderInterface
 import studio.styx.erisbot.generated.enums.Rarity
 import studio.styx.erisbot.generated.tables.records.UserfishingrodRecord

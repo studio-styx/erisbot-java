@@ -21,8 +21,8 @@ import shared.Colors
 import shared.utils.Env
 import shared.utils.Icon
 import shared.utils.Utils
-import studio.styx.erisbot.core.extensions.jda.guilds.giveawayEntryEndPoints.giveawayEntryPoints
-import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
+import discord.extensions.jda.guilds.giveaways.entry.giveawayEntryPoints
+import discord.extensions.jda.reply.rapidContainerReply
 import studio.styx.erisbot.core.interfaces.CommandInterface
 import studio.styx.erisbot.discord.features.commands.moderation.giveaway.subCommands.cancelGiveawayCommand
 import studio.styx.erisbot.discord.features.commands.moderation.giveaway.subCommands.endGiveawayCommand

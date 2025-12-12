@@ -9,11 +9,11 @@ import org.jooq.DSLContext
 import shared.Colors
 import shared.utils.Icon
 import shared.utils.MentionUtil.userMention
-import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
-import studio.styx.erisbot.discord.menus.giveaway.GiveawayMenuConnectedGuildExpectedValues
-import studio.styx.erisbot.discord.menus.giveaway.giveawayMenu
-import studio.styx.erisbot.functions.giveaway.GiveawaySelectWinner
-import studio.styx.erisbot.functions.giveaway.getGiveawayRoleEntriesFormatted
+import discord.extensions.jda.reply.rapidContainerReply
+import menus.giveaway.GiveawayMenuConnectedGuildExpectedValues
+import menus.giveaway.giveawayMenu
+import functions.giveaway.GiveawaySelectWinner
+import functions.giveaway.getGiveawayRoleEntriesFormatted
 import studio.styx.erisbot.generated.tables.records.*
 import studio.styx.erisbot.generated.tables.references.*
 import studio.styx.schemaEXtended.core.schemas.NumberSchema

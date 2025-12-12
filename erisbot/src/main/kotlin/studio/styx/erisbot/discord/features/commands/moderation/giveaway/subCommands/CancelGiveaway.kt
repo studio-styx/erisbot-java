@@ -1,17 +1,13 @@
 package studio.styx.erisbot.discord.features.commands.moderation.giveaway.subCommands
 
 import database.extensions.giveaway
-import database.extensions.giveaways
 import dev.minn.jda.ktx.coroutines.await
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import net.dv8tion.jda.api.components.actionrow.ActionRow
 import net.dv8tion.jda.api.components.buttons.Button
 import net.dv8tion.jda.api.entities.emoji.Emoji
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import org.jooq.DSLContext
-import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
+import discord.extensions.jda.reply.rapidContainerReply
 import studio.styx.schemaEXtended.core.schemas.NumberSchema
 import shared.Colors
 import shared.utils.Icon

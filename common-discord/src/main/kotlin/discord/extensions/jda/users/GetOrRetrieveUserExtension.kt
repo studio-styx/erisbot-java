@@ -1,4 +1,4 @@
-package studio.styx.erisbot.core.extensions.jda.users
+package discord.extensions.jda.users
 
 import dev.minn.jda.ktx.coroutines.await
 import net.dv8tion.jda.api.JDA

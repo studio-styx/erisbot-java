@@ -24,7 +24,6 @@ import studio.styx.erisbot.core.interfaces.ResponderInterface
 import studio.styx.erisbot.generated.tables.records.CommandRecord
 import studio.styx.schemaEXtended.core.exceptions.SchemaIllegalArgumentException
 import utils.ComponentBuilder
-import java.awt.Container
 import java.util.regex.Pattern
 
 @Component

@@ -1,6 +1,5 @@
 package studio.styx.erisbot.discord.features.interactions.moderation.giveaway
 
-import database.extensions.giveaway
 import database.extensions.giveaways
 import dev.minn.jda.ktx.coroutines.await
 import kotlinx.coroutines.Dispatchers
@@ -15,13 +14,12 @@ import org.springframework.stereotype.Component
 import shared.Colors
 import shared.utils.CustomIdHelper
 import shared.utils.Icon
-import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
+import discord.extensions.jda.reply.rapidContainerReply
 import studio.styx.erisbot.core.interfaces.ResponderInterface
-import studio.styx.erisbot.discord.menus.giveaway.GiveawayMenuConnectedGuildExpectedValues
-import studio.styx.erisbot.discord.menus.giveaway.giveawayMenu
-import studio.styx.erisbot.functions.giveaway.GiveawaySelectWinner
-import studio.styx.erisbot.functions.giveaway.VerifyUserRequirement
-import studio.styx.erisbot.functions.giveaway.getGiveawayRoleEntriesFormatted
+import menus.giveaway.GiveawayMenuConnectedGuildExpectedValues
+import menus.giveaway.giveawayMenu
+import functions.giveaway.VerifyUserRequirement
+import functions.giveaway.getGiveawayRoleEntriesFormatted
 
 @Component
 class EntryGiveaway : ResponderInterface {

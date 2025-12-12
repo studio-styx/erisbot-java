@@ -17,7 +17,7 @@ import shared.Colors
 import shared.utils.Icon
 import shared.utils.Utils
 import studio.styx.erisbot.core.dtos.wordle.WordleGameDto
-import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
+import discord.extensions.jda.reply.rapidContainerReply
 import studio.styx.erisbot.core.interfaces.CommandInterface
 import studio.styx.erisbot.functions.helpers.wordle.GetWordsHelper
 import studio.styx.erisbot.functions.imageGenerator.wordle.WordleImageGenerator

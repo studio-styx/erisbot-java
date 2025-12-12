@@ -1,4 +1,4 @@
-package studio.styx.erisbot.functions.giveaway
+package functions.giveaway
 
 import dev.minn.jda.ktx.coroutines.await
 import kotlinx.coroutines.async

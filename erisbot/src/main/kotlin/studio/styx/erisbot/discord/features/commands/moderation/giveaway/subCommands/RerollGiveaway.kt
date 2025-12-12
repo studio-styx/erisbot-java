@@ -9,8 +9,8 @@ import org.jooq.impl.DSL
 import shared.Colors
 import shared.utils.Icon
 import shared.utils.MentionUtil.userMention
-import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
-import studio.styx.erisbot.functions.giveaway.GiveawaySelectWinner
+import discord.extensions.jda.reply.rapidContainerReply
+import functions.giveaway.GiveawaySelectWinner
 import studio.styx.erisbot.generated.tables.records.GuildgiveawayRecord
 import studio.styx.erisbot.generated.tables.references.GIVEAWAY
 import studio.styx.erisbot.generated.tables.references.GUILDGIVEAWAY

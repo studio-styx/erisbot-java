@@ -1,10 +1,10 @@
-package studio.styx.erisbot.core.extensions.jda.guilds.giveawayEntryEndPoints
+package discord.extensions.jda.guilds.giveaways.entry
 
 import net.dv8tion.jda.api.entities.Guild
 import redis.RedisManager
-import studio.styx.erisbot.core.dtos.giveaway.entry.GiveawayEntryInvite
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import dtos.giveaway.entry.GiveawayEntryInvite
 import java.util.concurrent.TimeUnit
 
 val Guild.giveawayEntryPoints: GiveawayEntryEndPoints

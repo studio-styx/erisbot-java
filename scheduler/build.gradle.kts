@@ -14,6 +14,7 @@ repositories {
 dependencies {
     implementation(project(":common"))
     implementation(project(":common-discord"))
+    implementation(project(":redis"))
 
     implementation(project(":database"))
     implementation(project(":redisbridge"))
@@ -22,8 +23,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-jooq")
     implementation("org.postgresql:postgresql:42.7.4")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.0")
+
+    implementation("redis.clients:jedis:4.4.0")
+
     implementation("net.dv8tion:JDA:6.1.0")
+    implementation("club.minnced:jda-ktx:0.13.0")
 }
 
 kotlin {

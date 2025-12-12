@@ -1,4 +1,4 @@
-package studio.styx.erisbot.discord.menus.giveaway
+package menus.giveaway
 
 import net.dv8tion.jda.api.components.MessageTopLevelComponent
 import net.dv8tion.jda.api.components.actionrow.ActionRow

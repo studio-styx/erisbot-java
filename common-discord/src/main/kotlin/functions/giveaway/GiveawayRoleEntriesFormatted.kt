@@ -1,11 +1,11 @@
-package studio.styx.erisbot.functions.giveaway
+package functions.giveaway
 
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import menus.giveaway.GiveawayMenuRoleEntriesExpectedValues
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Role
-import studio.styx.erisbot.discord.menus.giveaway.GiveawayMenuRoleEntriesExpectedValues
 import studio.styx.erisbot.generated.tables.records.GuildgiveawayRecord
 import studio.styx.erisbot.generated.tables.records.RolemultipleentryRecord
 

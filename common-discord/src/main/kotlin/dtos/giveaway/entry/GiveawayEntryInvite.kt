@@ -1,4 +1,4 @@
-package studio.styx.erisbot.core.dtos.giveaway.entry
+package dtos.giveaway.entry
 
 data class GiveawayEntryInvite(
     val inviterGuildId: String,

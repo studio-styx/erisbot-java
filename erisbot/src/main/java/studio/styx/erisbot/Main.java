@@ -12,6 +12,7 @@ import server.ApplicationKt;
 import studio.styx.erisbot.core.CommandManager;
 import studio.styx.erisbot.core.init.InitCommandsAndCache;
 import studio.styx.erisbot.core.interfaces.CommandInterface;
+import studio.styx.erisbot.discord.features.listeners.OnReady;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,7 +48,7 @@ public class Main implements CommandLineRunner {
         registerCommandsToDiscord(jda, commands);
 
         // === CARREGA AGENDAMENTOS ===
-        IntervalCheckKt.startIntervalCheck(dsl, jda);
+        new OnReady(jda, dsl).startSchedules();
 
         System.out.println("Logado com sucesso como: " + jda.getSelfUser().getName());
     }

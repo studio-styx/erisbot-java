@@ -12,15 +12,14 @@ import org.springframework.stereotype.Component
 import shared.Colors
 import shared.utils.CustomIdHelper
 import shared.utils.Icon
-import studio.styx.erisbot.core.extensions.jda.reply.rapidContainerReply
-import studio.styx.erisbot.core.extensions.jda.users.getOrRetrieveUserOrNullAsync
+import discord.extensions.jda.reply.rapidContainerReply
+import discord.extensions.jda.users.getOrRetrieveUserOrNullAsync
 import studio.styx.erisbot.core.interfaces.ResponderInterface
 import utils.ComponentBuilder
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import java.util.Locale
 
 @Component
