@@ -10,6 +10,7 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.route
 import net.dv8tion.jda.api.JDA
 import org.jooq.DSLContext
+import server.routes.web.protectedWeb.auth.getMeRoute
 
 fun Route.webProtectedRoutes(jda: JDA, dsl: DSLContext) {
     route("/web/protected") {
@@ -33,7 +34,7 @@ fun Route.webProtectedRoutes(jda: JDA, dsl: DSLContext) {
         }
         rateLimit(RateLimitName("web_protected")) {
             authenticate("auth-jwt") {
-
+                getMeRoute(dsl, jda)
             }
         }
     }

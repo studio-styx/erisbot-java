@@ -92,17 +92,6 @@ open class UserDao(configuration: Configuration?) : DAOImpl<UserRecord, studio.s
     fun fetchByMoney(vararg values: BigDecimal): List<studio.styx.erisbot.generated.tables.pojos.User> = fetch(User.USER.MONEY, *values)
 
     /**
-     * Fetch records that have <code>token BETWEEN lowerInclusive AND
-     * upperInclusive</code>
-     */
-    fun fetchRangeOfToken(lowerInclusive: JSONB?, upperInclusive: JSONB?): List<studio.styx.erisbot.generated.tables.pojos.User> = fetchRange(User.USER.TOKEN, lowerInclusive, upperInclusive)
-
-    /**
-     * Fetch records that have <code>token IN (values)</code>
-     */
-    fun fetchByToken(vararg values: JSONB): List<studio.styx.erisbot.generated.tables.pojos.User> = fetch(User.USER.TOKEN, *values)
-
-    /**
      * Fetch records that have <code>xp BETWEEN lowerInclusive AND
      * upperInclusive</code>
      */

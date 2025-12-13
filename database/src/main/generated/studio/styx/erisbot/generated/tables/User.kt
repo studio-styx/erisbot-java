@@ -51,6 +51,7 @@ import studio.styx.erisbot.generated.keys.TRANSACTION__TRANSACTION_USERID_FKEY
 import studio.styx.erisbot.generated.keys.USERFISHINGROD__USERFISHINGROD_USERID_FKEY
 import studio.styx.erisbot.generated.keys.USERFISH__USERFISH_USERID_FKEY
 import studio.styx.erisbot.generated.keys.USERGIVEAWAY__USERGIVEAWAY_USERID_FKEY
+import studio.styx.erisbot.generated.keys.USERTOKEN__USERTOKEN_USERID_FKEY
 import studio.styx.erisbot.generated.keys.USER_PKEY
 import studio.styx.erisbot.generated.keys.USER__USER_ACTIVEPETID_FKEY
 import studio.styx.erisbot.generated.keys.USER__USER_CONTRACTID_FKEY
@@ -70,6 +71,7 @@ import studio.styx.erisbot.generated.tables.Userfish.UserfishPath
 import studio.styx.erisbot.generated.tables.Userfishingrod.UserfishingrodPath
 import studio.styx.erisbot.generated.tables.Usergiveaway.UsergiveawayPath
 import studio.styx.erisbot.generated.tables.Userpet.UserpetPath
+import studio.styx.erisbot.generated.tables.Usertoken.UsertokenPath
 import studio.styx.erisbot.generated.tables.records.UserRecord
 
 
@@ -134,11 +136,6 @@ open class User(
      * The column <code>public.User.money</code>.
      */
     val MONEY: TableField<UserRecord, BigDecimal?> = createField(DSL.name("money"), SQLDataType.NUMERIC(12, 2).nullable(false).defaultValue(DSL.field(DSL.raw("0.0"), SQLDataType.NUMERIC)), this, "")
-
-    /**
-     * The column <code>public.User.token</code>.
-     */
-    val TOKEN: TableField<UserRecord, JSONB?> = createField(DSL.name("token"), SQLDataType.JSONB, this, "")
 
     /**
      * The column <code>public.User.xp</code>.
@@ -482,6 +479,22 @@ open class User(
 
     val usergiveaway: UsergiveawayPath
         get(): UsergiveawayPath = usergiveaway()
+
+    private lateinit var _usertoken: UsertokenPath
+
+    /**
+     * Get the implicit to-many join path to the <code>public.UserToken</code>
+     * table
+     */
+    fun usertoken(): UsertokenPath {
+        if (!this::_usertoken.isInitialized)
+            _usertoken = UsertokenPath(this, null, USERTOKEN__USERTOKEN_USERID_FKEY.inverseKey)
+
+        return _usertoken;
+    }
+
+    val usertoken: UsertokenPath
+        get(): UsertokenPath = usertoken()
 
     /**
      * Get the implicit many-to-many join path to the

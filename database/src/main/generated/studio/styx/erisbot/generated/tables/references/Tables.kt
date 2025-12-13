@@ -43,6 +43,7 @@ import studio.styx.erisbot.generated.tables.Usergiveaway
 import studio.styx.erisbot.generated.tables.Userpet
 import studio.styx.erisbot.generated.tables.Userpetpersonality
 import studio.styx.erisbot.generated.tables.Userpetskill
+import studio.styx.erisbot.generated.tables.Usertoken
 import studio.styx.erisbot.generated.tables.Workchallenges
 import studio.styx.erisbot.generated.tables._Footballleaguetofootballteam
 import studio.styx.erisbot.generated.tables._PrismaMigrations
@@ -253,6 +254,11 @@ val USERPETPERSONALITY: Userpetpersonality = Userpetpersonality.USERPETPERSONALI
  * The table <code>public.UserPetSkill</code>.
  */
 val USERPETSKILL: Userpetskill = Userpetskill.USERPETSKILL
+
+/**
+ * The table <code>public.UserToken</code>.
+ */
+val USERTOKEN: Usertoken = Usertoken.USERTOKEN
 
 /**
  * The table <code>public.WorkChallenges</code>.

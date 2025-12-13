@@ -188,6 +188,11 @@ val USERPETPERSONALITY_ID_SEQ: Sequence<Int> = Internal.createSequence("UserPetP
 val USERPETSKILL_ID_SEQ: Sequence<Int> = Internal.createSequence("UserPetSkill_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
 
 /**
+ * The sequence <code>public.UserToken_id_seq</code>
+ */
+val USERTOKEN_ID_SEQ: Sequence<Int> = Internal.createSequence("UserToken_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)
+
+/**
  * The sequence <code>public.WorkChallenges_id_seq</code>
  */
 val WORKCHALLENGES_ID_SEQ: Sequence<Int> = Internal.createSequence("WorkChallenges_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null)

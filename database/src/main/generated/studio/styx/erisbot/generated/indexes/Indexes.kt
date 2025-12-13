@@ -29,6 +29,7 @@ import studio.styx.erisbot.generated.tables.User
 import studio.styx.erisbot.generated.tables.Userfishingrod
 import studio.styx.erisbot.generated.tables.Usergiveaway
 import studio.styx.erisbot.generated.tables.Userpet
+import studio.styx.erisbot.generated.tables.Usertoken
 import studio.styx.erisbot.generated.tables._Footballleaguetofootballteam
 
 
@@ -62,3 +63,6 @@ val USER_CONTRACTID_KEY: Index = Internal.createIndex(DSL.name("User_contractId_
 val USERFISHINGROD_USERID_FISHINGRODID_KEY: Index = Internal.createIndex(DSL.name("UserFishingRod_userId_fishingRodId_key"), Userfishingrod.USERFISHINGROD, arrayOf(Userfishingrod.USERFISHINGROD.USERID, Userfishingrod.USERFISHINGROD.FISHINGRODID), true)
 val USERGIVEAWAY_USERID_GIVEAWAYID_KEY: Index = Internal.createIndex(DSL.name("UserGiveaway_userId_giveawayId_key"), Usergiveaway.USERGIVEAWAY, arrayOf(Usergiveaway.USERGIVEAWAY.USERID, Usergiveaway.USERGIVEAWAY.GIVEAWAYID), true)
 val USERPET_SPOUSEID_KEY: Index = Internal.createIndex(DSL.name("UserPet_spouseId_key"), Userpet.USERPET, arrayOf(Userpet.USERPET.SPOUSEID), true)
+val USERTOKEN_ACCESS_TOKEN_KEY: Index = Internal.createIndex(DSL.name("UserToken_access_token_key"), Usertoken.USERTOKEN, arrayOf(Usertoken.USERTOKEN.ACCESS_TOKEN), true)
+val USERTOKEN_REFRESH_TOKEN_KEY: Index = Internal.createIndex(DSL.name("UserToken_refresh_token_key"), Usertoken.USERTOKEN, arrayOf(Usertoken.USERTOKEN.REFRESH_TOKEN), true)
+val USERTOKEN_USERID_KEY: Index = Internal.createIndex(DSL.name("UserToken_userId_key"), Usertoken.USERTOKEN, arrayOf(Usertoken.USERTOKEN.USERID), true)

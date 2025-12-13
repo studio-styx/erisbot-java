@@ -46,6 +46,7 @@ import studio.styx.erisbot.generated.sequences.USERGIVEAWAY_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERPETPERSONALITY_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERPETSKILL_ID_SEQ
 import studio.styx.erisbot.generated.sequences.USERPET_ID_SEQ
+import studio.styx.erisbot.generated.sequences.USERTOKEN_ID_SEQ
 import studio.styx.erisbot.generated.sequences.WORKCHALLENGES_ID_SEQ
 import studio.styx.erisbot.generated.tables.Adoptioncenter
 import studio.styx.erisbot.generated.tables.Application
@@ -86,6 +87,7 @@ import studio.styx.erisbot.generated.tables.Usergiveaway
 import studio.styx.erisbot.generated.tables.Userpet
 import studio.styx.erisbot.generated.tables.Userpetpersonality
 import studio.styx.erisbot.generated.tables.Userpetskill
+import studio.styx.erisbot.generated.tables.Usertoken
 import studio.styx.erisbot.generated.tables.Workchallenges
 import studio.styx.erisbot.generated.tables._Footballleaguetofootballteam
 import studio.styx.erisbot.generated.tables._PrismaMigrations
@@ -310,6 +312,11 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
     val USERPETSKILL: Userpetskill get() = Userpetskill.USERPETSKILL
 
     /**
+     * The table <code>public.UserToken</code>.
+     */
+    val USERTOKEN: Usertoken get() = Usertoken.USERTOKEN
+
+    /**
      * The table <code>public.WorkChallenges</code>.
      */
     val WORKCHALLENGES: Workchallenges get() = Workchallenges.WORKCHALLENGES
@@ -352,6 +359,7 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         USERPET_ID_SEQ,
         USERPETPERSONALITY_ID_SEQ,
         USERPETSKILL_ID_SEQ,
+        USERTOKEN_ID_SEQ,
         WORKCHALLENGES_ID_SEQ
     )
 
@@ -397,6 +405,7 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
         Userpet.USERPET,
         Userpetpersonality.USERPETPERSONALITY,
         Userpetskill.USERPETSKILL,
+        Usertoken.USERTOKEN,
         Workchallenges.WORKCHALLENGES
     )
 }

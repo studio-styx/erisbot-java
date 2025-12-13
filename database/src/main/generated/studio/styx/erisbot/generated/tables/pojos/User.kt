@@ -23,7 +23,6 @@ data class User(
     var afktime: LocalDateTime? = null,
     var dmnotification: Boolean? = null,
     var money: BigDecimal? = null,
-    var token: JSONB? = null,
     var xp: Int? = null,
     var activepetid: Int? = null,
     var blacklist: JSONB? = null,
@@ -75,12 +74,6 @@ data class User(
                 return false
         }
         else if (this.money != o.money)
-            return false
-        if (this.token == null) {
-            if (o.token != null)
-                return false
-        }
-        else if (this.token != o.token)
             return false
         if (this.xp == null) {
             if (o.xp != null)
@@ -159,7 +152,6 @@ data class User(
         result = prime * result + (if (this.afktime == null) 0 else this.afktime.hashCode())
         result = prime * result + (if (this.dmnotification == null) 0 else this.dmnotification.hashCode())
         result = prime * result + (if (this.money == null) 0 else this.money.hashCode())
-        result = prime * result + (if (this.token == null) 0 else this.token.hashCode())
         result = prime * result + (if (this.xp == null) 0 else this.xp.hashCode())
         result = prime * result + (if (this.activepetid == null) 0 else this.activepetid.hashCode())
         result = prime * result + (if (this.blacklist == null) 0 else this.blacklist.hashCode())
@@ -182,7 +174,6 @@ data class User(
         sb.append(", ").append(afktime)
         sb.append(", ").append(dmnotification)
         sb.append(", ").append(money)
-        sb.append(", ").append(token)
         sb.append(", ").append(xp)
         sb.append(", ").append(activepetid)
         sb.append(", ").append(blacklist)

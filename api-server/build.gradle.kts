@@ -29,12 +29,14 @@ dependencies {
     // --- KTOR CORE ---
     implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-rate-limit:${ktorVersion}")
+    implementation("io.ktor:ktor-server-rate-limit:$ktorVersion")
     implementation("io.ktor:ktor-server-cors-jvm:$ktorVersion")
+    implementation("io.ktor:ktor-client-cio:$ktorVersion")
 
     // --- JSON ---
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
 
     // --- AUTH / JWT ---
     implementation("io.ktor:ktor-server-auth-jvm:$ktorVersion")

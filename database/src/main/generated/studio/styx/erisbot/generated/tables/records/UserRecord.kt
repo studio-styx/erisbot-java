@@ -41,53 +41,49 @@ open class UserRecord() : UpdatableRecordImpl<UserRecord>(User.USER) {
         set(value): Unit = set(4, value)
         get(): BigDecimal? = get(4) as BigDecimal?
 
-    open var token: JSONB?
-        set(value): Unit = set(5, value)
-        get(): JSONB? = get(5) as JSONB?
-
     open var xp: Int?
+        set(value): Unit = set(5, value)
+        get(): Int? = get(5) as Int?
+
+    open var activepetid: Int?
         set(value): Unit = set(6, value)
         get(): Int? = get(6) as Int?
 
-    open var activepetid: Int?
-        set(value): Unit = set(7, value)
-        get(): Int? = get(7) as Int?
-
     open var blacklist: JSONB?
-        set(value): Unit = set(8, value)
-        get(): JSONB? = get(8) as JSONB?
+        set(value): Unit = set(7, value)
+        get(): JSONB? = get(7) as JSONB?
 
     open var createdat: LocalDateTime?
+        set(value): Unit = set(8, value)
+        get(): LocalDateTime? = get(8) as LocalDateTime?
+
+    open var updatedat: LocalDateTime?
         set(value): Unit = set(9, value)
         get(): LocalDateTime? = get(9) as LocalDateTime?
 
-    open var updatedat: LocalDateTime?
+    open var acceptedfootballtermsat: LocalDateTime?
         set(value): Unit = set(10, value)
         get(): LocalDateTime? = get(10) as LocalDateTime?
 
-    open var acceptedfootballtermsat: LocalDateTime?
-        set(value): Unit = set(11, value)
-        get(): LocalDateTime? = get(11) as LocalDateTime?
-
     open var favoriteteamid: Long?
-        set(value): Unit = set(12, value)
-        get(): Long? = get(12) as Long?
+        set(value): Unit = set(11, value)
+        get(): Long? = get(11) as Long?
 
     open var readfootballbetterms: Boolean?
+        set(value): Unit = set(12, value)
+        get(): Boolean? = get(12) as Boolean?
+
+    open var shownameinpresence: Boolean?
         set(value): Unit = set(13, value)
         get(): Boolean? = get(13) as Boolean?
 
-    open var shownameinpresence: Boolean?
-        set(value): Unit = set(14, value)
-        get(): Boolean? = get(14) as Boolean?
-
     open var gender: Gender?
-        set(value): Unit = set(15, value)
-        get(): Gender? = get(15) as Gender?
+        set(value): Unit = set(14, value)
+        get(): Gender? = get(14) as Gender?
 
     open var contractid: Int?
-        set(value): Unit = set(16, value)
-        get(): Int? = get(16) as Int?
+        set(value): Unit = set(15, value)
+        get(): Int? = get(15) as Int?
 
     // -------------------------------------------------------------------------
     // Primary key information
@@ -98,13 +94,12 @@ open class UserRecord() : UpdatableRecordImpl<UserRecord>(User.USER) {
     /**
      * Create a detached, initialised UserRecord
      */
-    constructor(id: String? = null, afkreasson: String? = null, afktime: LocalDateTime? = null, dmnotification: Boolean? = null, money: BigDecimal? = null, token: JSONB? = null, xp: Int? = null, activepetid: Int? = null, blacklist: JSONB? = null, createdat: LocalDateTime? = null, updatedat: LocalDateTime? = null, acceptedfootballtermsat: LocalDateTime? = null, favoriteteamid: Long? = null, readfootballbetterms: Boolean? = null, shownameinpresence: Boolean? = null, gender: Gender? = null, contractid: Int? = null): this() {
+    constructor(id: String? = null, afkreasson: String? = null, afktime: LocalDateTime? = null, dmnotification: Boolean? = null, money: BigDecimal? = null, xp: Int? = null, activepetid: Int? = null, blacklist: JSONB? = null, createdat: LocalDateTime? = null, updatedat: LocalDateTime? = null, acceptedfootballtermsat: LocalDateTime? = null, favoriteteamid: Long? = null, readfootballbetterms: Boolean? = null, shownameinpresence: Boolean? = null, gender: Gender? = null, contractid: Int? = null): this() {
         this.id = id
         this.afkreasson = afkreasson
         this.afktime = afktime
         this.dmnotification = dmnotification
         this.money = money
-        this.token = token
         this.xp = xp
         this.activepetid = activepetid
         this.blacklist = blacklist
@@ -129,7 +124,6 @@ open class UserRecord() : UpdatableRecordImpl<UserRecord>(User.USER) {
             this.afktime = value.afktime
             this.dmnotification = value.dmnotification
             this.money = value.money
-            this.token = value.token
             this.xp = value.xp
             this.activepetid = value.activepetid
             this.blacklist = value.blacklist
