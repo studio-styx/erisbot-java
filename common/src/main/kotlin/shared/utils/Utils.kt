@@ -138,6 +138,16 @@ object Utils {
     fun limitText(text: String, maxLength: Int, lastText: String): String {
         return text.take(maxLength).plus(lastText)
     }
+
+    @JvmStatic
+    fun calculateProbability(probability: Double): Boolean {
+        return Math.random() < probability
+    }
+
+    @JvmStatic
+    fun calculateProbability(probability: Int): Boolean {
+        return Math.random() < probability
+    }
 }
 
 enum class DiscordTimeStyle {
