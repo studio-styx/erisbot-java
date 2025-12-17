@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import shared.Cache
 import studio.styx.erisbot.core.interfaces.CommandInterface
+import studio.styx.erisbot.discord.features.commands.pets.subCommands.PetAdoptionCenterCommand
+import studio.styx.erisbot.discord.features.commands.pets.subCommands.PetBreedCommand
 import studio.styx.erisbot.discord.features.commands.pets.subCommands.PetChangeName
 import studio.styx.erisbot.discord.features.commands.pets.subCommands.PetInfoCommand
 import studio.styx.erisbot.discord.features.commands.pets.subCommands.PetReleaseCommand
@@ -184,6 +186,8 @@ class PetsCommands : CommandInterface {
             "release" -> PetReleaseCommand(event, dsl).execute()
             "set_active" -> PetSetActiveCommand(event, dsl).execute()
             "change_name" -> PetChangeName(event, dsl).execute()
+            "breed" -> PetBreedCommand(event, dsl).execute()
+            "adopt" -> PetAdoptionCenterCommand(event, dsl).execute()
         }
     }
 }
