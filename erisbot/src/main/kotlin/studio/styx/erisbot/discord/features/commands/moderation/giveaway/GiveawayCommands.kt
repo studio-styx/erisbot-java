@@ -74,7 +74,6 @@ class GiveawayCommands : CommandInterface {
                 OptionData(OptionType.STRING, "id", "giveaway id", true)
                     .setAutoComplete(true),
                 OptionData(OptionType.CHANNEL, "channel", "channel where the giveaway will to be entered", true)
-                    .setAutoComplete(true)
                     .setChannelTypes(ChannelType.TEXT, ChannelType.NEWS)
             )
 

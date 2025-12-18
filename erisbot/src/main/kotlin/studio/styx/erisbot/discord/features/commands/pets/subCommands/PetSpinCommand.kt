@@ -1,5 +1,6 @@
 package studio.styx.erisbot.discord.features.commands.pets.subCommands
 
+import database.extensions.getOrCreateUser
 import dev.minn.jda.ktx.coroutines.await
 import discord.extensions.jda.reply.rapidContainerReply
 import kotlinx.coroutines.Dispatchers
@@ -146,11 +147,8 @@ class PetSpinCommand(
             }
 
             // 5. Inserções
-            ctx.insertInto(USER)
-                .set(USER.ID, userId)
-                .onDuplicateKeyIgnore()
-                .execute()
 
+            ctx.getOrCreateUser(userId)
             val userPetRecord = ctx.insertInto(USERPET)
                 .set(USERPET.USERID, userId)
                 .set(USERPET.PETID, petId)

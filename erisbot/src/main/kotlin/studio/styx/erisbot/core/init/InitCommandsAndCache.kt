@@ -23,35 +23,40 @@ class InitCommandsAndCache() {
                     val ptbrSubgroupName = subgroup.nameLocalizations.get(DiscordLocale.PORTUGUESE_BRAZILIAN)
                     if (subgroup.subcommands.isNotEmpty()) {
                         for (subcommand in subgroup.subcommands) {
-                            val subcommandName = subcommand.name
-                            val ptbrSubcommandName = subcommand.nameLocalizations.get(DiscordLocale.PORTUGUESE_BRAZILIAN)
+                            try {
+                                val subcommandName = subcommand.name
+                                val ptbrSubcommandName = subcommand.nameLocalizations.get(DiscordLocale.PORTUGUESE_BRAZILIAN)
 
-                            val dbCommand = tx.selectFrom(COMMAND)
-                                .where(COMMAND.NAME.eq(commandName))
-                                .and(COMMAND.SUBCOMMANDGROUP.eq(subgroupName))
-                                .and(COMMAND.SUBCOMMAND.eq(subcommandName))
-                                .fetchOne()
+                                val dbCommand = tx.selectFrom(COMMAND)
+                                    .where(COMMAND.NAME.eq(commandName))
+                                    .and(COMMAND.SUBCOMMANDGROUP.eq(subgroupName))
+                                    .and(COMMAND.SUBCOMMAND.eq(subcommandName))
+                                    .fetchOne()
 
-                            if (dbCommand == null) {
-                                val registredCommand = tx.insertInto(COMMAND)
-                                    .set(COMMAND.NAME, commandName)
-                                    .set(COMMAND.PTBRNAME, ptbrCommandName)
-                                    .set(COMMAND.SUBCOMMANDGROUP, subgroupName)
-                                    .set(COMMAND.SUBCOMMANDGROUPPTBR, ptbrSubgroupName)
-                                    .set(COMMAND.SUBCOMMAND, subcommandName)
-                                    .set(COMMAND.SUBCOMMANDPTBR, ptbrSubcommandName)
-                                    .set(COMMAND.DISCORDID, command.id)
-                                    .set(COMMAND.DESCRIPTION, subcommand.description)
-                                    .set(COMMAND.DESCRIPTIONPTBR, subcommand.descriptionLocalizations.get(DiscordLocale.PORTUGUESE_BRAZILIAN))
-                                    .set(COMMAND.CATEGORY, "unknown")
-                                    .returning()
-                                    .fetchOne()!!
+                                if (dbCommand == null) {
+                                    val registredCommand = tx.insertInto(COMMAND)
+                                        .set(COMMAND.NAME, commandName)
+                                        .set(COMMAND.PTBRNAME, ptbrCommandName)
+                                        .set(COMMAND.SUBCOMMANDGROUP, subgroupName)
+                                        .set(COMMAND.SUBCOMMANDGROUPPTBR, ptbrSubgroupName)
+                                        .set(COMMAND.SUBCOMMAND, subcommandName)
+                                        .set(COMMAND.SUBCOMMANDPTBR, ptbrSubcommandName)
+                                        .set(COMMAND.DISCORDID, command.id)
+                                        .set(COMMAND.DESCRIPTION, subcommand.description)
+                                        .set(COMMAND.DESCRIPTIONPTBR, subcommand.descriptionLocalizations.get(DiscordLocale.PORTUGUESE_BRAZILIAN))
+                                        .set(COMMAND.CATEGORY, "unknown")
+                                        .returning()
+                                        .fetchOne()!!
 
-                                println("Registrado na db o novo comando: $commandName $subgroupName $subcommandName")
+                                    println("Registrado na db o novo comando: $commandName $subgroupName $subcommandName")
 
-                                registredCommands.add(registredCommand)
-                            } else {
-                                registredCommands.add(dbCommand)
+                                    registredCommands.add(registredCommand)
+                                } else {
+                                    registredCommands.add(dbCommand)
+                                }
+                            } catch (e: Exception) {
+                                println("Erro ao registrar o subcomando: ${subcommand.name} do grupo: ${subgroup.name} do comando: ${command.name}")
+                                e.printStackTrace()
                             }
                         }
                     }
@@ -61,57 +66,67 @@ class InitCommandsAndCache() {
 
             if (command.subcommands.isNotEmpty()) {
                 for (subcommand in command.subcommands) {
-                    val subcommandName = subcommand.name
-                    val ptbrSubcommandName = subcommand.nameLocalizations.get(DiscordLocale.PORTUGUESE_BRAZILIAN)
+                    try {
+                        val subcommandName = subcommand.name
+                        val ptbrSubcommandName = subcommand.nameLocalizations.get(DiscordLocale.PORTUGUESE_BRAZILIAN)
 
-                    val dbCommand = tx.selectFrom(COMMAND)
-                        .where(COMMAND.NAME.eq(commandName))
-                        .and(COMMAND.SUBCOMMAND.eq(subcommandName))
-                        .fetchOne()
+                        val dbCommand = tx.selectFrom(COMMAND)
+                            .where(COMMAND.NAME.eq(commandName))
+                            .and(COMMAND.SUBCOMMAND.eq(subcommandName))
+                            .fetchOne()
 
-                    if (dbCommand == null) {
-                        val registredCommand = tx.insertInto(COMMAND)
-                            .set(COMMAND.NAME, commandName)
-                            .set(COMMAND.PTBRNAME, ptbrCommandName)
-                            .set(COMMAND.SUBCOMMAND, subcommandName)
-                            .set(COMMAND.SUBCOMMANDPTBR, ptbrSubcommandName)
-                            .set(COMMAND.DISCORDID, command.id)
-                            .set(COMMAND.DESCRIPTION, subcommand.description)
-                            .set(COMMAND.DESCRIPTIONPTBR, subcommand.descriptionLocalizations.get(DiscordLocale.PORTUGUESE_BRAZILIAN))
-                            .set(COMMAND.CATEGORY, "unknown")
-                            .returning()
-                            .fetchOne()!!
+                        if (dbCommand == null) {
+                            val registredCommand = tx.insertInto(COMMAND)
+                                .set(COMMAND.NAME, commandName)
+                                .set(COMMAND.PTBRNAME, ptbrCommandName)
+                                .set(COMMAND.SUBCOMMAND, subcommandName)
+                                .set(COMMAND.SUBCOMMANDPTBR, ptbrSubcommandName)
+                                .set(COMMAND.DISCORDID, command.id)
+                                .set(COMMAND.DESCRIPTION, subcommand.description)
+                                .set(COMMAND.DESCRIPTIONPTBR, subcommand.descriptionLocalizations.get(DiscordLocale.PORTUGUESE_BRAZILIAN))
+                                .set(COMMAND.CATEGORY, "unknown")
+                                .returning()
+                                .fetchOne()!!
 
-                        println("Registrado na db o novo comando: $commandName $subcommandName")
+                            println("Registrado na db o novo comando: $commandName $subcommandName")
 
-                        registredCommands.add(registredCommand)
-                    } else {
-                        registredCommands.add(dbCommand)
+                            registredCommands.add(registredCommand)
+                        } else {
+                            registredCommands.add(dbCommand)
+                        }
+                    } catch (e: Exception) {
+                        println("Erro ao registrar o subcomando: ${subcommand.name} do comando: ${command.name}")
+                        e.printStackTrace()
                     }
                 }
                 continue
             }
 
-            val dbCommand = tx.selectFrom(COMMAND)
-                .where(COMMAND.NAME.eq(commandName))
-                .fetchOne()
+            try {
+                val dbCommand = tx.selectFrom(COMMAND)
+                    .where(COMMAND.NAME.eq(commandName))
+                    .fetchOne()
 
-            if (dbCommand == null) {
-                val registredCommand = tx.insertInto(COMMAND)
-                    .set(COMMAND.NAME, commandName)
-                    .set(COMMAND.PTBRNAME, ptbrCommandName)
-                    .set(COMMAND.DISCORDID, command.id)
-                    .set(COMMAND.DESCRIPTION, command.description)
-                    .set(COMMAND.DESCRIPTIONPTBR, command.descriptionLocalizations.get(DiscordLocale.PORTUGUESE_BRAZILIAN))
-                    .set(COMMAND.CATEGORY, "unknown")
-                    .returning()
-                    .fetchOne()!!
+                if (dbCommand == null) {
+                    val registredCommand = tx.insertInto(COMMAND)
+                        .set(COMMAND.NAME, commandName)
+                        .set(COMMAND.PTBRNAME, ptbrCommandName)
+                        .set(COMMAND.DISCORDID, command.id)
+                        .set(COMMAND.DESCRIPTION, command.description)
+                        .set(COMMAND.DESCRIPTIONPTBR, command.descriptionLocalizations.get(DiscordLocale.PORTUGUESE_BRAZILIAN))
+                        .set(COMMAND.CATEGORY, "unknown")
+                        .returning()
+                        .fetchOne()!!
 
-                println("Registrado na db o novo comando: $commandName")
+                    println("Registrado na db o novo comando: $commandName")
 
-                registredCommands.add(registredCommand)
-            } else {
-                registredCommands.add(dbCommand)
+                    registredCommands.add(registredCommand)
+                } else {
+                    registredCommands.add(dbCommand)
+                }
+            } catch (e: Exception) {
+                println("Erro ao registrar o comando: ${command.name}")
+                e.printStackTrace()
             }
         }
 

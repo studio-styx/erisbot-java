@@ -26,6 +26,8 @@ dependencies {
 
     implementation("org.postgresql:postgresql:42.7.4")
 
+    implementation("io.ktor:ktor-client-cio:2.3.9")
+
     implementation("redis.clients:jedis:4.4.0")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")

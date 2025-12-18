@@ -38,8 +38,6 @@ class PetsCommands : CommandInterface {
                 Subcommand("info", "Obter informações de um pet especifico")
                     .addOption(OptionType.STRING, "pet", "pet para cuidar", true, true),
                 Subcommand("spin", "girar a roleta de pets"),
-                Subcommand("care", "cuidar de um pet")
-                    .addOption(OptionType.STRING, "pet", "pet para cuidar", true, true),
                 Subcommand("breed", "reproduzir seus pets")
                     .addOption(OptionType.STRING, "pet1", "pet para reproduzir", true, true)
                     .addOption(OptionType.STRING, "pet2", "pet com quem ele irá reproduzir", true, true),

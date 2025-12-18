@@ -101,6 +101,6 @@ class PetAdoptionCenterCommand(
         }
 
         val menu = adoptPetMenu(availablePets)
-        event.hook.editOriginalComponents(menu).await()
+        event.hook.editOriginalComponents(menu).useComponentsV2().await()
     }
 }
