@@ -1,7 +1,9 @@
 package dtos.football.footballData.api.fixtureResult.team
 
 import dtos.football.footballData.api.fixtureResult.common.Area
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Club(
     val id: Long,
     val name: String,

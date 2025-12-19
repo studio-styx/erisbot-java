@@ -7,14 +7,17 @@ import dtos.football.footballData.api.fixtureResult.team.Club
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ResponseException
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.header
 import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
+import io.ktor.serialization.kotlinx.json.json
 import shared.utils.Env
 
 import kotlinx.coroutines.*
+import kotlinx.serialization.json.Json
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
@@ -243,4 +246,15 @@ class ApiFootballDataSdk(
     }
 }
 
-val apiFootballSdk = ApiFootballDataSdk(HttpClient(), apiKey = envApiKey)
+val apiFootballSdk = ApiFootballDataSdk(
+    HttpClient {
+        install(ContentNegotiation) {
+            json(Json {
+                prettyPrint = true
+                isLenient = true
+                ignoreUnknownKeys = true
+            })
+        }
+    },
+    apiKey = envApiKey
+)

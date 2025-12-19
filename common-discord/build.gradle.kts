@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "2.2.20"
+    kotlin("plugin.serialization") version "1.9.22"
 }
 
 group = "studio.styx.erisbot"
@@ -26,7 +27,13 @@ dependencies {
 
     implementation("org.postgresql:postgresql:42.7.4")
 
+    implementation("io.ktor:ktor-client-core:2.3.9")
     implementation("io.ktor:ktor-client-cio:2.3.9")
+
+    // Para serialização JSON
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.9")
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.9")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
     implementation("redis.clients:jedis:4.4.0")
 

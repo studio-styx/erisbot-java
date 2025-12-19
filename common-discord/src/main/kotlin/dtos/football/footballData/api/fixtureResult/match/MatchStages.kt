@@ -1,5 +1,8 @@
 package dtos.football.footballData.api.fixtureResult.match
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 enum class MatchStages {
     FINAL,
     THIRD_PLACE,

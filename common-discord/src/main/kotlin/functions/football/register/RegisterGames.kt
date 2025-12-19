@@ -8,8 +8,11 @@ import dtos.football.footballData.api.fixtureResult.match.TeamSide
 import dtos.football.footballData.api.fixtureResult.team.Player
 import dtos.football.footballData.api.fixtureResult.team.PlayerPosition
 import functions.football.ApiFootballDataSdk
+import functions.football.handlers.HandleEndGame
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.future.await
 import kotlinx.coroutines.withContext
+import net.dv8tion.jda.api.JDA
 import org.jooq.DSLContext
 import studio.styx.erisbot.generated.enums.Matchstatus
 import studio.styx.erisbot.generated.tables.references.FOOTBALLAREA
@@ -32,7 +35,8 @@ interface FootballMatchesPipelineResult {
 
 class RegisterMatches(
     private val sdk: ApiFootballDataSdk,
-    private val dsl: DSLContext
+    private val dsl: DSLContext,
+    private val jda: JDA
 ) {
     private val processedLeagues = mutableSetOf<Long>()
     private val processedTeams = mutableSetOf<Long>()
@@ -186,10 +190,15 @@ class RegisterMatches(
 
         val (leagueDbId, homeDbId, awayDbId) = internalIds
 
-        dsl.transactionSuspend { config ->
+        val matchBeforeUpdate = withContext(Dispatchers.IO) {
+            dsl.selectFrom(FOOTBALLMATCH)
+                .where(FOOTBALLMATCH.APIID.eq(match.id.toInt()))
+                .fetchOne()
+        }
+
+        val newGame = dsl.transactionResultAsync { config ->
             val tx = config.dsl()
 
-            // Status Mapper (Igual ao seu TS: TIMED -> SCHEDULED)
             val dbStatus = when(match.status) {
                 MatchStatus.TIMED -> Matchstatus.SCHEDULED
                 MatchStatus.CANCELLED -> Matchstatus.CANCELED
@@ -211,7 +220,17 @@ class RegisterMatches(
                 .set(FOOTBALLMATCH.GOALSAWAY, match.score?.fullTime?.away ?: 0)
                 .set(FOOTBALLMATCH.STATUS, dbStatus)
                 .set(FOOTBALLMATCH.STARTAT, OffsetDateTime.parse(match.utcDate).toLocalDateTime())
-                .execute()
+                .returning()
+                .fetchOne()
+        }.await()
+
+        if (matchBeforeUpdate != null) {
+            if (match.status == MatchStatus.FINISHED) {
+                if (matchBeforeUpdate.status != Matchstatus.FINISHED) {
+                    val endGame = HandleEndGame(match, newGame!!, dsl, jda)
+                    endGame.handle()
+                }
+            }
         }
     }
 }

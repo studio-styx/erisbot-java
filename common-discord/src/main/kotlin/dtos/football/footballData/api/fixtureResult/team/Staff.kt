@@ -1,5 +1,8 @@
 package dtos.football.footballData.api.fixtureResult.team
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Staff(
     val id: Long,
     val firstName: String,

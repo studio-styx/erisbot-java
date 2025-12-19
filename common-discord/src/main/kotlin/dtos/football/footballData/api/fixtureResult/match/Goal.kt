@@ -1,5 +1,8 @@
 package dtos.football.footballData.api.fixtureResult.match
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Goal(
     val minute: Int,
     val injuryTime: Int,
@@ -9,7 +12,7 @@ data class Goal(
     val assist: GoalDetail? = null,
     val score: ScoreDetail
 )
-
+@Serializable
 data class GoalDetail(
     val id: Long,
     val name: String

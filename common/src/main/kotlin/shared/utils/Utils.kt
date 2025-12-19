@@ -125,6 +125,22 @@ object Utils {
     }
 
     @JvmStatic
+    fun brBuilder(texts: List<String?>): String {
+        val nonNullTexts = texts.filterNotNull()
+        return nonNullTexts.joinToString("\n")
+    }
+
+    @JvmStatic
+    fun brBuilder(texts: List<String?>, replacements: Map<String, String>): String {
+        val nonNullTexts = texts.filterNotNull()
+        var result = nonNullTexts.joinToString("\n")
+        replacements.forEach { (key, value) ->
+            result = result.replace("{$key}", value)
+        }
+        return result
+    }
+
+    @JvmStatic
     fun <T> alternate(primary: T, default: T): T {
         return primary ?: default!!
     }

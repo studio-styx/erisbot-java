@@ -47,6 +47,8 @@ dependencies {
     implementation("studio.styx.schemaEXtended:SchemaEXtended:1.2.1")
 
     implementation("redis.clients:jedis:4.4.0")
+    implementation("io.ktor:ktor-client-core-jvm:2.3.9")
+    implementation("io.ktor:ktor-client-apache:2.3.9")
 
     runtimeOnly("org.postgresql:postgresql:42.7.4")
 

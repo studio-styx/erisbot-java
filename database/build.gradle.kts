@@ -19,6 +19,7 @@ dependencies {
     implementation("org.jooq:jooq:3.19.9")
     implementation("org.jooq:jooq-kotlin:3.19.9")
     implementation("org.postgresql:postgresql:42.7.4")
+    jooqGenerator("org.jooq:jooq-kotlin:3.19.9")
     jooqGenerator("org.postgresql:postgresql:42.7.4")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")

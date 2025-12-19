@@ -16,11 +16,11 @@ suspend fun JDA.getOrRetrieveUserOrNullAsync(userId: String): User? {
     }.getOrNull()
 }
 
-fun JDA.getOrRetrieveUserBlockingOrNull(userId: String): User {
+fun JDA.getOrRetrieveUserBlocking(userId: String): User {
     return this.getUserById(userId) ?: this.retrieveUserById(userId).complete()
 }
 
-fun JDA.safeGetOrRetrieveUserBlockingOrNull(userId: String): User? {
+fun JDA.getOrRetrieveUserBlockingOrNull(userId: String): User? {
     return this.getUserById(userId) ?: runCatching {
         this.retrieveUserById(userId).complete()
     }.getOrNull()
