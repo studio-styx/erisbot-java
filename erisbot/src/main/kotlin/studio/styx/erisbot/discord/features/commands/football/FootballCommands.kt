@@ -23,6 +23,7 @@ import studio.styx.erisbot.generated.tables.records.FootballleagueRecord
 import studio.styx.erisbot.generated.tables.records.FootballmatchRecord
 import studio.styx.erisbot.generated.tables.records.FootballteamRecord
 import studio.styx.erisbot.generated.tables.references.FOOTBALLBET
+import studio.styx.erisbot.generated.tables.references.FOOTBALLLEAGUE
 import studio.styx.erisbot.generated.tables.references.FOOTBALLMATCH
 import studio.styx.erisbot.generated.tables.references.FOOTBALLTEAM
 import java.time.Instant
@@ -55,9 +56,9 @@ class FootballCommands : CommandInterface {
 
         when (focused.name) {
             "match" -> {
-                val homeTeam = Footballteam("home_team")
-                val awayTeam = Footballteam("away_team")
-                val league = Footballleague("league")
+                val homeTeam = FOOTBALLTEAM.`as`("home_team")
+                val awayTeam = FOOTBALLTEAM.`as`("away_team")
+                val league = FOOTBALLLEAGUE.`as`("league")
 
                 val now = Instant.now()
                 val in3Days = now.plus(3, ChronoUnit.DAYS)
@@ -83,7 +84,8 @@ class FootballCommands : CommandInterface {
                         awayTeam.asterisk(),
                         league.asterisk(),
                         betCountField,
-                        totalGoalsField
+                        totalGoalsField,
+                        totalPointsField
                     )
                         .from(FOOTBALLMATCH)
                         .innerJoin(homeTeam).on(FOOTBALLMATCH.HOMETEAMID.eq(homeTeam.ID))

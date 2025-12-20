@@ -41,4 +41,8 @@ class CustomIdHelper(customId: String, returnedCustomId: String) {
     fun getAsDouble(param: String): Double? {
         return get(param)?.toDoubleOrNull()
     }
+
+    fun getAsLong(param: String): Long? {
+        return get(param)?.toLongOrNull()
+    }
 }

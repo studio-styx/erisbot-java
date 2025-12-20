@@ -1,5 +1,6 @@
 package studio.styx.erisbot.discord.features.commands.football.subCommands
 
+import database.extensions.football.football
 import dev.minn.jda.ktx.coroutines.await
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,10 +15,13 @@ import studio.styx.erisbot.generated.tables.records.FootballleagueRecord
 import studio.styx.erisbot.generated.tables.records.FootballmatchRecord
 import studio.styx.erisbot.generated.tables.records.FootballteamRecord
 import studio.styx.erisbot.generated.tables.references.FOOTBALLBET
+import studio.styx.erisbot.generated.tables.references.FOOTBALLLEAGUE
 import studio.styx.erisbot.generated.tables.references.FOOTBALLMATCH
+import studio.styx.erisbot.generated.tables.references.FOOTBALLTEAM
 import studio.styx.schemaEXtended.core.schemas.NumberSchema
 import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 
@@ -43,10 +47,19 @@ class GetMatchesCommand(
         }
 
         val nowUtc = Instant.now()
-        val atStartOfDayBrazilTime = nowUtc.atOffset(ZoneOffset.of("America/São_Paulo")).toLocalDate().atStartOfDay()
-        val atEndOfDayBrazilTime = nowUtc.atOffset(ZoneOffset.of("America/São_Paulo")).toLocalDate().atTime(23, 59)
 
-        val matches = getMatches(atStartOfDayBrazilTime, atEndOfDayBrazilTime)
+        // CORREÇÃO 1: Usar ZoneId em vez de ZoneOffset
+        val brazilZone = ZoneId.of("America/Sao_Paulo")
+
+        // Converte o Instant atual para o ZonedDateTime do Brasil
+        val zonedDateTimeBrazil = nowUtc.atZone(brazilZone)
+
+        // Pega o início e o fim do dia
+        val atStartOfDayBrazilTime = zonedDateTimeBrazil.toLocalDate().atStartOfDay()
+        val atEndOfDayBrazilTime = zonedDateTimeBrazil.toLocalDate().atTime(23, 59, 59)
+
+        val matches = dsl.football.getMatchesWithTeamsAndLeaguesAsync(atStartOfDayBrazilTime, atEndOfDayBrazilTime)
+
         val matchesFormatted = matches.map { m ->
             ExpectedMatchesValuesMenu(
                 match = m.match,
@@ -55,47 +68,14 @@ class GetMatchesCommand(
                 competition = m.competition
             )
         }
+
         val menu = footballMatchesMenu(
-            matchesFormatted, event.user.effectiveAvatarUrl, ZonedDateTime.of(nowUtc.atOffset(ZoneOffset.UTC).toLocalDateTime(),
-                ZoneOffset.UTC)
+            matchesFormatted,
+            event.user.effectiveAvatarUrl,
+            ZonedDateTime.of(nowUtc.atZone(ZoneOffset.UTC).toLocalDateTime(), ZoneOffset.UTC)
         )
 
         event.hook.editOriginalComponents(menu).useComponentsV2().await()
-    }
-
-    private suspend fun getMatches(dateFrom: LocalDateTime, dateTo: LocalDateTime): List<MatchWithDetails> {
-        val homeTeam = Footballteam("home_team")
-        val awayTeam = Footballteam("away_team")
-        val league = Footballleague("league")
-
-        return withContext(Dispatchers.IO) {
-            dsl.select(
-                FOOTBALLMATCH.asterisk(),
-                homeTeam.asterisk(),
-                awayTeam.asterisk(),
-                league.asterisk(),
-            )
-                .from(FOOTBALLMATCH)
-                .innerJoin(homeTeam).on(FOOTBALLMATCH.HOMETEAMID.eq(homeTeam.ID))
-                .innerJoin(awayTeam).on(FOOTBALLMATCH.AWAYTEAMID.eq(awayTeam.ID))
-                .innerJoin(league).on(FOOTBALLMATCH.COMPETITIONID.eq(league.ID))
-                .where(
-                    FOOTBALLMATCH.STARTAT.between(dateFrom, dateTo)
-                )
-                .orderBy(
-                    FOOTBALLMATCH.STARTAT.asc(),
-                )
-                .fetch()
-                .map { record ->
-                    MatchWithDetails(
-                        match = record.into(FOOTBALLMATCH),
-                        homeTeam = record.into(homeTeam),
-                        awayTeam = record.into(awayTeam),
-                        competition = record.into(league),
-                    )
-                }
-                .take(25)
-        }
     }
 
     private data class MatchWithDetails(

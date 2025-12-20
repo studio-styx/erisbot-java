@@ -19,7 +19,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.0")
     implementation("club.minnced:jda-ktx:0.13.0")
-    implementation("net.dv8tion:JDA:6.1.0")
+    implementation("net.dv8tion:JDA:6.2.0")
 
     implementation("org.jooq:jooq:3.19.9")
     implementation("org.jooq:jooq-kotlin:3.19.9")

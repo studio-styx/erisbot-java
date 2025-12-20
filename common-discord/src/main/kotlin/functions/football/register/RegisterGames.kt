@@ -14,12 +14,15 @@ import kotlinx.coroutines.future.await
 import kotlinx.coroutines.withContext
 import net.dv8tion.jda.api.JDA
 import org.jooq.DSLContext
+import org.jooq.impl.DSL
 import studio.styx.erisbot.generated.enums.Matchstatus
 import studio.styx.erisbot.generated.tables.references.FOOTBALLAREA
 import studio.styx.erisbot.generated.tables.references.FOOTBALLLEAGUE
 import studio.styx.erisbot.generated.tables.references.FOOTBALLMATCH
 import studio.styx.erisbot.generated.tables.references.FOOTBALLPLAYER
 import studio.styx.erisbot.generated.tables.references.FOOTBALLTEAM
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
@@ -180,15 +183,40 @@ class RegisterMatches(
     }
 
     private suspend fun handleRegisterMatchResult(match: Match) {
-        // Buscamos os IDs internos necessários para as Foreign Keys
-        val internalIds = withContext(Dispatchers.IO) {
-            val leagueId = dsl.select(FOOTBALLLEAGUE.ID).from(FOOTBALLLEAGUE).where(FOOTBALLLEAGUE.APIID.eq(match.competition.id)).fetchOne(FOOTBALLLEAGUE.ID)
-            val homeId = dsl.select(FOOTBALLTEAM.ID).from(FOOTBALLTEAM).where(FOOTBALLTEAM.APIID.eq(match.homeTeam.id)).fetchOne(FOOTBALLTEAM.ID)
-            val awayId = dsl.select(FOOTBALLTEAM.ID).from(FOOTBALLTEAM).where(FOOTBALLTEAM.APIID.eq(match.awayTeam.id)).fetchOne(FOOTBALLTEAM.ID)
-            Triple(leagueId, homeId, awayId)
+        // 1. Buscamos IDs E PONTOS para calcular as odds
+        val teamData = withContext(Dispatchers.IO) {
+            val leagueId = dsl.select(FOOTBALLLEAGUE.ID)
+                .from(FOOTBALLLEAGUE)
+                .where(FOOTBALLLEAGUE.APIID.eq(match.competition.id))
+                .fetchOne(FOOTBALLLEAGUE.ID)
+
+            // Buscamos ID e POINTS do Home
+            val homeRecord = dsl.select(FOOTBALLTEAM.ID, FOOTBALLTEAM.POINTS)
+                .from(FOOTBALLTEAM)
+                .where(FOOTBALLTEAM.APIID.eq(match.homeTeam.id))
+                .fetchOne()
+
+            // Buscamos ID e POINTS do Away
+            val awayRecord = dsl.select(FOOTBALLTEAM.ID, FOOTBALLTEAM.POINTS)
+                .from(FOOTBALLTEAM)
+                .where(FOOTBALLTEAM.APIID.eq(match.awayTeam.id))
+                .fetchOne()
+
+            Triple(leagueId, homeRecord, awayRecord)
         }
 
-        val (leagueDbId, homeDbId, awayDbId) = internalIds
+        val (leagueDbId, homeRecord, awayRecord) = teamData
+
+        // Evita crash se por algum motivo o time não tiver sido salvo (safety check)
+        if (leagueDbId == null || homeRecord == null || awayRecord == null) return
+
+        val homeDbId = homeRecord[FOOTBALLTEAM.ID]
+        val awayDbId = awayRecord[FOOTBALLTEAM.ID]
+
+        val (oddHome, oddDraw, oddAway) = calculateOdds(
+            homeRecord[FOOTBALLTEAM.POINTS] ?: 0,
+            awayRecord[FOOTBALLTEAM.POINTS] ?: 0
+        )
 
         val matchBeforeUpdate = withContext(Dispatchers.IO) {
             dsl.selectFrom(FOOTBALLMATCH)
@@ -205,21 +233,45 @@ class RegisterMatches(
                 else -> Matchstatus.valueOf(match.status.toString())
             }
 
-            // Upsert da Partida
+            val matchDate = OffsetDateTime.parse(match.utcDate).toLocalDateTime()
+
+            // Upsert da Partida com Lógica de Odds Condicional
             tx.insertInto(FOOTBALLMATCH)
                 .set(FOOTBALLMATCH.APIID, match.id.toInt())
                 .set(FOOTBALLMATCH.COMPETITIONID, leagueDbId)
                 .set(FOOTBALLMATCH.HOMETEAMID, homeDbId)
                 .set(FOOTBALLMATCH.AWAYTEAMID, awayDbId)
-                .set(FOOTBALLMATCH.GOALSHOME, match.score?.fullTime?.home ?: 0)
-                .set(FOOTBALLMATCH.GOALSAWAY, match.score?.fullTime?.away ?: 0)
+                .set(FOOTBALLMATCH.GOALSHOME, match.score?.fullTime?.home)
+                .set(FOOTBALLMATCH.GOALSAWAY, match.score?.fullTime?.away)
                 .set(FOOTBALLMATCH.STATUS, dbStatus)
-                .set(FOOTBALLMATCH.STARTAT, OffsetDateTime.parse(match.utcDate).toLocalDateTime())
-                .onDuplicateKeyUpdate()
-                .set(FOOTBALLMATCH.GOALSHOME, match.score?.fullTime?.home ?: 0)
-                .set(FOOTBALLMATCH.GOALSAWAY, match.score?.fullTime?.away ?: 0)
+                .set(FOOTBALLMATCH.STARTAT, matchDate)
+                .set(FOOTBALLMATCH.ODDSHOMEWIN, oddHome)
+                .set(FOOTBALLMATCH.ODDSDRAW, oddDraw)
+                .set(FOOTBALLMATCH.ODDSAWAYWIN, oddAway)
+                .onConflict(FOOTBALLMATCH.APIID)
+                .doUpdate()
+                .set(FOOTBALLMATCH.GOALSHOME, match.score?.fullTime?.home)
+                .set(FOOTBALLMATCH.GOALSAWAY, match.score?.fullTime?.away)
                 .set(FOOTBALLMATCH.STATUS, dbStatus)
-                .set(FOOTBALLMATCH.STARTAT, OffsetDateTime.parse(match.utcDate).toLocalDateTime())
+                .set(FOOTBALLMATCH.STARTAT, matchDate)
+                .set(
+                    FOOTBALLMATCH.ODDSHOMEWIN,
+                    DSL.case_()
+                        .`when`(FOOTBALLMATCH.STARTAT.gt(LocalDateTime.now()), oddHome)
+                        .else_(FOOTBALLMATCH.ODDSHOMEWIN)
+                )
+                .set(
+                    FOOTBALLMATCH.ODDSDRAW,
+                    DSL.case_()
+                        .`when`(FOOTBALLMATCH.STARTAT.gt(LocalDateTime.now()), oddDraw)
+                        .else_(FOOTBALLMATCH.ODDSDRAW)
+                )
+                .set(
+                    FOOTBALLMATCH.ODDSAWAYWIN,
+                    DSL.case_()
+                        .`when`(FOOTBALLMATCH.STARTAT.gt(LocalDateTime.now()), oddAway)
+                        .else_(FOOTBALLMATCH.ODDSAWAYWIN)
+                )
                 .returning()
                 .fetchOne()
         }.await()
@@ -232,5 +284,34 @@ class RegisterMatches(
                 }
             }
         }
+    }
+
+    private fun calculateOdds(homePoints: Int, awayPoints: Int): Triple<Double, Double, Double> {
+        val totalPoints = (homePoints + awayPoints).coerceAtLeast(1).toDouble()
+
+        // Função auxiliar para arredondar
+        fun roundToTwoDecimals(value: Double): Double {
+            return BigDecimal.valueOf(value)
+                .setScale(2, RoundingMode.HALF_UP)
+                .toDouble()
+        }
+
+        fun calcOdd(points: Int): Double {
+            val strength = points / totalPoints
+            // Inverter probabilidade
+            val odd = 1 / strength.coerceAtLeast(0.05)
+            // Limitar e arredondar
+            return roundToTwoDecimals(odd.coerceIn(1.2, 8.0))
+        }
+
+        val oddHome = calcOdd(homePoints)
+        val oddAway = calcOdd(awayPoints)
+
+        // Cálculo do empate
+        val diff = Math.abs(oddHome - oddAway)
+        val rawDraw = (3.0 + (diff * 0.2)).coerceIn(2.5, 6.0)
+        val oddDraw = roundToTwoDecimals(rawDraw)
+
+        return Triple(oddHome, oddDraw, oddAway)
     }
 }

@@ -28,7 +28,7 @@ dependencies {
     implementation(project(":redis"))
     implementation(project(":api-server"))
 
-    implementation("net.dv8tion:JDA:6.1.0")
+    implementation("net.dv8tion:JDA:6.2.0")
     implementation("club.minnced:jda-ktx:0.13.0")
     implementation("org.reflections:reflections:0.10.2")
     implementation("io.github.cdimascio:java-dotenv:5.2.2")

@@ -3,9 +3,11 @@ package menus.football
 import net.dv8tion.jda.api.components.MessageTopLevelComponent
 import net.dv8tion.jda.api.components.actionrow.ActionRow
 import net.dv8tion.jda.api.components.buttons.Button
+import shared.Colors
 import shared.utils.DiscordTimeStyle
 import shared.utils.Icon
 import shared.utils.Utils
+import studio.styx.erisbot.generated.enums.Matchstatus
 import studio.styx.erisbot.generated.tables.records.FootballleagueRecord
 import studio.styx.erisbot.generated.tables.records.FootballmatchRecord
 import studio.styx.erisbot.generated.tables.records.FootballteamRecord
@@ -22,54 +24,33 @@ data class ExpectedMatchesValuesMenu(
 )
 
 object FootballMenuHelper {
-    // Zona do Brasil (considera horário de Brasília - America/Sao_Paulo)
     val BRAZIL_ZONE = ZoneId.of("America/Sao_Paulo")
-
-    // Formatter para datas em português do Brasil
     val BRAZIL_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         .withLocale(Locale("pt", "BR"))
 
-    /**
-     * Formata a data em termos relativos (hoje, ontem, amanhã, etc.)
-     * em relação ao horário brasileiro atual
-     */
     fun formatDateRelativeToBrazil(date: ZonedDateTime): String {
-        val nowInBrazil = ZonedDateTime.now(BRAZIL_ZONE)
+        // Garantimos que a comparação é feita no fuso do Brasil
+        val dateInBr = date.withZoneSameInstant(BRAZIL_ZONE)
+        val today = ZonedDateTime.now(BRAZIL_ZONE).toLocalDate()
 
-        // Converter para data pura (sem horas) para comparação
-        val today = nowInBrazil.toLocalDate()
-        val yesterday = today.minusDays(1)
-        val dayBeforeYesterday = today.minusDays(2)
-        val tomorrow = today.plusDays(1)
-        val dayAfterTomorrow = today.plusDays(2)
-
-        val targetDate = date.withZoneSameInstant(BRAZIL_ZONE).toLocalDate()
-
-        return when (targetDate) {
+        return when (dateInBr.toLocalDate()) {
             today -> "hoje"
-            yesterday -> "ontem"
-            dayBeforeYesterday -> "anteontem"
-            tomorrow -> "amanhã"
-            dayAfterTomorrow -> "depois de amanhã"
-            else -> targetDate.format(BRAZIL_DATE_FORMATTER)
+            today.minusDays(1) -> "ontem"
+            today.plusDays(1) -> "amanhã"
+            else -> dateInBr.format(BRAZIL_DATE_FORMATTER)
         }
-    }
-
-    /**
-     * Converte UTC para horário brasileiro
-     */
-    fun utcToBrazilTime(utcTime: ZonedDateTime): ZonedDateTime {
-        return utcTime.withZoneSameInstant(BRAZIL_ZONE)
     }
 }
 
 fun footballMatchesMenu(
     matches: List<ExpectedMatchesValuesMenu>,
     defaultImageUrl: String,
-    utcDate: ZonedDateTime, // Data em UTC
+    referenceDate: ZonedDateTime,
     page: Int = 0
 ): MutableList<MessageTopLevelComponent> {
+    val formattedDate = FootballMenuHelper.formatDateRelativeToBrazil(referenceDate)
     val container = ComponentBuilder.ContainerBuilder.create()
+        .withColor(Colors.SUCCESS)
 
     // Configurações
     val matchesPerPage = 5
@@ -77,8 +58,8 @@ fun footballMatchesMenu(
     val currentPage = page.coerceIn(0, totalPages - 1)
 
     // Converter UTC para horário brasileiro para exibição
-    val brazilDate = FootballMenuHelper.utcToBrazilTime(utcDate)
-    val formattedDate = FootballMenuHelper.formatDateRelativeToBrazil(brazilDate)
+    val tomorrowBr = referenceDate.plusDays(1)
+    val yesterdayBr = referenceDate.minusDays(1)
 
     // Título com a data formatada
     container.addText("## Partidas de futebol de $formattedDate")
@@ -102,8 +83,18 @@ fun footballMatchesMenu(
 
             // Converter horário do jogo para Brasil
             val matchStartUtc = match.startat!!.atZone(ZoneOffset.UTC)
-            val matchStartBrazil = FootballMenuHelper.utcToBrazilTime(matchStartUtc)
+            val matchStartBrazil = match.startat!!.atZone(FootballMenuHelper.BRAZIL_ZONE)
             val nowInBrazil = ZonedDateTime.now(FootballMenuHelper.BRAZIL_ZONE)
+
+            val matchStatus = when(match.status) {
+                Matchstatus.FINISHED -> "Finalizado"
+                Matchstatus.SCHEDULED -> "Agendado"
+                Matchstatus.CANCELED -> "Cancelado"
+                Matchstatus.POSTPONED -> "Reagendado"
+                Matchstatus.IN_PLAY, Matchstatus.LIVE -> "Em andamento"
+                Matchstatus.PAUSED -> "Pausado"
+                else -> "Desconhecido"
+            }
 
             // Construir texto do jogo
             val matchText = Utils.brBuilder(
@@ -115,6 +106,7 @@ fun footballMatchesMenu(
                 } else {
                     "${Icon.static.get("alarm")} - **Começa:** ${Utils.formatDiscordTime(match.startat!!, DiscordTimeStyle.RELATIVE)} | ${Utils.formatDiscordTime(match.startat!!, DiscordTimeStyle.LONGDATETIME)}"
                 },
+                "**Status:** $matchStatus",
                 "**Odd para o time da casa:** ${match.oddshomewin ?: "Desconhecido"}",
                 "**Odd para o empate:** ${match.oddsdraw ?: "Desconhecido"}",
                 "**Odd para o time visitante:** ${match.oddsawaywin ?: "Desconhecido"}"
@@ -138,44 +130,24 @@ fun footballMatchesMenu(
         container.addText("Nenhum jogo agendado para esse dia")
     }
 
-    // Cálculos de datas para navegação
-    val tomorrowUtc = utcDate.plusDays(1)
-        .toLocalDate()
-        .atStartOfDay(ZoneOffset.UTC)
-    val yesterdayUtc = utcDate.minusDays(1)
-        .toLocalDate()
-        .atStartOfDay(ZoneOffset.UTC)
+    val tomorrowTimestamp = tomorrowBr.withHour(12).toInstant().epochSecond
+    val yesterdayTimestamp = yesterdayBr.withHour(12).toInstant().epochSecond
 
-    // Converter para Brasil para exibição dos botões
-    val tomorrowBrazil = FootballMenuHelper.utcToBrazilTime(tomorrowUtc)
-    val yesterdayBrazil = FootballMenuHelper.utcToBrazilTime(yesterdayUtc)
-
-    // Botões de paginação
+    // Botões de paginação (Mantidos iguais, usando a data atual do menu)
+    val currentTimestamp = referenceDate.toInstant().epochSecond
     val paginationButtons = ActionRow.of(
-        Button.primary(
-            "football/menu/page/${currentPage - 1}/${utcDate.toInstant().epochSecond}",
-            "Voltar"
-        ).withDisabled(currentPage == 0),
-        Button.primary(
-            "football/menu/page/${currentPage + 1}/${utcDate.toInstant().epochSecond}",
-            "Avançar"
-        ).withDisabled(currentPage >= totalPages - 1 || totalPages == 0)
+        Button.primary("football/menu/page/${page - 1}/$currentTimestamp", "Voltar")
+            .withDisabled(page == 0),
+        Button.primary("football/menu/page/${page + 1}/$currentTimestamp", "Avançar")
+            .withDisabled(page >= totalPages - 1 || totalPages == 0)
     )
 
-    // Botões de navegação por data
     val dateButtons = ActionRow.of(
-        Button.primary(
-            "football/menu/date/${yesterdayUtc.toInstant().epochSecond}",
-            yesterdayBrazil.format(FootballMenuHelper.BRAZIL_DATE_FORMATTER)
-        ),
-        Button.primary(
-            "football/menu/date/${tomorrowUtc.toInstant().epochSecond}",
-            tomorrowBrazil.format(FootballMenuHelper.BRAZIL_DATE_FORMATTER)
-        ),
-        Button.secondary(
-            "football/menu/other/otherData",
-            "Escolher uma data"
-        )
+        Button.primary("football/menu/date/$yesterdayTimestamp",
+            yesterdayBr.format(FootballMenuHelper.BRAZIL_DATE_FORMATTER)),
+        Button.primary("football/menu/date/$tomorrowTimestamp",
+            tomorrowBr.format(FootballMenuHelper.BRAZIL_DATE_FORMATTER)),
+        Button.secondary("football/menu/other/otherData", "Escolher uma data")
     )
 
     container.addRow(paginationButtons)

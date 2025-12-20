@@ -16,7 +16,7 @@ dependencies {
     implementation(project(":redis"))
 
     testImplementation(kotlin("test"))
-    implementation("net.dv8tion:JDA:6.1.0")
+    implementation("net.dv8tion:JDA:6.2.0")
     implementation("club.minnced:jda-ktx:0.13.0")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")

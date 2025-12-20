@@ -5,11 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90219cdd-834f-4824-84ac-e9a08a1b9da2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/football/FootballCommands.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/football/subCommands/GetMatchesCommand.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/football/subCommands/SetFavoriteTeamCommand.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/src/main/kotlin/database/extensions/football/GetMatchWithTeamsAndLeague.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/src/main/kotlin/database/repository/football/FootballRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/football/matches/menu/FootballMatchesDate.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/football/matches/menu/FootballMatchesOtherDate.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/interactions/football/matches/menu/FootballMatchesPage.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-server/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/api-server/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-discord/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/functions/football/register/RegisterGames.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/functions/football/register/RegisterGames.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/menus/football/MatchesMenu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/menus/football/MatchesMenu.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/CustomIdHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/CustomIdHelper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev.emojis.json" beforeDir="false" afterPath="$PROJECT_DIR$/dev.emojis.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emojis.json" beforeDir="false" afterPath="$PROJECT_DIR$/emojis.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/football/FootballCommands.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/football/FootballCommands.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/football/subCommands/GetMatchesCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/football/subCommands/GetMatchesCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/games/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/games/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,8 +87,8 @@
         <option value="Kotlin Object" />
         <option value="Kotlin Data Class" />
         <option value="Kotlin Enum" />
-        <option value="Kotlin File" />
         <option value="package-info" />
+        <option value="Kotlin File" />
         <option value="Kotlin Class" />
       </list>
     </option>
