@@ -5,42 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90219cdd-834f-4824-84ac-e9a08a1b9da2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/functions/KtorClientManager.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/menus/football/MatchesMenu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/football/FootballCommands.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/football/subCommands/GetMatchesCommand.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/commands/football/subCommands/SetFavoriteTeamCommand.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/discord/extensions/jda/users/GetOrRetrieveUserExtension.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/discord/extensions/jda/users/GetOrRetrieveUserExtension.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/common/Area.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/common/Area.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/competition/Competition.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/competition/Competition.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/competition/Season.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/competition/Season.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/competition/WinnerClub.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/competition/WinnerClub.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/Booking.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/Booking.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/Goal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/Goal.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/Match.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/Match.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/MatchCoach.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/MatchCoach.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/MatchCompetition.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/MatchCompetition.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/MatchPlayer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/MatchPlayer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/MatchSeason.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/MatchSeason.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/MatchStages.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/MatchStages.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/MatchStatus.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/MatchStatus.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/Penalty.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/Penalty.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/Score.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/Score.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/ScoreDetail.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/ScoreDetail.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/TeamSide.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/match/TeamSide.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/Club.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/Club.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/Coach.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/Coach.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/Contract.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/Contract.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/Player.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/Player.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/PlayerPosition.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/PlayerPosition.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/Staff.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/Staff.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/TeamCompetition.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/dtos/football/footballData/api/fixtureResult/team/TeamCompetition.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/functions/football/FootballDataSdk.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/functions/football/FootballDataSdk.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/functions/football/handlers/HandleEndGame.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/functions/football/handlers/HandleEndGame.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/functions/football/register/RegisterGames.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/functions/football/register/RegisterGames.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/Utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/shared/utils/Utils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/database/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/listeners/MessageListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/erisbot/src/main/kotlin/studio/styx/erisbot/discord/features/listeners/MessageListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-discord/src/main/kotlin/menus/football/MatchesMenu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-discord/src/main/kotlin/menus/football/MatchesMenu.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,8 +74,9 @@
         <option value="Kotlin Object" />
         <option value="Kotlin Data Class" />
         <option value="Kotlin Enum" />
-        <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="package-info" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>

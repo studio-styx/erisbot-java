@@ -63,9 +63,6 @@ object FootballMenuHelper {
     }
 }
 
-/**
- * Menu de partidas de futebol com suporte robusto a UTC e horário brasileiro
- */
 fun footballMatchesMenu(
     matches: List<ExpectedMatchesValuesMenu>,
     defaultImageUrl: String,

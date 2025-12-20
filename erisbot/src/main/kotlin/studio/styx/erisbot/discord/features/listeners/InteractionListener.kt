@@ -158,6 +158,11 @@ class InteractionListener(
                 .withColor(Colors.DANGER)
                 .reply(event)
 
+        } catch(e: NotImplementedError) {
+            ComponentBuilder.ContainerBuilder.create()
+                .addText("Essa função ainda não foi implementada! **${e.message}**")
+                .withColor(Colors.DANGER)
+                .reply(event)
         } catch (e: Exception) {
             System.err.println("Erro ao executar comando ${event.name}: ${e.message}")
             e.printStackTrace()
