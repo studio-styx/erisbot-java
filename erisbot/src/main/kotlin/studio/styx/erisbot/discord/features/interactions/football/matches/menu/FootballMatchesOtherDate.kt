@@ -90,10 +90,9 @@ class FootballMatchesOtherDate : ResponderInterface {
     }
 
     override suspend fun execute(event: ModalInteractionEvent) {
-        // 1. Parsing inicial com seu SCHEMA (valida tipos e ranges básicos)
         val info = SCHEMA.parseOrThrow(mapOf(
             "day" to event.getValue("day")?.asString,
-            "month" to event.getValue("month")?.asStringList?.firstOrNull() // getValues é mais estável para SelectMenus
+            "month" to event.getValue("month")?.asStringList?.firstOrNull()
         ))
 
         val day = info.getInteger("day")
